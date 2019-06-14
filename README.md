@@ -1,4 +1,8 @@
-# front_cdb
+# Computer-Database Front
+Download VueJs (v3+)  
+```
+sudo npm i -g @vue/cli
+```
 
 ## Project setup
 ```
