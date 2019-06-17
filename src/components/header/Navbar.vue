@@ -53,6 +53,6 @@ export default {
 </script>
 <style scoped>
 .bg-info{
-  background-color: #00171f !important;
+  background-color: #003459 !important;
 }
 </style>
