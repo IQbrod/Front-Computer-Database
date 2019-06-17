@@ -48,7 +48,7 @@ export default {
 }
 </script>
 <style scoped>
-.navbar-nav{
-  background-color: #00171f !important;
+.bg-info{
+  background-color: #003459 !important;
 }
 </style>

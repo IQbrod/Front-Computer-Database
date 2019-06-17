@@ -23,4 +23,5 @@ import pagination from './Pagination'
 </script>
 
 <style>
+
 </style>
