@@ -25,7 +25,7 @@ export default {
         }
     },
     created() {
-        axios.get(`http://localhost:8080/cdb/api/computers?page=1&size=10&search=&orderBy=id`)
+        axios.get(`http://10.0.1.97:8080/cdb/api/computers?page=1&size=10&search=&orderBy=id`)
             .then((response) => this.computerList = response.data)
             .catch(e => {this.errors.push(e)})
     }
