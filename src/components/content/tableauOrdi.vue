@@ -1,13 +1,15 @@
 <template>
   <div>
-    <b-table striped hover :items="this.ComputerList"></b-table>
+    <CustomTableOrdi striped hover :items="this.ComputerList"></CustomTableOrdi>
   </div>
 </template>
 
 <script>
+  import CustomTableOrdi from './CustomTableOrdi'
   export default {
       name : 'tableauOrdi',
-      props : ['ComputerList'],
+      props : ['ComputerList', 'CustomTableOrdi'],
+    components: {CustomTableOrdi},
     data() {
       return {
         

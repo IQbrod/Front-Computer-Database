@@ -1,6 +1,10 @@
 <template>
   <div id="cont">
+
+
+
     <b-jumbotron  id="jumb" lead="Computer DataBase">
+
       <tableauOrdi :ComputerList="computerList"/>
     </b-jumbotron>
   </div>
