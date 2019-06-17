@@ -15,7 +15,8 @@ import axios from "axios";
 export default {
   name: "ComputerDashboard",
   components: {
-    computers
+    computers,
+    pagination
   },
   props: {},
   data() {
