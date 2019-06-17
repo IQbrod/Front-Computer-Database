@@ -18,6 +18,10 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
 
+          <b-nav-item-dropdown text="List" right>
+            <b-dropdown-item href="/computers">Computers</b-dropdown-item>
+          </b-nav-item-dropdown>
+
           <b-nav-item-dropdown text="Lang" right>
             <b-dropdown-item href="#">EN</b-dropdown-item>
             <b-dropdown-item href="#">ES</b-dropdown-item>

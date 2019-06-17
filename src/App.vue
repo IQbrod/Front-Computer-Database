@@ -1,18 +1,17 @@
 <template>
-  <div id="app">
-    <cdb/>
+  <div class="application">
+    <navbar/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-
-import cdb from './components/Body'
+import navbar from './components/header/navbar'
 
 export default {
   name: 'app',
   components: {
-    cdb,
+    navbar,
   }
 }
 </script>
