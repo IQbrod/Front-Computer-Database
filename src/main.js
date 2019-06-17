@@ -5,14 +5,14 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import contentB from './components/content/contentB'
+import ComputerDashboard from './components/content/ComputerDashboard'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/computers', component: contentB },
+  { path: '/computers', component: ComputerDashboard },
   { path: '/', redirect:'/computers' }
 ]
 

@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import navbar from './components/header/navbar'
+import Navbar from './components/header/Navbar'
 
 export default {
   name: 'app',
   components: {
-    navbar,
+    Navbar,
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
 }
+
 </style>

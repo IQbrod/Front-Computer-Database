@@ -1,19 +1,19 @@
 <template>
   <div id="cont">
     <b-jumbotron  id="jumb" lead="Computer DataBase">
-      <tableauOrdi :ComputerList="computerList"/>
+      <computers :ComputerList="computerList"/>
     </b-jumbotron>
   </div>
 </template>
 
 <script>
-import tableauOrdi from "./tableauOrdi";
+import computers from "./Computers";
 import axios from 'axios';
 
 export default {
-  name: "contentB",
+  name: "ComputerDashboard",
   components: {
-    tableauOrdi
+    computers
   },
   props: {},
   data(){
@@ -35,7 +35,6 @@ export default {
 
 #cont{
   margin: 3%;
-  box-shadow: 10px 5px 5px grey;
 }
 
 #jumb{
