@@ -1,7 +1,7 @@
 <template>
   <div id="cont">
-    <b-jumbotron id="jumb" lead="Computer DataBase">
-      <computers :ComputerList="computerList"/>
+    <b-jumbotron id="jumb" lead="Company DataBase">
+      <computers :CompanyList="companyList"/>
     </b-jumbotron>
     <pagination className="page"/>
   </div>
@@ -9,27 +9,27 @@
 
 <script>
 import pagination from './Pagination'
-import computers from "./Computers";
+import companies from "./Companies";
 import axios from "axios";
 
 export default {
-  name: "ComputerDashboard",
+  name: "CompanyDashboard",
   components: {
-    computers
+    companies
   },
   props: {},
   data() {
     return {
-      computerList: [],
+      companyList: [],
       errors: []
     };
   },
   created() {
     axios
       .get(
-        `http://10.0.1.97:8080/cdb/api/computers?page=1&size=10&search=&orderBy=id`
+        `http://10.0.1.97:8080/cdb/api/companies?page=1&size=10`
       )
-      .then(response => (this.computerList = response.data))
+      .then(response => (this.companyList = response.data))
       .catch(e => {
         this.errors.push(e);
       });
