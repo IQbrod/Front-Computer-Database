@@ -1,7 +1,7 @@
 <template>
   <div id="cont">
     <b-jumbotron id="jumb" lead="Company DataBase">
-      <computers :CompanyList="companyList"/>
+      <companies :CompanyList="companyList"/>
     </b-jumbotron>
     <pagination className="page"/>
   </div>
@@ -15,7 +15,8 @@ import axios from "axios";
 export default {
   name: "CompanyDashboard",
   components: {
-    companies
+    companies,
+    pagination
   },
   props: {},
   data() {

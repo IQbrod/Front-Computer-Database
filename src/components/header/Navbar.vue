@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar  toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="/">Computer Database</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -20,6 +20,7 @@
 
           <b-nav-item-dropdown text="List" right>
             <b-dropdown-item href="/computers">Computers</b-dropdown-item>
+            <b-dropdown-item href="/companies">Companies</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown text="Lang" right>
