@@ -1,4 +1,4 @@
-# Computer-Database Front
+# Computer-Database Front [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=IQbrod_Front-Computer-Database&metric=alert_status)](https://sonarcloud.io/dashboard?id=IQbrod_Front-Computer-Database)
 Download VueJs (v3+)  
 ```
 sudo npm i -g @vue/cli

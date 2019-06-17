@@ -1,29 +1,28 @@
 <template>
-  <div id="app">
-    <cdb/>
+  <div class="application">
+    <navbar/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
-
-import cdb from './components/Body'
+import Navbar from './components/header/Navbar'
 
 export default {
   name: 'app',
   components: {
-    cdb,
+    Navbar,
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
 }
+
 </style>

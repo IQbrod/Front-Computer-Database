@@ -7,7 +7,7 @@
 <script>
   import CustomTableOrdi from './CustomTableOrdi'
   export default {
-      name : 'tableauOrdi',
+      name : 'computers',
       props : ['ComputerList', 'CustomTableOrdi'],
     components: {CustomTableOrdi},
     data() {
@@ -17,7 +17,3 @@
     }
   }
 </script>
-
-<style>
-
-</style>

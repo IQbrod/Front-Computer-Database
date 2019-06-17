@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    <b-navbar  toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="/">Computer Database</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -17,6 +17,11 @@
             <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
+
+          <b-nav-item-dropdown text="List" right>
+            <b-dropdown-item href="/computers">Computers</b-dropdown-item>
+            <b-dropdown-item href="/companies">Companies</b-dropdown-item>
+          </b-nav-item-dropdown>
 
           <b-nav-item-dropdown text="Lang" right>
             <b-dropdown-item href="#">EN</b-dropdown-item>
@@ -41,9 +46,14 @@
 
 <script>
 export default {
-  name: 'navbar',
+  name: 'Navbar',
   props: {
     
   }
 }
 </script>
+<style scoped>
+.bg-info{
+  background-color: #003459 !important;
+}
+</style>
