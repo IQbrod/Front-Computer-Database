@@ -7,6 +7,7 @@
 <script>
     import CustomTableOrdi from './CustomTableOrdi'
     import axios from "axios";
+    import { mapGetters } from 'vuex'
 
     export default {
         name: 'computers',
@@ -17,16 +18,29 @@
                 errors: []
             }
         },
-
-        created() {
+        computed: {
+            ...mapGetters([
+                'page'
+            ])
+        },
+        methods: {
+            get() {
             axios
-                .get(
-                    `http://10.0.1.97:8080/cdb/api/computers?page=1&size=10&search=&orderBy=id`
-                )
+                .get("http://10.0.1.97:8080/cdb/api/computers?page=+"+this.page+"&size=10&search=&orderBy=id")
                 .then(response => (this.computerList = response.data))
                 .catch(e => {
                     this.errors.push(e);
-                });
+                }
+            );
+            }
+        },
+        created() {
+            this.get()
+        },
+        watch: {
+            page: function() {
+                this.get()
+            }
         }
     }
 </script>
