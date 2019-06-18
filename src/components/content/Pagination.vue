@@ -1,26 +1,30 @@
 <template>
-  <div id="nav" >
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="my-table"
-      align="center"
-    ></b-pagination>
+  <div class="overflow-auto">
+    <div>
+      <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="size"></b-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
   export default {
+    data() {
+      return {
+        rows: 100,
+        currentPage: 1,
+        size: 10
+      }
+    },
     methods: {
-      linkGen(pageNum) {
-        return pageNum === 1 ? '?' : `?page=${pageNum}`
+      ...mapMutations([
+        'setPage',
+      ])
+    },
+    watch: {
+      currentPage: function(value) {
+        this.setPage(value)
       }
     }
   }
 </script>
-<style>
-#nav{
-    margin: 0 auto;
-}
-</style>
