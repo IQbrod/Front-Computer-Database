@@ -29,8 +29,8 @@
             </template>
 
 
-            <template slot="update" slot-scope="patate">
-                <b-button size="sm" class="mr-2" v-on:click="updating = patate.item.id"> Update</b-button>
+            <template slot="update" slot-scope="ligne">
+                <b-button size="sm" class="mr-2" v-on:click="updating = ligne.item.id"> Update</b-button>
             </template>
 
             <template slot="delete">
