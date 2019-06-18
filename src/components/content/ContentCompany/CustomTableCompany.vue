@@ -22,25 +22,20 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :items="this.items" :fields="fields">
-
-            <template slot="id" slot-scope="row">
-                {{ row.value}}
-            </template>
-            <template slot="name" slot-scope="row">
-                {{ row.value}}
-            </template>
-
-            <template slot="delete" >
-                <b-button size="sm"  class="mr-2" > Delete  </b-button>
-            </template>
-
-            <template slot="update">
-                <b-button size="sm" class="mr-2" > Update </b-button>
+        <b-table :items="items" :fields="fields" >
+            <template slot="name" slot-scope="ligne">
+                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
+                <p v-else><input type="text" id="name" name="name"></p>
             </template>
 
 
+            <template slot="update" slot-scope="patate">
+                <b-button size="sm" class="mr-2" v-on:click="updating = patate.item.id"> Update</b-button>
+            </template>
 
+            <template slot="delete">
+                <b-button size="sm" class="mr-2"> Delete</b-button>
+            </template>
 
         </b-table>
 
@@ -56,14 +51,23 @@
     export default {
         name: "CustomTableCompany",
         props: ['items'],
-        data(){
-            return{
+        methods: {
+            myUpdate(items) {
+                this.updating = items.index
+            }
+        },
+        data() {
+            return {
                 filter: null,
                 pageOptions: [10, 50, 100],
                 perPage: 10,
-                fields:['id', 'name','delete', 'update']
+                fields: ['id', 'name', 'update', 'delete'],
+                updating: -1
+
+
             }
-        }
+        },
+        computed: {}
     }
 
 
