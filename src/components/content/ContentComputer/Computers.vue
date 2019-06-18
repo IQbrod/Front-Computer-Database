@@ -8,7 +8,7 @@
   import CustomTableOrdi from './CustomTableOrdi'
   export default {
       name : 'computers',
-      props : ['ComputerList', 'CustomTableOrdi'],
+      props : ['ComputerList'],
     components: {CustomTableOrdi},
     data() {
       return {

@@ -5,8 +5,8 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import ComputerDashboard from './components/content/ComputerDashboard'
-import CompanyDashboard from './components/content/CompanyDashboard'
+import ComputerDashboard from './components/content/ContentComputer/ComputerDashboard'
+import CompanyDashboard from './components/content/ContentCompany/CompanyDashboard'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);

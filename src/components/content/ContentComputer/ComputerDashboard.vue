@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import pagination from './Pagination'
+import pagination from '../Pagination'
 import computers from "./Computers";
 import axios from "axios";
 
