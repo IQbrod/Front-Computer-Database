@@ -25,7 +25,7 @@
         <b-table :items="items" :fields="fields" >
             <template slot="name" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input type="text" id="name" name="name"></p>
+                <p v-else><input :value="ligne.value" type="text" id="name" name="name"></p>
             </template>
 
 

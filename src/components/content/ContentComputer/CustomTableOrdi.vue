@@ -29,17 +29,17 @@
             </template>
             <template slot="name" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input type="text" id="name" name="name"></p>
+                <p v-else><input :value="ligne.value"  type="text" id="name" name="name"></p>
             </template>
 
             <template slot="introduction" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input type="date" id="introduction" name="introduction"></p>
+                <p v-else><input :value="ligne.value" type="date" id="introduction" name="introduction"></p>
             </template>
 
             <template slot="discontinued" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input type="date" id="discontinued" name="discontinued"></p>
+                <p v-else><input :value="ligne.value" type="date" id="discontinued" name="discontinued"></p>
             </template>
 
               <template slot="companyName" slot-scope="row">

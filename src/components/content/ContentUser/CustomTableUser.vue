@@ -29,7 +29,7 @@
             </template>
             <template slot="username" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input type="text" id="username" name="username"></p>
+                <p v-else><input :value="ligne.value" type="text" id="username" name="username"></p>
             </template>
 
 
