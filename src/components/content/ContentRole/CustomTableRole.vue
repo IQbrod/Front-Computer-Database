@@ -54,7 +54,7 @@
 
 <script>
     export default {
-        name: "CustomTableCompany",
+        name: "CustomTableRole",
         props: ['items'],
         data(){
             return{

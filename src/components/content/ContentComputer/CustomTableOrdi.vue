@@ -49,11 +49,11 @@
 
 
             <template slot="delete" >
-                <b-button size="sm"  class="mr-2" > Update  </b-button>
+                <b-button size="sm"  class="mr-2" > Delete  </b-button>
             </template>
 
             <template slot="update">
-                <b-button size="sm" class="mr-2" > Delete </b-button>
+                <b-button size="sm" class="mr-2" > Update </b-button>
             </template>
 
 

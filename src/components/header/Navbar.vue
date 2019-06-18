@@ -21,6 +21,8 @@
           <b-nav-item-dropdown text="List" right>
             <b-dropdown-item href="/computers">Computers</b-dropdown-item>
             <b-dropdown-item href="/companies">Companies</b-dropdown-item>
+            <b-dropdown-item href="/users">Users</b-dropdown-item>
+            <b-dropdown-item href="/roles">Roles</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown text="Lang" right>

@@ -7,6 +7,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import ComputerDashboard from './components/content/ContentComputer/ComputerDashboard'
 import CompanyDashboard from './components/content/ContentCompany/CompanyDashboard'
+import UserDashboard from './components/content/ContentUser/UserDashboard'
+import RoleDashboard from './components/content/ContentRole/RoleDashboard'
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
@@ -15,7 +17,9 @@ Vue.use(VueRouter);
 const routes = [
   { path: '/', redirect:'/computers' },
   { path: '/computers', component: ComputerDashboard },
-  { path: '/companies', component: CompanyDashboard }
+  { path: '/companies', component: CompanyDashboard },
+  { path: '/users', component: UserDashboard},
+  { path: '/roles', component: RoleDashboard}
 ]
 
 const router = new VueRouter({ routes: routes, mode: "history" })

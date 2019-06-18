@@ -27,20 +27,25 @@
             <template slot="id" slot-scope="row">
                 {{ row.value}}
             </template>
-            <template slot="userName" slot-scope="row">
+            <template slot="username" slot-scope="row">
                 {{ row.value}}
             </template>
 
-            <template slot="droits" slot-scope="row">
+
+            <template slot="roleId" slot-scope="row">
+                {{ row.value}}
+            </template>
+
+            <template slot="roleName" slot-scope="row">
                 {{ row.value}}
             </template>
 
             <template slot="delete" >
-                <b-button size="sm"  class="mr-2" > Update  </b-button>
+                <b-button size="sm"  class="mr-2" > Delete  </b-button>
             </template>
 
             <template slot="update">
-                <b-button size="sm" class="mr-2" > Delete </b-button>
+                <b-button size="sm" class="mr-2" > Update </b-button>
             </template>
 
 
@@ -65,7 +70,7 @@
                 filter: null,
                 pageOptions: [10, 50, 100],
                 perPage: 10,
-                fields:['id', 'userName', 'droits','delete', 'update']
+                fields:['id', 'username', 'roleId', 'roleName', 'delete', 'update']
             }
         }
     }

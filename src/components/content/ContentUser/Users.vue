@@ -21,7 +21,7 @@
     created() {
         axios
             .get(
-                `http://10.0.1.97:8080/cdb/api/computers?page=1&size=10&search=&orderBy=id`
+                `http://10.0.1.97:8080/cdb/api/users?page=1&size=10&search=&orderBy=id`
             )
             .then(response => (this.userList = response.data))
             .catch(e => {
