@@ -16,7 +16,7 @@
 
             <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-                    <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+                    <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -58,11 +58,6 @@
             <template slot="delete">
                 <b-button size="sm" class="mr-2"> Delete</b-button>
             </template>
-
-
-
-
-
         </b-table>
 
 
@@ -74,20 +69,38 @@
 </template>
 
 <script>
+    import { mapMutations, mapGetters } from 'vuex';
     export default {
         name: "CustomTableOrdi",
         props: ['items'],
         data(){
             return{
-                filter: null,
+                filter: this.search(),
                 pageOptions: [10, 50, 100],
-                perPage: 10,
                 fields:['id', 'name','introduction','discontinued', 'companyId', 'companyName','update', 'delete'],
-                updating: -1
+                updating: -1,
+                currentSize: this.size()
+            }
+        },
+        methods: {
+            ...mapMutations([
+                'setSize',
+                'setSearch'
+            ]),
+            ...mapGetters([
+                'size',
+                'search'
+            ])
+        },
+        watch: {
+            currentSize: function(value) {
+                this.setSize(value)
+            },
+            filter: function (value) {
+                this.setSearch(value)
             }
         }
     }
-
 
 </script>
 

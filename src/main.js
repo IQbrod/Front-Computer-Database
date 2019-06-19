@@ -22,28 +22,44 @@ const routes = [
   { path: '/companies', component: CompanyDashboard },
   { path: '/users', component: UserDashboard},
   { path: '/roles', component: RoleDashboard}
-]
+];
 
-const router = new VueRouter({ routes: routes, mode: "history" })
+const router = new VueRouter({ routes: routes, mode: "history" });
 
 const store = new Vuex.Store({
   state: {
-    page: 1
+    page: 1,
+    size: 10,
+    search: ''
   },
   getters: {
-    page: state => state.page
+    page: state => state.page,
+    size: state => state.size,
+    search: state => state.search
   },
   mutations: {
     setPage (state, page) {
       state.page = page
+    },
+    setSize (state, size) {
+      state.size = size
+    },
+    setSearch(state, search) {
+      state.search = search
     }
   },
   actions: {
     editPage( context, page ) {
       context.commit('setPage', page )
+    },
+    editSize( context, size ) {
+      context.commit('setSize', size )
+    },
+    editSearch( context, search ) {
+      context.commit('setSearch', search)
     }
   }
-})
+});
 
 
 new Vue({

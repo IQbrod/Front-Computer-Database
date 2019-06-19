@@ -20,13 +20,15 @@
         },
         computed: {
             ...mapGetters([
-                'page'
+                'page',
+                'size',
+                'search'
             ])
         },
         methods: {
             get() {
             axios
-                .get("http://10.0.1.97:8080/cdb/api/computers?page=+"+this.page+"&size=10&search=&orderBy=id")
+                .get("http://10.0.1.97:8080/cdb/api/computers?page=+"+this.page+"&size="+this.size+"&search="+this.search+"&orderBy=id")
                 .then(response => (this.computerList = response.data))
                 .catch(e => {
                     this.errors.push(e);
@@ -39,6 +41,12 @@
         },
         watch: {
             page: function() {
+                this.get()
+            },
+            size: function() {
+                this.get()
+            },
+            search: function() {
                 this.get()
             }
         }
