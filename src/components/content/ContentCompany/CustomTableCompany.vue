@@ -16,7 +16,7 @@
 
             <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-                    <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+                    <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -39,7 +39,6 @@
 
         </b-table>
 
-
         <!-- Info modal -->
         <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
              <pre>{{ infoModal.content }}</pre>
@@ -48,26 +47,35 @@
 </template>
 
 <script>
+    import { mapMutations, mapGetters } from 'vuex';
     export default {
         name: "CustomTableCompany",
         props: ['items'],
         methods: {
             myUpdate(items) {
                 this.updating = items.index
-            }
+            },
+            ...mapMutations([
+                'setSize'
+            ]),
+            ...mapGetters([
+                'size'
+            ])
         },
         data() {
             return {
                 filter: null,
                 pageOptions: [10, 50, 100],
-                perPage: 10,
                 fields: ['id', 'name', 'update', 'delete'],
-                updating: -1
-
-
+                updating: -1,
+                currentSize: this.size()
             }
         },
-        computed: {}
+        watch: {
+            currentSize: function(value) {
+                this.setSize(value)
+            }
+        }
     }
 
 

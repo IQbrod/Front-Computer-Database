@@ -20,33 +20,48 @@
         },
         computed: {
             ...mapGetters([
-                'page'
+                'page',
+                'size',
+                'search'
             ])
         },
         methods: {
             get() {
             axios
-                .get("http://10.0.1.97:8080/cdb/api/computers?page=+"+this.page+"&size=10&search=&orderBy=id")
+                .get("http://10.0.1.97:8080/cdb/api/computers?page=+"+this.page+"&size="+this.size+"&search="+this.search+"&orderBy=id")
                 .then(response => (this.computerList = response.data))
                 .catch(e => {
                     this.errors.push(e);
-                }
-            );
+                });
             },
             delete(listId) {
-                alert("on entee")
+                alert("on entre");
                 listId.forEach(function(elem){
                     axios
                         .delete("http://10.0.1.97:8080/cdb/api/computers/"+elem)
                         .then(response => alert(response))
                 })
             },
+            update(computer) {
+                alert("on update");
+                axios
+                        .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
+                        .catch(e => {
+                            this.errors.push(e);
+                        });
+            }
         },
         created() {
             this.get()
         },
         watch: {
             page: function() {
+                this.get()
+            },
+            size: function() {
+                this.get()
+            },
+            search: function() {
                 this.get()
             }
         }

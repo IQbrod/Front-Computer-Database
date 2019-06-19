@@ -16,7 +16,7 @@
 
             <b-col md="6" class="my-1">
                 <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-                    <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+                    <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
                 </b-form-group>
             </b-col>
         </b-row>
@@ -36,7 +36,6 @@
         <!-- Main table element -->
         <b-table :items="this.items" :fields="fields" @row-clicked="deletedSelection" >
 
-
             <template slot="id" slot-scope="row" >
                 <p v-if="deleteMode"> <b-form-checkbox value="row.items.id" @change="deletedSelection(row.item.id)">Check me out</b-form-checkbox></p>
                 {{ row.value}}
@@ -45,16 +44,17 @@
             <template slot="name" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
                 <p v-else><input :value="ligne.value"  type="text" id="name" name="name"></p>
+
             </template>
 
-            <template slot="introduction" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value" type="date" id="introduction" name="introduction"></p>
+            <template slot="introduction" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input :value="row.value" type="date" id="introduction" name="introduction"></p>
             </template>
 
-            <template slot="discontinued" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value" type="date" id="discontinued" name="discontinued"></p>
+            <template slot="discontinued" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input :value="row.value" type="date" id="discontinued" name="discontinued"></p>
             </template>
 
               <template slot="companyName" slot-scope="row">
@@ -65,10 +65,13 @@
                 {{ row.value}}
             </template>
 
-            <template slot="update" slot-scope="ligne">
-                <b-button size="sm" class="mr-2 " v-on:click="updating = ligne.item.id" > Update</b-button>
+            <template slot="update" slot-scope="row">
+                <b-button v-if="updating != row.item.id" :disabled="updating != row.item.id && updating" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
+                <span v-else>
+                    <b-button @click="" size="sm" class="mr-2">Commit</b-button>
+                    <b-button @click="updating=null" size="sm" class="mr-2"> Cancel </b-button>
+                </span>
             </template>
-
 
 
         </b-table>
@@ -82,23 +85,31 @@
 </template>
 
 <script>
+    import { mapMutations, mapGetters } from 'vuex';
     export default {
         name: "CustomTableOrdi",
         props: ['items','delete'],
 
         data(){
             return{
-                filter: null,
+                filter: this.search(),
                 pageOptions: [10, 50, 100],
-                perPage: 10,
-                fields:['id', {key:'name'},'introduction','discontinued', 'companyId', 'companyName','update',],
-                updating: -1,
+                fields:['id', 'name','introduction','discontinued', 'companyId', 'companyName','update'],
+                updating: null,
+                currentSize: this.size(),
                 deleteMode:false,
                 deleteSelected: [],
             }
         },
-
-        methods:{
+        methods: {
+            ...mapMutations([
+                'setSize',
+                'setSearch'
+            ]),
+            ...mapGetters([
+                'size',
+                'search'
+            ]),
             deletedSelection(id){
                 if (this.deleteSelected.includes(id)){
                     const index = this.deleteSelected.indexOf(id);
@@ -110,15 +121,21 @@
                 this.deleteMode = (!this.deleteMode)
             },
             validationSupression: function () {
-                this.delete(this.deleteSelected)
-                this.deleteSelected = []
+                this.delete(this.deleteSelected);
+                this.deleteSelected = [];
                 this.deleteMode = false
-
+            }
+        },
+        watch: {
+            currentSize: function(value) {
+                this.setSize(value)
+            },
+            filter: function (value) {
+                this.setSearch(value)
             }
         }
 
     }
-
 
 </script>
 
