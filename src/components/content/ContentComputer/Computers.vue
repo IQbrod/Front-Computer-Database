@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CustomTableOrdi striped hover :items="this.computerList"></CustomTableOrdi>
+        <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList"></CustomTableOrdi>
     </div>
 </template>
 
@@ -32,7 +32,15 @@
                     this.errors.push(e);
                 }
             );
-            }
+            },
+            delete(listId) {
+                alert("on entee")
+                listId.forEach(function(elem){
+                    axios
+                        .delete("http://10.0.1.97:8080/cdb/api/computers/"+elem)
+                        .then(response => alert(response))
+                })
+            },
         },
         created() {
             this.get()

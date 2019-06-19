@@ -50,9 +50,6 @@
             </template>
 
 
-
-
-
         </b-table>
 
 

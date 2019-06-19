@@ -20,13 +20,28 @@
                 </b-form-group>
             </b-col>
         </b-row>
+        <b-row>
+            <b-col md="6" class="my-1">
+                    <b-input-group>
+                        <b-input-group-append>
+                            <b-button  @click="toggleDeleteMode" class="btn btn-danger " >Delete</b-button>
+                            <div v-if="deleteMode && deleteSelected.length>0 ">
+                                <b-button @click="validationSupression">Valider la supression</b-button>
+                            </div>
+                        </b-input-group-append>
+                    </b-input-group>
+            </b-col>
+        </b-row>
 
         <!-- Main table element -->
-        <b-table :items="this.items" :fields="fields">
+        <b-table :items="this.items" :fields="fields" @row-clicked="deletedSelection" >
 
-            <template slot="id" slot-scope="row">
+
+            <template slot="id" slot-scope="row" >
+                <p v-if="deleteMode"> <b-form-checkbox value="row.items.id" @change="deletedSelection(row.item.id)">Check me out</b-form-checkbox></p>
                 {{ row.value}}
             </template>
+
             <template slot="name" slot-scope="ligne">
                 <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
                 <p v-else><input :value="ligne.value"  type="text" id="name" name="name"></p>
@@ -50,16 +65,9 @@
                 {{ row.value}}
             </template>
 
-
             <template slot="update" slot-scope="ligne">
-                <b-button size="sm" class="mr-2" v-on:click="updating = ligne.item.id"> Update</b-button>
+                <b-button size="sm" class="mr-2 " v-on:click="updating = ligne.item.id" > Update</b-button>
             </template>
-
-            <template slot="delete">
-                <b-button size="sm" class="mr-2"> Delete</b-button>
-            </template>
-
-
 
 
 
@@ -76,16 +84,39 @@
 <script>
     export default {
         name: "CustomTableOrdi",
-        props: ['items'],
+        props: ['items','delete'],
+
         data(){
             return{
                 filter: null,
                 pageOptions: [10, 50, 100],
                 perPage: 10,
-                fields:['id', 'name','introduction','discontinued', 'companyId', 'companyName','update', 'delete'],
-                updating: -1
+                fields:['id', {key:'name'},'introduction','discontinued', 'companyId', 'companyName','update',],
+                updating: -1,
+                deleteMode:false,
+                deleteSelected: [],
+            }
+        },
+
+        methods:{
+            deletedSelection(id){
+                if (this.deleteSelected.includes(id)){
+                    const index = this.deleteSelected.indexOf(id);
+                    if (index !== -1) this.deleteSelected.splice(index, 1)}
+                else{this.deleteSelected.push(id)}
+
+            },
+            toggleDeleteMode: function(){
+                this.deleteMode = (!this.deleteMode)
+            },
+            validationSupression: function () {
+                this.delete(this.deleteSelected)
+                this.deleteSelected = []
+                this.deleteMode = false
+
             }
         }
+
     }
 
 
