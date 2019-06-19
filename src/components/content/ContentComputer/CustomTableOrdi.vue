@@ -25,21 +25,21 @@
         <b-table :items="this.items" :fields="fields">
 
             <template slot="id" slot-scope="row">
-                {{ row.value}}
+                {{ row.value }}
             </template>
-            <template slot="name" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value"  type="text" id="name" name="name"></p>
-            </template>
-
-            <template slot="introduction" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value" type="date" id="introduction" name="introduction"></p>
+            <template slot="name" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input :value="row.value"  type="text" id="name" name="name"></p>
             </template>
 
-            <template slot="discontinued" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value" type="date" id="discontinued" name="discontinued"></p>
+            <template slot="introduction" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input :value="row.value" type="date" id="introduction" name="introduction"></p>
+            </template>
+
+            <template slot="discontinued" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input :value="row.value" type="date" id="discontinued" name="discontinued"></p>
             </template>
 
               <template slot="companyName" slot-scope="row">
@@ -51,13 +51,14 @@
             </template>
 
 
-            <template slot="update" slot-scope="ligne">
-                <b-button size="sm" class="mr-2" v-on:click="updating = ligne.item.id"> Update</b-button>
+            <template slot="update" slot-scope="row">
+                <b-button v-if="updating != row.item.id" :disabled="updating != row.item.id && updating" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
+                <span v-else>
+                    <b-button @click="" size="sm" class="mr-2">Commit</b-button>
+                    <b-button @click="updating=null" size="sm" class="mr-2"> Cancel </b-button>
+                </span>
             </template>
 
-            <template slot="delete">
-                <b-button size="sm" class="mr-2"> Delete</b-button>
-            </template>
         </b-table>
 
 
@@ -77,8 +78,8 @@
             return{
                 filter: this.search(),
                 pageOptions: [10, 50, 100],
-                fields:['id', 'name','introduction','discontinued', 'companyId', 'companyName','update', 'delete'],
-                updating: -1,
+                fields:['id', 'name','introduction','discontinued', 'companyId', 'companyName','update'],
+                updating: null,
                 currentSize: this.size()
             }
         },

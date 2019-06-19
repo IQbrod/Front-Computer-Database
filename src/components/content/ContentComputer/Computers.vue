@@ -32,8 +32,14 @@
                 .then(response => (this.computerList = response.data))
                 .catch(e => {
                     this.errors.push(e);
-                }
-            );
+                });
+            },
+            update(computer) {
+                axios
+                    .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
+                        .catch(e => {
+                            this.errors.push(e);
+                        });
             }
         },
         created() {
