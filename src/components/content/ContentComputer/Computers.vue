@@ -40,7 +40,7 @@ export default {
       listId.forEach((elem) => {
         axios
           .delete("http://10.0.1.97:8080/cdb/api/computers/" + elem)
-          .then();
+          .then(()=>this.get());
       });
     }
   },

@@ -22,10 +22,24 @@
     <b-row>
       <b-col md="6" class="my-1">
         <b-input-group>
-          <b-button size="sm" class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+          <b-input-group-append>
+          <p v-if="!deleteMode">
+          <b-button  class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+          </p>
+          <p v-else="">
+            <b-button  class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+            </p>
           <div v-if="deleteMode && selectedDelete.length>0 ">
-            <b-button @click="validationSupression">Valider la supression</b-button>
+            <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+            <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
+              <template slot="modal-title">Are you sure you want to delete ?</template>
+              <div class="d-block text-center">
+                <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
+                <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
+              </div>
+            </b-modal>
           </div>
+          </b-input-group-append>
         </b-input-group>
       </b-col>
     </b-row>
@@ -104,7 +118,6 @@ export default {
     validationSupression: function() {
       this.delete(this.selectedDelete);
       this.selectedDelete = [];
-      this.delete(this.selectedDelete);
       this.deleteMode = false;
     }
   },
