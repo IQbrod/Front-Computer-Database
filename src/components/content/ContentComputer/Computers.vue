@@ -49,20 +49,21 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    },
-    created() {
+    }
+  },
+  created() {
+    this.get();
+  },
+
+  watch: {
+    page: function() {
       this.get();
     },
-    watch: {
-      page: function() {
-        this.get();
-      },
-      size: function() {
-        this.get();
-      },
-      search: function() {
-        this.get();
-      }
+    size: function() {
+      this.get();
+    },
+    search: function() {
+      this.get();
     }
   }
 };

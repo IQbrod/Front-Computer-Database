@@ -1,5 +1,4 @@
 <template>
-
   <b-container fluid>
     <!-- User Interface controls -->
     <b-row>
@@ -15,31 +14,31 @@
       </b-col>
 
       <b-col md="6" class="my-1">
-                <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-                    <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
-                </b-form-group>
-            </b-col>
+        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+          <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
+        </b-form-group>
+      </b-col>
     </b-row>
     <b-row>
       <b-col md="6" class="my-1">
         <b-input-group>
           <b-input-group-append>
-          <p v-if="!deleteMode">
-          <b-button  class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
-          </p>
-          <p v-else="">
-            <b-button " class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+            <p v-if="!deleteMode">
+              <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
             </p>
-          <div v-if="deleteMode && selectedDelete.length>0 ">
-            <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
-            <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
-              <template slot="modal-title">Are you sure you want to delete ?</template>
-              <div class="d-block text-center">
-                <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
-                <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
-              </div>
-            </b-modal>
-          </div>
+            <p v-else>
+              <b-button class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+            </p>
+            <div v-if="deleteMode && selectedDelete.length>0 ">
+              <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+              <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
+                <template slot="modal-title">Are you sure you want to delete ?</template>
+                <div class="d-block text-center">
+                  <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
+                  <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
+                </div>
+              </b-modal>
+            </div>
           </b-input-group-append>
         </b-input-group>
       </b-col>
@@ -72,13 +71,19 @@
 
       <template slot="companyId" slot-scope="row">{{ row.value}}</template>
 
-     <template slot="update" slot-scope="row">
-                <b-button v-if="updating != row.item.id" :disabled="updating != row.item.id && updating" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
-                <span v-else>
-                    <b-button @click="" size="sm" class="mr-2">Commit</b-button>
-                    <b-button @click="updating=null" size="sm" class="mr-2"> Cancel </b-button>
-                </span>
-            </template>
+      <template slot="update" slot-scope="row">
+        <b-button
+          v-if="updating != row.item.id"
+          :disabled="updating != row.item.id && updating"
+          size="sm"
+          class="mr-2"
+          v-on:click="updating = row.item.id"
+        >Update</b-button>
+        <span v-else>
+          <b-button @click="null" size="sm" class="mr-2">Commit</b-button>
+          <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
+        </span>
+      </template>
     </b-table>
 
     <!-- Info modal -->
@@ -89,6 +94,7 @@
 </template>
 
 <script>
+import {mapMutations,mapGetters} from "vuex"
 export default {
   name: "CustomTableOrdi",
   props: ["items", "delete"],
@@ -113,14 +119,8 @@ export default {
     };
   },
   methods: {
-    ...mapMutations([
-                'setSize',
-                'setSearch'
-            ]),
-            ...mapGetters([
-                'size',
-                'search'
-            ]),
+    ...mapMutations(["setSize", "setSearch"]),
+    ...mapGetters(["size", "search"]),
     selectionDelete(render) {
       if (this.selectedDelete.includes(render.id) && this.deleteMode) {
         const index = this.selectedDelete.indexOf(render.id);
@@ -149,12 +149,12 @@ export default {
     }
   },
   watch: {
-            currentSize: function(value) {
-                this.setSize(value)
-            },
-            filter: function (value) {
-                this.setSearch(value)
-            }
-        }
+    currentSize: function(value) {
+      this.setSize(value);
+    },
+    filter: function(value) {
+      this.setSearch(value);
+    }
+  }
 };
 </script>
