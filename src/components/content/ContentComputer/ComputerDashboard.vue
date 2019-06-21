@@ -1,7 +1,7 @@
 <template>
     <div id="cont">
         <b-jumbotron id="jumb" lead="Computer DataBase">
-            <computers/>
+            <computers />
         </b-jumbotron>
         <pagination className="page"/>
     </div>
@@ -19,8 +19,9 @@
         },
         props: {},
         data() {
-            return {};
-        }
+            return {
+            };
+        },
     };
 </script>
 
