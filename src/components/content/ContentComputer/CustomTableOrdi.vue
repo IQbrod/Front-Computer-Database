@@ -25,6 +25,15 @@
           <b-input-group-append>
             <p v-if="!deleteMode">
               <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+              <b-button v-b-modal.modal-2>Add Computer</b-button>
+
+              <b-modal ref="my-modal" id="modal-2" title="New Computer" >
+                <AddForm  :add="this.add" :hideModal="this.hideModal"></AddForm>
+                <div slot="modal-footer">
+                  <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
+                </div>
+              </b-modal>
+
             </p>
             <p v-else>
               <b-button class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
@@ -95,9 +104,11 @@
 
 <script>
 import {mapMutations,mapGetters} from "vuex"
+import AddForm from "./FormAddComputer"
+
 export default {
   name: "CustomTableOrdi",
-  props: ["items", "delete"],
+  props: ["items", "delete","add"],
   data() {
     return {
       filter: null,
@@ -118,6 +129,10 @@ export default {
       deleteMode: false
     };
   },
+  components:{
+    AddForm
+  }
+  ,
   methods: {
     ...mapMutations(["setSize", "setSearch"]),
     ...mapGetters(["size", "search"]),
@@ -133,6 +148,9 @@ export default {
       this.delete(this.selectedDelete);
       this.selectedDelete = [];
       this.deleteMode = false;
+    },
+    hideModal() {
+        this.$refs['my-modal'].hide()
     }
   },
   computed: {

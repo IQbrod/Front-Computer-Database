@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList"></CustomTableOrdi>
+    <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList" :add="this.add"></CustomTableOrdi>
   </div>
 </template>
 
@@ -50,6 +50,15 @@ export default {
         .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
         .catch(e => {
           this.errors.push(e);
+        });
+    },
+    add(computer){
+      axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
+        .then(function (response) {
+          console.log(response.data)
+        })
+        .catch(function (error) {
+          console.log(error)
         });
     }
   },
