@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList"></CustomTableOrdi>
+        <CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList"></CustomTableOrdi>
     </div>
 </template>
 
@@ -43,7 +43,8 @@
                 })
             },
             update(computer) {
-                alert("on update");
+                if(computer.introduction==='') computer.introduction=null;
+                if(computer.discontinued==='') computer.discontinued=null;
                 axios
                         .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
                         .catch(e => {

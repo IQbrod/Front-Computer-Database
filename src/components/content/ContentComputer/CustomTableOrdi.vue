@@ -25,7 +25,7 @@
                     <b-input-group>
                         <b-input-group-append>
                             <b-button  @click="toggleDeleteMode" class="btn btn-danger " >Delete</b-button>
-                            <div v-if="deleteMode && deleteSelected.length>0 ">
+                            <div v-if="deleteMode && deleteSelected.length > 0">
                                 <b-button @click="validationSupression">Valider la supression</b-button>
                             </div>
                         </b-input-group-append>
@@ -38,23 +38,22 @@
 
             <template slot="id" slot-scope="row" >
                 <p v-if="deleteMode"> <b-form-checkbox value="row.items.id" @change="deletedSelection(row.item.id)">Check me out</b-form-checkbox></p>
-                {{ row.value}}
+                {{ row.value }}
             </template>
 
-            <template slot="name" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value"  type="text" id="name" name="name"></p>
-
+            <template slot="name" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input v-model="newName" v-init:newName="row.item.name" type="text" id="name" name="name"></p>
             </template>
 
             <template slot="introduction" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
-                <p v-else><input :value="row.value" type="date" id="introduction" name="introduction"></p>
+                <p v-else><input v-model="newIntro" v-init:newIntro="row.item.introduction" type="date" id="introduction" name="introduction"></p>
             </template>
 
             <template slot="discontinued" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
-                <p v-else><input :value="row.value" type="date" id="discontinued" name="discontinued"></p>
+                <p v-else><input v-model="newDiscon" v-init:newDiscon="row.item.discontinued" type="date" id="discontinued" name="discontinued"></p>
             </template>
 
               <template slot="companyName" slot-scope="row">
@@ -66,21 +65,13 @@
             </template>
 
             <template slot="update" slot-scope="row">
-                <b-button v-if="updating != row.item.id" :disabled="updating != row.item.id && updating" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
+                <b-button v-if="updating !== row.item.id" :disabled="updating !== row.item.id && updating!==null" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
                 <span v-else>
-                    <b-button @click="" size="sm" class="mr-2">Commit</b-button>
+                    <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId], row.item)" size="sm" class="mr-2">Commit</b-button>
                     <b-button @click="updating=null" size="sm" class="mr-2"> Cancel </b-button>
                 </span>
             </template>
-
-
         </b-table>
-
-
-        <!-- Info modal -->
-       <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-            <pre>{{ infoModal.content }}</pre>
-        </b-modal>-->
     </b-container>
 </template>
 
@@ -88,7 +79,7 @@
     import { mapMutations, mapGetters } from 'vuex';
     export default {
         name: "CustomTableOrdi",
-        props: ['items','delete'],
+        props: ['items', 'delete', 'update'],
 
         data(){
             return{
@@ -99,6 +90,9 @@
                 currentSize: this.size(),
                 deleteMode:false,
                 deleteSelected: [],
+                newName:'',
+                newIntro:'',
+                newDiscon:''
             }
         },
         methods: {
@@ -124,7 +118,22 @@
                 this.delete(this.deleteSelected);
                 this.deleteSelected = [];
                 this.deleteMode = false
-            }
+            },
+            updateManager: function(fields, row) {
+
+                this.updating=null;
+                row.name=fields[1];
+                row.introduction = fields[2];
+                row.discontinued = fields[3];
+
+                let modelComputer={};
+                modelComputer.id=fields[0];
+                modelComputer.name=fields[1];
+                modelComputer.introduction=fields[2];
+                modelComputer.discontinued=fields[3];
+                modelComputer.companyId=fields[4];
+                this.update(modelComputer);
+            },
         },
         watch: {
             currentSize: function(value) {
@@ -132,6 +141,23 @@
             },
             filter: function (value) {
                 this.setSearch(value)
+            }
+        },
+        directives: {
+            init: {
+                bind : function (el, binding, vnode) {
+                    vnode.context[binding.arg] = binding.value;
+                }
+            }
+        },
+        computed: {
+            ...mapGetters([
+                'page'
+            ])
+        },
+        watch: {
+            page: function () {
+                this.updating=null;
             }
         }
 
