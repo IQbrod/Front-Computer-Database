@@ -1,4 +1,5 @@
 <template>
+
   <b-container fluid>
     <!-- User Interface controls -->
     <b-row>
@@ -14,10 +15,10 @@
       </b-col>
 
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-          <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
-        </b-form-group>
-      </b-col>
+                <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+                    <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
+                </b-form-group>
+            </b-col>
     </b-row>
     <b-row>
       <b-col md="6" class="my-1">
@@ -71,9 +72,13 @@
 
       <template slot="companyId" slot-scope="row">{{ row.value}}</template>
 
-      <template slot="update" slot-scope="ligne">
-        <b-button size="sm" class="mr-2" v-on:click="updating = ligne.item.id">Update</b-button>
-      </template>
+     <template slot="update" slot-scope="row">
+                <b-button v-if="updating != row.item.id" :disabled="updating != row.item.id && updating" size="sm" class="mr-2" v-on:click="updating = row.item.id">Update</b-button>
+                <span v-else>
+                    <b-button @click="" size="sm" class="mr-2">Commit</b-button>
+                    <b-button @click="updating=null" size="sm" class="mr-2"> Cancel </b-button>
+                </span>
+            </template>
     </b-table>
 
     <!-- Info modal -->
@@ -101,12 +106,21 @@ export default {
         "companyName",
         "update"
       ],
-      updating: -1,
+      updating: null,
+      currentSize: this.size(),
       selectedDelete: [],
       deleteMode: false
     };
   },
   methods: {
+    ...mapMutations([
+                'setSize',
+                'setSearch'
+            ]),
+            ...mapGetters([
+                'size',
+                'search'
+            ]),
     selectionDelete(render) {
       if (this.selectedDelete.includes(render.id) && this.deleteMode) {
         const index = this.selectedDelete.indexOf(render.id);
@@ -133,6 +147,14 @@ export default {
         }
       });
     }
-  }
+  },
+  watch: {
+            currentSize: function(value) {
+                this.setSize(value)
+            },
+            filter: function (value) {
+                this.setSearch(value)
+            }
+        }
 };
 </script>

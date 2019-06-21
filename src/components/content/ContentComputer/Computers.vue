@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CustomTableOrdi striped hover :delete="this.delete" :items="computerList"  ></CustomTableOrdi>
+    <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList"></CustomTableOrdi>
   </div>
 </template>
 
@@ -16,12 +16,11 @@ export default {
   data() {
     return {
       computerList: [],
-      componentKey: 0,
       errors: []
     };
   },
   computed: {
-    ...mapGetters(["page"]),
+    ...mapGetters(["page", "size", "search"])
   },
   methods: {
     get() {
@@ -37,19 +36,33 @@ export default {
         });
     },
     delete(listId) {
-      listId.forEach((elem) => {
+      listId.forEach(elem => {
         axios
           .delete("http://10.0.1.97:8080/cdb/api/computers/" + elem)
-          .then(()=>this.get());
+          .then(() => this.get());
       });
-    }
-  },
-  created() {
-    this.get();
-  },
-  watch: {
-    page: function() {
+    },
+    update(computer) {
+      alert("on update");
+      axios
+        .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
+    created() {
       this.get();
+    },
+    watch: {
+      page: function() {
+        this.get();
+      },
+      size: function() {
+        this.get();
+      },
+      search: function() {
+        this.get();
+      }
     }
   }
 };

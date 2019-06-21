@@ -7,7 +7,7 @@
 <script>
     import CustomTableRole from './CustomTableRole'
     import axios from "axios";
-
+    import { mapGetters } from 'vuex';
     export default {
         name: 'roles',
         components: {CustomTableRole},
@@ -17,16 +17,34 @@
                 errors: []
             }
         },
-
+        computed: {
+            ...mapGetters([
+                'page',
+                'size'
+            ])
+        },
+        methods: {
+            get() {
+                axios
+                    .get(
+                            "http://10.0.1.97:8080/cdb/api/roles?page="+this.page+"&size="+this.size
+                        )
+                        .then(response => (this.roleList = response.data))
+                        .catch(e => {
+                            this.errors.push(e);
+                        });
+            }
+        },
         created() {
-            axios
-                .get(
-                    `http://10.0.1.97:8080/cdb/api/roles?page=1&size=10&search=&orderBy=id`
-                )
-                .then(response => (this.roleList = response.data))
-                .catch(e => {
-                    this.errors.push(e);
-                });
+            this.get()
+        },
+        watch: {
+            page: function() {
+                this.get()
+            },
+            size: function() {
+                this.get()
+            }
         }
     }
 </script>
