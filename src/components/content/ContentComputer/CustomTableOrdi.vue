@@ -27,7 +27,7 @@
           <b-button  class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
           </p>
           <p v-else="">
-            <b-button  class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+            <b-button " class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
             </p>
           <div v-if="deleteMode && selectedDelete.length>0 ">
             <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
