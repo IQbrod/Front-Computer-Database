@@ -141,6 +141,9 @@
             },
             filter: function (value) {
                 this.setSearch(value)
+            },
+            page: function () {
+                this.updating=null;
             }
         },
         directives: {
@@ -154,13 +157,7 @@
             ...mapGetters([
                 'page'
             ])
-        },
-        watch: {
-            page: function () {
-                this.updating=null;
-            }
         }
-
     }
 
 </script>
