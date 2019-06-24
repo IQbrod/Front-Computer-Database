@@ -27,8 +27,11 @@
         },
         methods: {
             get() {
+
                 axios.get(
-                    "http://10.0.1.97:8080/cdb/api/companies?page=" + this.page + "&size=" + this.size
+                    "http://10.0.1.97:8080/cdb/api/companies?page=" + this.page + "&size=" + this.size+
+                    "&search=" + this.search +
+                    "&orderBy=id"
                 )
                     .then(response => (this.companyList = response.data))
                     .catch(e => {
