@@ -27,7 +27,7 @@ export default {
       axios
         .get(
           "http://10.0.1.97:8080/cdb/api/computers"+
-            "?page=+" + this.page +
+            "?page=" + this.page +
             "&size=" + this.size +
             "&search=" + this.search + 
             "&orderBy=id"
@@ -54,12 +54,6 @@ export default {
     },
     add(computer){
       axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
-        .then(function (response) {
-          console.log(response.data)
-        })
-        .catch(function (error) {
-          console.log(error)
-        });
     }
   },
   created() {
