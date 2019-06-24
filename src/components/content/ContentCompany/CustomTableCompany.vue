@@ -56,7 +56,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :items="items" :fields="fields" >
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields" >
             <template slot="id" slot-scope="row">{{ row.value}}</template>
 
             <template slot="name" slot-scope="row">
