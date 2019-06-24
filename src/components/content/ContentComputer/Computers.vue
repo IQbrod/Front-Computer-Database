@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CustomTableOrdi striped hover :delete="this.delete" :items="this.computerList" :add="this.add"></CustomTableOrdi>
+    <CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList" :add="this.add"></CustomTableOrdi>
   </div>
 </template>
 
@@ -44,14 +44,15 @@ export default {
           .then(() => this.get());
       });
     },
-    update(computer) {
-      alert("on update");
-      axios
-        .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
-        .catch(e => {
-          this.errors.push(e);
-        });
-    },
+      update(computer) {
+          if(computer.introduction==='') computer.introduction=null;
+          if(computer.discontinued==='') computer.discontinued=null;
+          axios
+                  .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
+                  .catch(e => {
+                      this.errors.push(e);
+                  });
+      },
     add(computer){
       axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
     }
