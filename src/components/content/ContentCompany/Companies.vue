@@ -54,6 +54,7 @@
             },
             add(companie) {
                 axios.post('http://10.0.1.97:8080/cdb/api/companies', companie)
+                    .then(()=>this.get())
             }
         },
         created() {

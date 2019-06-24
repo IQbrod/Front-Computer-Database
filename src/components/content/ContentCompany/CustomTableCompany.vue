@@ -26,7 +26,7 @@
                 <b-input-group>
                     <b-input-group-append>
                         <p v-if="!deleteMode">
-                            <b-button class="btn btn-danger" v-on:click="cancelDelete">Delete</b-button>
+                            <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
                             <b-button v-b-modal.modal-2>Add Company</b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New Computer">
@@ -121,10 +121,7 @@
                 modelCompany.name = fields[1];
                 this.update(modelCompany);
             },
-            cancelDelete:function () {
-                this.deleteMode=(!this.deleteMode)
-                this.selectedDelete =[];
-            }
+
         },
         data() {
             return {

@@ -55,6 +55,7 @@ export default {
       },
     add(computer){
       axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
+              .then(()=>this.get())
     }
   },
   created() {
