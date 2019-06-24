@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CustomTableCompany striped hover :items="this.companyList"></CustomTableCompany>
+        <CustomTableCompany striped hover :update="this.update" :delete="this.delete" :add="this.add" :items="this.companyList "></CustomTableCompany>
     </div>
 </template>
 
@@ -11,6 +11,7 @@
 
     export default {
         name: 'companies',
+        props: ["updateVar", "componentUpdate"],
         components: {CustomTableCompany},
         data() {
             return {
@@ -21,7 +22,7 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size'
+                'size', "search"
             ])
         },
         methods: {
@@ -52,12 +53,18 @@
                 axios.post('http://10.0.1.97:8080/cdb/api/companies', companie)
             }
         },
+        created() {
+            this.get();
+        },
         watch: {
             page: function () {
                 this.get()
             },
             size: function () {
                 this.get()
+            },
+            search: function() {
+                this.get();
             }
         }
     }
