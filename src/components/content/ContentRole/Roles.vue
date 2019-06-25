@@ -8,7 +8,7 @@
 <script>
     import CustomTableRole from './CustomTableRole'
     import axios from "axios";
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapMutations, mapState } from 'vuex';
     export default {
         name: 'roles',
         props: ["updateVar", "componentUpdate"],
@@ -22,10 +22,13 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size', "search"
-            ])
+                'size', "search", "count"]),
+            ...mapState(['count'])
         },
         methods: {
+            ...mapMutations([
+                'setCount'
+            ]),
             get() {
                 axios
                     .get(
@@ -41,6 +44,7 @@
                     axios
                         .delete("http://10.0.1.97:8080/cdb/api/roles/" + elem)
                         .then(() => this.get());
+                    this.setCount(this.count - 1);
                 });
             },
             update(role) {
@@ -52,11 +56,20 @@
             },
             add(role) {
                 axios.post('http://10.0.1.97:8080/cdb/api/roles', role)
-                    .then(()=>this.get())
+                    .then(()=>this.get());
+                this.setCount(this.count + 1);
+            },
+            countRoles() {
+                axios
+                        .get('http://10.0.1.97:8080/cdb/api/roles/count?search=' + this.search)
+                        .then(response => {
+                            this.setCount(response.data);
+                        });
             }
         },
         created() {
-            this.get()
+            this.countRoles();
+            this.get();
         },
         watch: {
             page: function() {
@@ -66,6 +79,7 @@
                 this.get()
             },
             search: function() {
+                this.countRoles();
                 this.get();
             }
         }

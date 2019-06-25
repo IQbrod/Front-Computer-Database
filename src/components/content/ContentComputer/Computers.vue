@@ -78,12 +78,13 @@
                     .then(response => {
                         this.setCount(response.data);
                     });
-            }
+            },
         },
         created() {
             this.countComputers();
             this.get();
             this.getCompanies();
+
         },
 
         watch: {
