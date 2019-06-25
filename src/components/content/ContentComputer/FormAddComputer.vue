@@ -15,12 +15,12 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-2" label="Introduced Date:" label-for="input-introduced">
+            <b-form-group id="input-group-2" label="introduction Date:" label-for="input-introduction">
                 <b-form-input
-                        id="input-introduced"
-                        v-model="computer.introduced"
+                        id="input-introduction"
+                        v-model="computer.introduction"
                         type="date"
-                        @change="changeIntroduced"
+                        @change="changeintroduction"
                 ></b-form-input>
             </b-form-group>
 
@@ -40,7 +40,7 @@
                 >
                     <template slot="first">
                         <option value=0>-- Please select a company --</option>
-                        <option v-for="company in companies" :key=company.id :value=company.id> {{company.name}}
+                        <option v-for="company in companiesList" :key=company.id :value=company.id> {{company.name}}
                         </option>
                     </template>
                 </b-form-select>
@@ -56,28 +56,25 @@
 
 
 <script>
-    import axios from 'axios'
 
     export default {
         name: "AddForm",
-        props: ["add", "hideModal"],
+        props: ["add", "hideModal","companies"],
         data() {
             return {
                 computer: {
                     name: '',
                     discontinued: null,
-                    introduced: null,
+                    introduction: null,
                     companyId: 0
                 },
-                companies: [],
+                companiesList: [],
                 companiesForOptions: [],
                 show: true
             }
         },
         mounted() {
-            axios
-                .get('http://10.0.1.97:8080/cdb/api/companies')
-                .then(response => (this.companies = response.data))
+            this.companiesList=this.companies
         },
         methods: {
             onSubmit(evt) {
@@ -90,7 +87,7 @@
                 evt.preventDefault()
                 // Reset our form values
                 this.computer.name = ''
-                this.computer.introduced = null
+                this.computer.introduction = null
                 this.computer.discontinued = null
                 this.computer.companyId = 0
                 // Trick to reset/clear native browser form validation state
@@ -102,8 +99,8 @@
             changeDiscontinued() {
                 this.computer.discontinued = this.computer.discontinued === "" ? null : this.computer.discontinued
             },
-            changeIntroduced() {
-                this.computer.introduced = this.computer.introduced === "" ? null : this.computer.introduced
+            changeintroduction() {
+                this.computer.introduction = this.computer.introduction === "" ? null : this.computer.introduction
             }
 
         }

@@ -28,7 +28,7 @@
                             <b-button v-b-modal.modal-2>Add Computer</b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New Computer">
-                                <AddForm :add="this.add" :hideModal="this.hideModal"></AddForm>
+                                <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
                                 <div slot="modal-footer">
                                     <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
                                 </div>
@@ -73,9 +73,21 @@
                                  id="discontinued" name="discontinued"></p>
             </template>
 
-            <template slot="companyName" slot-scope="row">{{ row.value }}</template>
+            <template slot="companyName" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><b-form-select
+                        id="input-company"
+                        v-model="row.item.companyId"
+                >
+                    <template slot="first">
+                        <option @click="newCompanyName='_'" value=0>-- Please select a company --</option>
+                        <option @click="newCompanyName=company.name" v-for="company in companies" :key=company.id :value=company.id> {{company.name}}
+                        </option>
+                    </template>
+                </b-form-select></p>
+            </template>
 
-            <template slot="companyId" slot-scope="row">{{ row.value}}</template>
+            <template slot="companyId" slot-scope="row">{{ row.value }}</template>
 
             <template slot="update" slot-scope="row">
                 <b-button
@@ -83,11 +95,11 @@
                         :disabled="updating != row.item.id && updating !== null"
                         size="sm"
                         class="mr-2"
-                        v-on:click="updating = row.item.id"
+                        @click="updating = row.item.id"
                 >Update
                 </b-button>
                 <span v-else>
-          <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId], row.item)"
+          <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
                     size="sm" class="mr-2">Commit</b-button>
           <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
         </span>
@@ -103,7 +115,7 @@
 
     export default {
         name: "CustomTableOrdi",
-        props: ["items", "delete", "add", "update"],
+        props: ["items", "delete", "add", "update","companies"],
         data() {
             return {
                 filter: this.search(),
@@ -124,7 +136,8 @@
                 deleteMode: false,
                 newName: '',
                 newIntro: '',
-                newDiscon: ''
+                newDiscon: '',
+                newCompanyName:"_"
             };
         },
         components: {
@@ -154,6 +167,7 @@
                 row.name = fields[1];
                 row.introduction = fields[2];
                 row.discontinued = fields[3];
+                row.companyName = fields[5];
 
                 let modelComputer = {};
                 modelComputer.id = fields[0];
@@ -161,6 +175,7 @@
                 modelComputer.introduction = fields[2];
                 modelComputer.discontinued = fields[3];
                 modelComputer.companyId = fields[4];
+
                 this.update(modelComputer);
             }
         },

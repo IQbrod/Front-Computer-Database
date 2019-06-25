@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList" :add="this.add"></CustomTableOrdi>
+    <CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList" :add="this.add" :companies="this.companyList"></CustomTableOrdi>
   </div>
 </template>
 
@@ -16,7 +16,8 @@ export default {
   data() {
     return {
       computerList: [],
-      errors: []
+	  errors: [],
+	  companyList: []
     };
   },
   computed: {
@@ -48,7 +49,7 @@ export default {
           if(computer.introduction==='') computer.introduction=null;
           if(computer.discontinued==='') computer.discontinued=null;
           axios
-                  .put("http://10.0.1.97:8080/cdb/api/computers/", computer)
+                  .put("http://10.0.1.97:8080/cdb/api/computers/", computer).then(()=>this.get())
                   .catch(e => {
                       this.errors.push(e);
                   });
@@ -56,10 +57,18 @@ export default {
     add(computer){
       axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
               .then(()=>this.get())
+    },
+    getCompanies(){
+       axios
+        .get('http://10.0.1.97:8080/cdb/api/companies')
+        .then(response => {
+			this.companyList = response.data
+  		})
     }
   },
   created() {
-    this.get();
+	this.get();
+	this.getCompanies();
   },
 
   watch: {
