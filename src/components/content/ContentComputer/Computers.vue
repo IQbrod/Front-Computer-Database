@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 	<div>
 		<CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList"
 		                 :add="this.add" :companies="this.companyList"></CustomTableOrdi>
@@ -99,4 +100,5 @@
 			}
 		}
 	};
+
 </script>
