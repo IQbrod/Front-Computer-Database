@@ -195,7 +195,8 @@
                 this.setSearch(value);
             },
             page: function () {
-                this.updating = null;
+				this.updating = null;
+				this.selectedDelete = [];
             }
         }
     }
