@@ -28,7 +28,11 @@
             get() {
                 axios
                     .get(
-                            "http://10.0.1.97:8080/cdb/api/users?page="+this.page+"&size="+this.size
+                            "http://10.0.1.97:8080/cdb/api/users" +
+                            "?page=" + this.page +
+                            "&size=" + this.size +
+                            "&search=" +
+                            "&orderBy=id"
                         )
                         .then(response => (this.userList = response.data))
                         .catch(e => {
