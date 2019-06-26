@@ -193,7 +193,10 @@
                         return item;
                     }
                 });
-            }
+            },
+            ...mapGetters([
+                'page'
+            ])
         }
     }
 
