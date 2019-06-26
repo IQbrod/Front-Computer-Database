@@ -7,7 +7,7 @@
 <script>
     import CustomTableUser from './CustomTableUser';
     import axios from "axios";
-    import { mapGetters } from 'vuex';
+    import { mapGetters , mapState, mapMutations} from 'vuex';
 
     export default {
         name : 'users',
@@ -22,12 +22,13 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size',
-                'search',
-                "orderBy"
-            ])
+                'size', "search", "count"]),
+            ...mapState(['count'])
         },
         methods:{
+            ...mapMutations([
+                'setCount'
+            ]),
             get() {
                 axios
                     .get(
@@ -68,9 +69,17 @@
                 .then(response => {
                     this.roleList = response.data
                 })
+            },
+            countUsers() {
+                axios
+                        .get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search)
+                        .then(response => {
+                            this.setCount(response.data);
+                        });
             }
         },
         created() {
+            this.countUsers();
             this.get()
             this.getRoles();
         },
@@ -86,7 +95,8 @@
                 this.get();
             },
             search: function() {
-             this.get();
+                this.countComputers();
+                this.get();
              }
         }
     }
