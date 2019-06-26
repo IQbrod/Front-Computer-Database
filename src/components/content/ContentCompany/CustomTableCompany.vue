@@ -56,7 +56,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields" 
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields"
                  :filter="filter"
                  :sort-by.sync="sortBy"
                  :sort-desc.sync="sortDesc"
@@ -101,7 +101,7 @@
         name: "CustomTableCompany",
         props: ['items', "delete", "add", "update"],
         methods: {
-            ...mapMutations(["setSize", "setSearch"]),
+            ...mapMutations(["setSize", "setSearch", "setOrderBy"]),
             ...mapGetters(["size", "search"]),
             selectionDelete(render) {
                 if (this.selectedDelete.includes(render.id) && this.deleteMode) {
@@ -140,8 +140,7 @@
                 deleteMode: false,
                 newName: '',
                 sortBy: 'id',
-                sortDesc: false,
-                sortDirection: 'asc'
+                sortDesc: false
             }
         },
         components: {

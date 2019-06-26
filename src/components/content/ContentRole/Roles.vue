@@ -22,7 +22,7 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size', "search", "count"]),
+                'size', "search", "count","orderBy"]),
             ...mapState(['count'])
         },
         methods: {
@@ -32,7 +32,11 @@
             get() {
                 axios
                     .get(
-                            "http://10.0.1.97:8080/cdb/api/roles?page="+this.page+"&size="+this.size+"&orderBy=id&search="+this.search
+                            "http://10.0.1.97:8080/cdb/api/roles?" +
+                        "page="+ this.page
+                        +"&size="+ this.size
+                        +"&search="+ this.search+
+                        "&orderBy="+this.orderBy
                         )
                         .then(response => (this.roleList = response.data))
                         .catch(e => {
@@ -80,6 +84,9 @@
             },
             search: function() {
                 this.countRoles();
+                this.get();
+            },
+            orderBy: function () {
                 this.get();
             }
         }

@@ -117,7 +117,7 @@
 </template>
 
 <script>
-    import {mapMutations, mapGetters, mapState} from "vuex"
+    import {mapMutations, mapGetters} from "vuex"
     import AddForm from "./FormAddComputer"
 
     export default {
@@ -146,8 +146,7 @@
                 newDiscon: '',
                 newCompanyName:"_",
                 sortBy: 'id',
-                sortDesc: false,
-                sortDirection: 'asc'
+                sortDesc: false
 
             };
         },
@@ -157,7 +156,6 @@
         methods: {
             ...mapMutations(["setSize", "setSearch", "setOrderBy"]),
             ...mapGetters(["size", "search"]),
-            ...mapState(["orderBy"]),
             selectionDelete(render) {
                 if (this.selectedDelete.includes(render.id) && this.deleteMode) {
                     const index = this.selectedDelete.indexOf(render.id);
