@@ -56,7 +56,12 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields">
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields" 
+                 :filter="filter"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :noLocalSorting="true"
+                 :no-sort-reset="true">
             <template slot="id" slot-scope="row">{{ row.value}}</template>
 
             <template slot="name" slot-scope="row">
@@ -128,12 +133,15 @@
             return {
                 filter: this.search(),
                 pageOptions: [10, 50, 100],
-                fields: ['id', 'name', 'update'],
+                fields: [{key:'id',sortable: true}, {key:'name', sortable:true}, 'update'],
                 updating: null,
                 currentSize: this.size(),
                 selectedDelete: [],
                 deleteMode: false,
-                newName: ''
+                newName: '',
+                sortBy: 'id',
+                sortDesc: false,
+                sortDirection: 'asc'
             }
         },
         components: {
@@ -171,6 +179,14 @@
             },
             page: function () {
                 this.updating = null;
+            },
+            sortBy: function (value) {
+                this.setOrderBy(value);
+            },
+            sortDesc: function (value) {
+                if(value){
+                    this.setOrderBy(this.sortBy + "_rev");
+                } else this.setOrderBy(this.sortBy);
             }
         }
     }

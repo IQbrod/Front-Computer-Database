@@ -22,7 +22,7 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size', "search", "count"]),
+                'size', "search", "count", "orderBy"]),
             ...mapState(['count'])
         },
         methods: {
@@ -34,7 +34,7 @@
                 axios.get(
                     "http://10.0.1.97:8080/cdb/api/companies?page=" + this.page + "&size=" + this.size+
                     "&search=" + this.search +
-                    "&orderBy=id"
+                    "&orderBy="+this.orderBy
                 )
                     .then(response => (this.companyList = response.data))
                     .catch(e => {
@@ -82,6 +82,9 @@
             },
             search: function() {
                 this.countCompanies();
+                this.get();
+            },
+            orderBy: function () {
                 this.get();
             }
         }
