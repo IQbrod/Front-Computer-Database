@@ -22,7 +22,7 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size', "search", "count"]),
+                'size', "search", "count","orderBy"]),
             ...mapState(['count'])
         },
         methods:{
