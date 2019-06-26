@@ -53,7 +53,11 @@
             </b-col>
         </b-row>
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields">
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields"   :filter="filter"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :sort-direction="sortDirection"
+                 @filtered="onFiltered">
             <template slot="id" slot-scope="row">{{ row.value}}</template>
 
             <template slot="name" slot-scope="row">
@@ -122,13 +126,13 @@
                 pageOptions: [10, 50, 100],
                 perPage: 10,
                 fields: [
-                    "id",
-                    "name",
-                    "introduction",
-                    "discontinued",
-                    "companyId",
-                    "companyName",
-                    "update"
+                    {key:"id",  sortable: true},
+                    {key:"name",sortable: true},
+                    {key:"introduction",sortable: true},
+                    {key:"discontinued",sortable: true},
+                    {key:"companyId", sortable: true},
+                    {key:"companyName",sortable: true},
+                    {key:"update",sortable: true}
                 ],
                 updating: null,
                 currentSize: this.size(),
@@ -137,7 +141,11 @@
                 newName: '',
                 newIntro: '',
                 newDiscon: '',
-                newCompanyName:"_"
+                newCompanyName:"_",
+                sortBy: 'id',
+                sortDesc: true,
+                sortDirection: 'asc'
+
             };
         },
         components: {

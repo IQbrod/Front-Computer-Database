@@ -31,13 +31,15 @@ const store = new Vuex.Store({
     page: 1,
     size: 10,
     search: '',
-    count: 0
+    count: 0,
+    orderBy: 'id'
   },
   getters: {
     page: state => state.page,
     size: state => state.size,
     search: state => state.search,
-    count: state => state.count
+    count: state => state.count,
+    orderBy: state => state.orderBy
   },
   mutations: {
     setPage (state, page) {
@@ -51,6 +53,9 @@ const store = new Vuex.Store({
     },
     setCount(state, count) {
       state.count = count
+    },
+    setOrderBy(state, orderBy ){
+      state.orderBy = orderBy
     }
   },
   actions: {
@@ -65,6 +70,9 @@ const store = new Vuex.Store({
     },
     editCount( context, count ) {
       context.commit('setCount', count)
+    },
+    editOrderBy(context, orderBy){
+      context.commit('setOrderBy', orderBy)
     }
   }
 });

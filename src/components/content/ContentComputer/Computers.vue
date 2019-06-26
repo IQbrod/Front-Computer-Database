@@ -22,12 +22,13 @@
             };
         },
         computed: {
-            ...mapGetters(["page", "size", "search", "count"]),
-            ...mapState(['count'])
+            ...mapGetters(["page", "size", "search", "count", "orderBy"]),
+            ...mapState(['count', "orderBy"])
         },
         methods: {
             ...mapMutations([
-                'setCount'
+                'setCount',
+                'setOrderBy'
             ]),
             get() {
                 axios
@@ -36,7 +37,7 @@
                         "?page=" + this.page +
                         "&size=" + this.size +
                         "&search=" + this.search +
-                        "&orderBy=id"
+                        "&orderBy="+ this.orderBy
                     )
                     .then(response => (this.computerList = response.data))
                     .catch(e => {
