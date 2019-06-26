@@ -59,7 +59,7 @@
             add(company) {
                 axios.post('http://10.0.1.97:8080/cdb/api/companies', company)
                     .then(()=>this.get());
-                this.setCount(this.count - 1);
+                this.setCount(this.count + 1);
             },
             countCompanies() {
                 axios

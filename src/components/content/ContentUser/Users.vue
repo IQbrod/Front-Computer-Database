@@ -47,6 +47,7 @@
                 axios
                 .delete("http://10.0.1.97:8080/cdb/api/users/" + elem)
                 .then(() => this.get());
+                this.setCount(this.count - 1);
             });
             },
             update(user) {
@@ -58,7 +59,8 @@
             },
             add(user){
             axios.post('http://10.0.1.97:8080/cdb/api/users', user)
-                    .then(()=>this.get())
+                    .then(()=>this.get());
+                this.setCount(this.count + 1);
             },
             getRoles(){
             axios
