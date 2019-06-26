@@ -53,8 +53,15 @@
             </b-col>
         </b-row>
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields">
-            <template slot="id" slot-scope="row">{{ row.value}}</template>
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete"
+                 :fields="fields"
+                 :filter="filter"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :noLocalSorting="true"
+                 :no-sort-reset="true"
+        >
+            <template slot="id" slot-scope="row">{{ row.value }}</template>
 
             <template slot="name" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
@@ -87,7 +94,7 @@
                 </b-form-select></p>
             </template>
 
-            <template slot="companyId" slot-scope="row">{{ row.value }}</template>
+            <template slot="companyId" slot-scope="row">{{ row.value === 0 ? "_" : row.value}}</template>
 
             <template slot="update" slot-scope="row">
                 <b-button
@@ -122,13 +129,13 @@
                 pageOptions: [10, 50, 100],
                 perPage: 10,
                 fields: [
-                    "id",
-                    "name",
-                    "introduction",
-                    "discontinued",
-                    "companyId",
-                    "companyName",
-                    "update"
+                    {key:"id",  sortable: true},
+                    {key:"name",sortable: true},
+                    {key:"introduction",sortable: true},
+                    {key:"discontinued",sortable: true},
+                    {key:"companyId", sortable: true},
+                    {key:"companyName",sortable: true},
+                    {key:"update"}
                 ],
                 updating: null,
                 currentSize: this.size(),
@@ -137,14 +144,17 @@
                 newName: '',
                 newIntro: '',
                 newDiscon: '',
-                newCompanyName:"_"
+                newCompanyName:"_",
+                sortBy: 'id',
+                sortDesc: false
+
             };
         },
         components: {
             AddForm
         },
         methods: {
-            ...mapMutations(["setSize", "setSearch"]),
+            ...mapMutations(["setSize", "setSearch", "setOrderBy"]),
             ...mapGetters(["size", "search"]),
             selectionDelete(render) {
                 if (this.selectedDelete.includes(render.id) && this.deleteMode) {
@@ -219,6 +229,14 @@
             page: function () {
 				this.updating = null;
 				this.selectedDelete = [];
+            },
+            sortBy: function (value) {
+                this.setOrderBy(value);
+            },
+            sortDesc: function (value) {
+                if(value){
+                    this.setOrderBy(this.sortBy + "_rev");
+                } else this.setOrderBy(this.sortBy);
             }
         }
     }

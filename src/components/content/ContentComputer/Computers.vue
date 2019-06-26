@@ -22,7 +22,7 @@
             };
         },
         computed: {
-            ...mapGetters(["page", "size", "search", "count"]),
+            ...mapGetters(["page", "size", "search", "count", "orderBy"]),
             ...mapState(['count'])
         },
         methods: {
@@ -36,7 +36,7 @@
                         "?page=" + this.page +
                         "&size=" + this.size +
                         "&search=" + this.search +
-                        "&orderBy=id"
+                        "&orderBy="+ this.orderBy
                     )
                     .then(response => (this.computerList = response.data))
                     .catch(e => {
@@ -96,6 +96,9 @@
             },
             search: function () {
                 this.countComputers();
+                this.get();
+            },
+            orderBy: function () {
                 this.get();
             }
         }
