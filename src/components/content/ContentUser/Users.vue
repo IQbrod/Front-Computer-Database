@@ -71,7 +71,10 @@
             },
             size: function() {
                 this.get()
-            }
+            },
+            search: function() {
+             this.get();
+             }
         }
     }
 </script>

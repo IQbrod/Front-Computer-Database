@@ -60,9 +60,9 @@
             <template slot="id" slot-scope="row">
                 {{ row.value}}
             </template>
-            <template slot="username" slot-scope="ligne">
-                <p v-if="updating!== ligne.item.id">{{ ligne.value}}</p>
-                <p v-else><input :value="ligne.value" type="text" id="username" name="username"></p>
+            <template slot="username" slot-scope="row">
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><input v-model="newUserName" v-init:newUserName="row.item.username" type="text" id="username" name="username"></p>
             </template>
 
 
@@ -71,11 +71,33 @@
             </template>
 
             <template slot="roleName" slot-scope="row">
-                {{ row.value}}
+                <p v-if="updating!== row.item.id">{{ row.value }}</p>
+                <p v-else><b-form-select
+                        id="input-role"
+                        v-model="row.item.roleId"
+                >
+                    <template slot="first">
+                        <option @click="newRoleName='_'" value=0>-- Please select a role --</option>
+                        <option @click="newRoleName=role.name" v-for="role in roles" :key=role.id :value=role.id> {{role.name}}
+                        </option>
+                    </template>
+                </b-form-select></p>
             </template>
 
-            <template slot="update" slot-scope="ligne">
-                <b-button size="sm" class="mr-2" v-on:click="updating = ligne.item.id"> Update</b-button>
+            <template slot="update" slot-scope="row">
+                <b-button
+                        v-if="updating != row.item.id"
+                        :disabled="updating != row.item.id && updating !== null"
+                        size="sm"
+                        class="mr-2"
+                        @click="updating = row.item.id"
+                >Update
+                </b-button>
+                <span v-else>
+                    <b-button @click="updateManager([row.item.id,newUserName ,row.item.roleId , newRoleName], row.item)"
+                                size="sm" class="mr-2">Commit</b-button>
+                    <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
+                </span>
             </template>
 
             
@@ -93,12 +115,8 @@
         name: "CustomTableUser",
         props: ['items','add','delete','roles','update'],
         methods:{
-            ...mapMutations([
-                'setSize'
-            ]),
-            ...mapGetters([
-                'size'
-            ]),
+            ...mapMutations(["setSize", "setSearch"]),
+            ...mapGetters(["size", "search"]),
             selectionDelete(render) {
                 if (this.selectedDelete.includes(render.id) && this.deleteMode) {
                     const index = this.selectedDelete.indexOf(render.id);
@@ -114,6 +132,18 @@
             },
             hideModal() {
                 this.$refs['my-modal'].hide()
+            },
+            updateManager: function (fields, row) {
+                this.updating = null;
+                row.username = fields[1];
+                row.roleName = fields[3];
+
+                let modelUser = {};
+                modelUser.id = fields[0];
+                modelUser.username = fields[1];
+                modelUser.roleId = fields[2];
+
+                this.update(modelUser);
             }
         },
         components:{
@@ -121,14 +151,16 @@
         },
         data(){
             return{
-                filter: null,
+                filter: this.search(),
                 pageOptions: [10, 50, 100],
                 perPage: 10,
                 fields:['id', 'username', 'roleId', 'roleName', 'update'],
                 updating: null,
                 currentSize: this.size(),
                 selectedDelete: [],
-                deleteMode: false
+                deleteMode: false,
+                newRoleName: '',
+                newUserName: ''
             }
         },
         watch: {
@@ -141,6 +173,13 @@
             page: function () {
 				this.updating = null;
 				this.selectedDelete = [];
+            }
+        },
+        directives: {
+            init: {
+                bind: function (el, binding, vnode) {
+                    vnode.context[binding.arg] = binding.value;
+                }
             }
         },
         computed:{
