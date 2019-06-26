@@ -166,6 +166,7 @@
                 fields: [
                     {key: 'id', sortable: true},
                     {key: 'username', sortable: true},
+                    {key: 'password'},
                     {key: 'roleId', sortable: true},
                     {key: 'roleName', sortable: true},
                     {key: 'update'}
