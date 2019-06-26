@@ -24,7 +24,7 @@
                 <b-input-group>
                     <b-input-group-append>
                         <p v-if="!deleteMode">
-                            <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+                            <b-button class="btn btn-danger" v-b-popover.hover="'Double click to select all elements currently in the table'" title="Hint" v-on:click="deleteMode=(!deleteMode)"   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)" >Delete</b-button>
                             <b-button v-b-modal.modal-2>Add Computer</b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New Computer">
@@ -36,7 +36,7 @@
 
                         </p>
                         <p v-else>
-                            <b-button class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+                            <b-button class="btn" v-b-popover.hover="'Double click to deselect all elements currently in the table'" title="Hint" v-on:click="deleteMode=(!deleteMode)"  v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)">Cancel</b-button>
                         </p>
                         <div v-if="deleteMode && selectedDelete.length>0 ">
                             <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
@@ -153,6 +153,13 @@
                 } else if (this.deleteMode) {
                     this.selectedDelete.push(render.id);
                 }
+            },
+            selectAll(items){
+                var res = [];
+                items.forEach(elem => {
+                    res.push(elem.id)
+                });
+                return res;
             },
             validationSupression: function () {
                 this.delete(this.selectedDelete);
