@@ -53,12 +53,15 @@
             </b-col>
         </b-row>
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields"   :filter="filter"
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete"
+                 :fields="fields"
+                 :filter="filter"
                  :sort-by.sync="sortBy"
                  :sort-desc.sync="sortDesc"
-                 :sort-direction="sortDirection"
-                 @filtered="onFiltered">
-            <template slot="id" slot-scope="row">{{ row.value}}</template>
+                 :noLocalSorting="true"
+                 :no-sort-reset="true"
+        >
+            <template slot="id" slot-scope="row">{{ row.value }}</template>
 
             <template slot="name" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
@@ -91,7 +94,7 @@
                 </b-form-select></p>
             </template>
 
-            <template slot="companyId" slot-scope="row">{{ row.value }}</template>
+            <template slot="companyId" slot-scope="row">{{ row.value === 0 ? "_" : row.value}}</template>
 
             <template slot="update" slot-scope="row">
                 <b-button
@@ -114,7 +117,7 @@
 </template>
 
 <script>
-    import {mapMutations, mapGetters} from "vuex"
+    import {mapMutations, mapGetters, mapState} from "vuex"
     import AddForm from "./FormAddComputer"
 
     export default {
@@ -132,7 +135,7 @@
                     {key:"discontinued",sortable: true},
                     {key:"companyId", sortable: true},
                     {key:"companyName",sortable: true},
-                    {key:"update",sortable: true}
+                    {key:"update"}
                 ],
                 updating: null,
                 currentSize: this.size(),
@@ -143,7 +146,7 @@
                 newDiscon: '',
                 newCompanyName:"_",
                 sortBy: 'id',
-                sortDesc: true,
+                sortDesc: false,
                 sortDirection: 'asc'
 
             };
@@ -152,8 +155,9 @@
             AddForm
         },
         methods: {
-            ...mapMutations(["setSize", "setSearch"]),
+            ...mapMutations(["setSize", "setSearch", "setOrderBy"]),
             ...mapGetters(["size", "search"]),
+            ...mapState(["orderBy"]),
             selectionDelete(render) {
                 if (this.selectedDelete.includes(render.id) && this.deleteMode) {
                     const index = this.selectedDelete.indexOf(render.id);
@@ -220,6 +224,14 @@
             page: function () {
 				this.updating = null;
 				this.selectedDelete = [];
+            },
+            sortBy: function (value) {
+                this.setOrderBy(value);
+            },
+            sortDesc: function (value) {
+                if(value){
+                    this.setOrderBy(this.sortBy + "_rev");
+                } else this.setOrderBy(this.sortBy);
             }
         }
     }

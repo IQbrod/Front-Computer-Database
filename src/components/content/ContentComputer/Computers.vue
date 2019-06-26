@@ -23,12 +23,11 @@
         },
         computed: {
             ...mapGetters(["page", "size", "search", "count", "orderBy"]),
-            ...mapState(['count', "orderBy"])
+            ...mapState(['count'])
         },
         methods: {
             ...mapMutations([
-                'setCount',
-                'setOrderBy'
+                'setCount'
             ]),
             get() {
                 axios
@@ -97,6 +96,9 @@
             },
             search: function () {
                 this.countComputers();
+                this.get();
+            },
+            orderBy: function () {
                 this.get();
             }
         }
