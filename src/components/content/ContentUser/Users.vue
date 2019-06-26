@@ -7,7 +7,7 @@
 <script>
     import CustomTableUser from './CustomTableUser';
     import axios from "axios";
-    import { mapGetters } from 'vuex';
+    import { mapGetters , mapState, mapMutations} from 'vuex';
 
     export default {
         name : 'users',
@@ -21,10 +21,14 @@
         },
         computed: {
             ...mapGetters([
-                'page','size','search'
-            ])
+                'page',
+                'size', "search", "count"]),
+            ...mapState(['count'])
         },
         methods:{
+            ...mapMutations([
+                'setCount'
+            ]),
             get() {
                 axios
                     .get(
@@ -45,6 +49,7 @@
                 axios
                 .delete("http://10.0.1.97:8080/cdb/api/users/" + elem)
                 .then(() => this.get());
+                this.setCount(this.count - 1);
             });
             },
             update(user) {
@@ -55,8 +60,9 @@
                         });
             },
             add(user){
-            axios.post('http://10.0.1.97:8080/cdb/api/users', user)
+                axios.post('http://10.0.1.97:8080/cdb/api/users', user)
                     .then(()=>this.get())
+                this.setCount(this.count + 1);
             },
             getRoles(){
             axios
@@ -64,9 +70,17 @@
                 .then(response => {
                     this.roleList = response.data
                 })
+            },
+            countUsers() {
+                axios
+                        .get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search)
+                        .then(response => {
+                            this.setCount(response.data);
+                        });
             }
         },
         created() {
+            this.countUsers();
             this.get()
             this.getRoles();
         },
@@ -78,7 +92,8 @@
                 this.get()
             },
             search: function() {
-             this.get();
+                this.countComputers();
+                this.get();
              }
         }
     }
