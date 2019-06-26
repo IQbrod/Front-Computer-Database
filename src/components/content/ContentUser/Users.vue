@@ -95,7 +95,7 @@
                 this.get();
             },
             search: function() {
-                this.countComputers();
+                this.countUsers();
                 this.get();
              }
         }
