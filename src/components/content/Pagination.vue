@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-auto">
     <div>
-      <b-pagination align="center" v-model="currentPage" :total-rows="rows" :per-page="this.$store.size"></b-pagination>
+      <b-pagination align="center" v-model="currentPage" :total-rows="this.count()" :per-page="this.size()"></b-pagination>
     </div>
   </div>
 </template>
@@ -11,7 +11,6 @@ import { mapMutations, mapGetters } from 'vuex';
   export default {
     data() {
       return {
-        rows: 100,
         currentPage: this.page()
       }
     },
@@ -20,7 +19,9 @@ import { mapMutations, mapGetters } from 'vuex';
         'setPage',
       ]),
       ...mapGetters([
-        'page'
+        'page',
+        'count',
+        'size'
       ])
     },
     watch: {

@@ -7,7 +7,7 @@
 <script>
     import CustomTableCompany from './CustomTableCompany';
     import axios from "axios";
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapState, mapMutations} from 'vuex';
 
     export default {
         name: 'companies',
@@ -22,10 +22,13 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size', "search"
-            ])
+                'size', "search", "count"]),
+            ...mapState(['count'])
         },
         methods: {
+            ...mapMutations([
+                'setCount'
+            ]),
             get() {
 
                 axios.get(
@@ -43,31 +46,42 @@
                     axios
                         .delete("http://10.0.1.97:8080/cdb/api/companies/" + elem)
                         .then(() => this.get());
+                    this.setCount(this.count - 1);
                 });
             },
-            update(companie) {
+            update(company) {
                 axios
-                    .put("http://10.0.1.97:8080/cdb/api/companies/", companie)
+                    .put("http://10.0.1.97:8080/cdb/api/companies/", company)
                     .catch(e => {
                         this.errors.push(e);
                     });
             },
-            add(companie) {
-                axios.post('http://10.0.1.97:8080/cdb/api/companies', companie)
-                    .then(()=>this.get())
+            add(company) {
+                axios.post('http://10.0.1.97:8080/cdb/api/companies', company)
+                    .then(()=>this.get());
+                this.setCount(this.count - 1);
+            },
+            countCompanies() {
+                axios
+                        .get('http://10.0.1.97:8080/cdb/api/companies/count?search=' + this.search)
+                        .then(response => {
+                            this.setCount(response.data);
+                        });
             }
         },
         created() {
+            this.countCompanies();
             this.get();
         },
         watch: {
             page: function () {
-                this.get()
+                this.get();
             },
             size: function () {
                 this.get()
             },
             search: function() {
+                this.countCompanies();
                 this.get();
             }
         }

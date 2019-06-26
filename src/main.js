@@ -30,12 +30,14 @@ const store = new Vuex.Store({
   state: {
     page: 1,
     size: 10,
-    search: ''
+    search: '',
+    count: 0
   },
   getters: {
     page: state => state.page,
     size: state => state.size,
-    search: state => state.search
+    search: state => state.search,
+    count: state => state.count
   },
   mutations: {
     setPage (state, page) {
@@ -46,6 +48,9 @@ const store = new Vuex.Store({
     },
     setSearch(state, search) {
       state.search = search
+    },
+    setCount(state, count) {
+      state.count = count
     }
   },
   actions: {
@@ -57,6 +62,9 @@ const store = new Vuex.Store({
     },
     editSearch( context, search ) {
       context.commit('setSearch', search)
+    },
+    editCount( context, count ) {
+      context.commit('setCount', count)
     }
   }
 });

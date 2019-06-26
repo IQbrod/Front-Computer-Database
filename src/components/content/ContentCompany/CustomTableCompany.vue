@@ -29,7 +29,7 @@
                             <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
                             <b-button v-b-modal.modal-2>Add Company</b-button>
 
-                            <b-modal ref="my-modal" id="modal-2" title="New Computer">
+                            <b-modal ref="my-modal" id="modal-2" title="New Company">
                                 <AddForm :add="this.add" :hideModal="this.hideModal"></AddForm>
                                 <div slot="modal-footer">
                                     <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
@@ -56,7 +56,7 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields" >
+        <b-table hover :items="styleDanger" @row-clicked="selectionDelete" :fields="fields">
             <template slot="id" slot-scope="row">{{ row.value}}</template>
 
             <template slot="name" slot-scope="row">
@@ -75,7 +75,7 @@
                 >Update
                 </b-button>
                 <span v-else>
-          <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId], row.item)"
+          <b-button @click="updateManager([row.item.id, newName], row.item)"
                     size="sm" class="mr-2">Commit</b-button>
           <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
         </span>
@@ -89,8 +89,9 @@
 
 <script>
 
-        import { mapMutations, mapGetters } from 'vuex';
-        import AddForm from "./FormAddCompany"
+    import {mapMutations, mapGetters} from 'vuex';
+    import AddForm from "./FormAddCompany"
+
     export default {
         name: "CustomTableCompany",
         props: ['items', "delete", "add", "update"],
@@ -162,7 +163,7 @@
             }
         },
         watch: {
-            currentSize: function(value) {
+            currentSize: function (value) {
                 this.setSize(value)
             },
             filter: function (value) {
