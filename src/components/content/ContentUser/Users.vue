@@ -21,7 +21,8 @@
         computed: {
             ...mapGetters([
                 'page',
-                'size'
+                'size',
+                "orderBy"
             ])
         },
         methods:{
@@ -32,7 +33,7 @@
                             "?page=" + this.page +
                             "&size=" + this.size +
                             "&search=" +
-                            "&orderBy=id"
+                            "&orderBy=" + this.orderBy
                         )
                         .then(response => (this.userList = response.data))
                         .catch(e => {
@@ -49,6 +50,9 @@
             },
             size: function() {
                 this.get()
+            },
+            orderBy: function () {
+                this.get();
             }
         }
     }

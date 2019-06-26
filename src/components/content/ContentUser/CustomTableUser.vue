@@ -21,7 +21,12 @@
         </b-row>
 
         <!-- Main table element -->
-        <b-table :items="this.items" :fields="fields">
+        <b-table :items="this.items" :fields="fields"
+                 :sort-by.sync="sortBy"
+                 :sort-desc.sync="sortDesc"
+                 :noLocalSorting="true"
+                 :no-sort-reset="true"
+        >
 
             <template slot="id" slot-scope="row">
                 {{ row.value}}
@@ -65,7 +70,8 @@
         props: ['items'],
         methods:{
             ...mapMutations([
-                'setSize'
+                'setSize',
+                'setOrderBy'
             ]),
             ...mapGetters([
                 'size'
@@ -75,14 +81,30 @@
             return{
                 filter: null,
                 pageOptions: [10, 50, 100],
-                fields:['id', 'username', 'roleId', 'roleName', 'update', 'delete'],
+                fields:[
+                        {key:'id', sortable: true},
+                        {key:'username', sortable: true},
+                        {key:'roleId', sortable: true},
+                        {key:'roleName', sortable: true},
+                        {key:'update'}
+                        ],
                 updating: -1,
-                currentSize: this.size()
+                currentSize: this.size(),
+                sortBy: 'id',
+                sortDesc: false
             }
         },
         watch: {
             currentSize: function(value) {
                 this.setSize(value)
+            },
+            sortBy: function (value) {
+                this.setOrderBy(value);
+            },
+            sortDesc: function (value) {
+                if(value){
+                    this.setOrderBy(this.sortBy + "_rev");
+                } else this.setOrderBy(this.sortBy);
             }
         }
     }
