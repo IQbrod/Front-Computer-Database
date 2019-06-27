@@ -307,13 +307,14 @@ button {
 .slide-fade-leave-active {
   transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
-.slide-fade-enter, .slide-fade-leave-to,.flip-list-enter, .flip-list-leave-to{
-  transform: translateX(10px);
+.slide-fade-enter, .slide-fade-leave-to,.flip-list-leave-to{
+  transform: translateX(100px);
   opacity: 0;
 }
-table#CustomTableOrdi .flip-list-move,.flip-list-enter {
+.flip-list-move  {
   transition: transform 1s;
 }
+
 
 
 </style>
