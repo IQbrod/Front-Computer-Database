@@ -103,7 +103,7 @@
                         size="sm"
                         class="mr-2"
                         @click="updating = row.item.id"
-                >Update
+                >{{ $t('message.update', ['update']) }}
                 </b-button>
                 <span v-else>
           <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
