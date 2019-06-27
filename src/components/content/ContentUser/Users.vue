@@ -29,6 +29,13 @@
             ...mapMutations([
                 'setCount'
             ]),
+            ...mapGetters(["token"]),
+            headers() {
+                return { headers: {
+                        Authorization: "Bearer " + this.token()
+                    }
+                }
+            },
             get() {
                 axios
                     .get(
@@ -36,7 +43,7 @@
                             "?page=" + this.page +
                             "&size=" + this.size +
                             "&search=" + this.search +
-                            "&orderBy=" + this.orderBy
+                            "&orderBy=" + this.orderBy, this.headers()
                         )
                         .then(response => (this.userList = response.data))
                         .catch(e => {
@@ -46,33 +53,33 @@
             delete(listId) {
             listId.forEach(elem => {
                 axios
-                .delete("http://10.0.1.97:8080/cdb/api/users/" + elem)
+                .delete("http://10.0.1.97:8080/cdb/api/users/" + elem, this.headers())
                 .then(() => this.get());
                 this.setCount(this.count - 1);
             });
             },
             update(user) {
                 axios
-                        .put("http://10.0.1.97:8080/cdb/api/users/", user).then(()=>this.get())
+                        .put("http://10.0.1.97:8080/cdb/api/users/", user, this.headers()).then(()=>this.get())
                         .catch(e => {
                             this.errors.push(e);
                         });
             },
             add(user){
-            axios.post('http://10.0.1.97:8080/cdb/api/users', user)
+            axios.post('http://10.0.1.97:8080/cdb/api/users', user, this.headers())
                     .then(()=>this.get());
                 this.setCount(this.count + 1);
             },
             getRoles(){
             axios
-                .get("http://10.0.1.97:8080/cdb/api/roles")
+                .get("http://10.0.1.97:8080/cdb/api/roles", this.headers())
                 .then(response => {
                     this.roleList = response.data
                 })
             },
             countUsers() {
                 axios
-                        .get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search)
+                        .get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search, this.headers())
                         .then(response => {
                             this.setCount(response.data);
                         });
@@ -80,7 +87,7 @@
         },
         created() {
             this.countUsers();
-            this.get()
+            this.get();
             this.getRoles();
         },
         watch: {

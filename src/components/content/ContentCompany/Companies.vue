@@ -29,12 +29,19 @@
             ...mapMutations([
                 'setCount'
             ]),
+        ...mapGetters(["token"]),
+        headers() {
+            return { headers: {
+                    Authorization: "Bearer " + this.token()
+                }
+            }
+        },
             get() {
 
                 axios.get(
                     "http://10.0.1.97:8080/cdb/api/companies?page=" + this.page + "&size=" + this.size+
                     "&search=" + this.search +
-                    "&orderBy="+this.orderBy
+                    "&orderBy="+this.orderBy, this.headers()
                 )
                     .then(response => (this.companyList = response.data))
                     .catch(e => {
@@ -44,26 +51,26 @@
             delete(listId) {
                 listId.forEach(elem => {
                     axios
-                        .delete("http://10.0.1.97:8080/cdb/api/companies/" + elem)
+                        .delete("http://10.0.1.97:8080/cdb/api/companies/" + elem, this.headers())
                         .then(() => this.get());
                     this.setCount(this.count - 1);
                 });
             },
             update(company) {
                 axios
-                    .put("http://10.0.1.97:8080/cdb/api/companies/", company)
+                    .put("http://10.0.1.97:8080/cdb/api/companies/", company, this.headers())
                     .catch(e => {
                         this.errors.push(e);
                     });
             },
             add(company) {
-                axios.post('http://10.0.1.97:8080/cdb/api/companies', company)
+                axios.post('http://10.0.1.97:8080/cdb/api/companies', company, this.headers())
                     .then(()=>this.get());
                 this.setCount(this.count + 1);
             },
             countCompanies() {
                 axios
-                        .get('http://10.0.1.97:8080/cdb/api/companies/count?search=' + this.search)
+                        .get('http://10.0.1.97:8080/cdb/api/companies/count?search=' + this.search, this.headers())
                         .then(response => {
                             this.setCount(response.data);
                         });

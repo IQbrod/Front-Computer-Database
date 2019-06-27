@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar  toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="/">Computer Database</b-navbar-brand>
+      <b-navbar-brand to='/'>Computer Database</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -19,10 +19,10 @@
           </b-nav-form>
 
           <b-nav-item-dropdown text="List" right>
-            <b-dropdown-item href="/computers">Computers</b-dropdown-item>
-            <b-dropdown-item href="/companies">Companies</b-dropdown-item>
-            <b-dropdown-item href="/users">Users</b-dropdown-item>
-            <b-dropdown-item href="/roles">Roles</b-dropdown-item>
+            <b-dropdown-item to='/computers'>Computers</b-dropdown-item>
+            <b-dropdown-item to='/companies'>Companies</b-dropdown-item>
+            <b-dropdown-item to='/users'>Users</b-dropdown-item>
+            <b-dropdown-item to='/roles'>Roles</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown text="Lang" right>
@@ -48,10 +48,7 @@
 
 <script>
 export default {
-  name: 'Navbar',
-  props: {
-    
-  }
+  name: 'Navbar'
 }
 </script>
 <style scoped>
