@@ -30,7 +30,7 @@
                             <b-modal ref="my-modal" id="modal-2" title="New Computer">
                                 <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
                                 <div slot="modal-footer">
-                                    <b-button slot="modal-cancel" @click="this.hideModal">{{ $t('message.cancel', ['cancel']) }}</b-button>
+                                    <b-button slot="modal-cancel" @click="this.hideModal">{{ $t('message.cancel', ['cancel'])}}</b-button>
                                 </div>
                             </b-modal>
 
@@ -87,7 +87,7 @@
                         v-model="row.item.companyId"
                 >
                     <template slot="first">
-                        <option @click="newCompanyName='_'" value=0>-- Please select a company --</option>
+                        <option @click="newCompanyName='_'" value=0>-- {{ $t('message.plsSelectCompany', ['plsSelectCompany']) }} --</option>
                         <option @click="newCompanyName=company.name" v-for="company in companies" :key=company.id :value=company.id> {{company.name}}
                         </option>
                     </template>
@@ -107,8 +107,8 @@
                 </b-button>
                 <span v-else>
           <b-button @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
-                    size="sm" class="mr-2">Commit</b-button>
-          <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
+                    size="sm" class="mr-2">{{ $t('message.commit', ['commit']) }}</b-button>
+          <b-button @click="updating=null" size="sm" class="mr-2">{{ $t('message.cancel', ['cancel']) }}</b-button>
         </span>
             </template>
         </b-table>

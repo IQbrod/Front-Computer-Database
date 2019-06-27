@@ -10,7 +10,7 @@
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
-                   
+
 
                     <b-nav-item-dropdown text="List" right>
                         <b-dropdown-item to='/computers'>{{ $t('message.computer', ['computer']) }}</b-dropdown-item>

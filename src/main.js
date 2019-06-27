@@ -145,7 +145,11 @@ const messages = {
             deleteWarning:'Are you sure you want to delete ?',
             yes: 'Yes',
             no: 'No',
-            hintDoubleCheck: 'Double click to deselect all elements currently in the table'
+            hintDoubleCheck: 'Double click to deselect all elements currently in the table',
+            plsSelectCompany: 'Please select a company',
+            commit: 'commit',
+            reset: 'reset',
+            submit: 'submit',
         }
     },
 
@@ -180,7 +184,11 @@ const messages = {
             deleteWarning:'Etes vous sûr de vouloir effacer ?',
             yes: 'Oui',
             no: 'Non',
-            hintDoubleCheck: 'Double cliquer pour selectionner tout les elements de la table'
+            hintDoubleCheck: 'Double cliquer pour selectionner tout les elements de la table',
+            plsSelectCompany: 'Selectionnez une companie',
+            commit: 'commit',
+            reset: 'Annuler',
+            submit: 'Se connecter',
         }
     },
 };
