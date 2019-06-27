@@ -7,7 +7,7 @@
                     <b-input-group>
                         <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
                         <b-input-group-append>
-                            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                            <b-button :disabled="!filter" @click="filter = ''">{{ $t('message.clear', ['clear']) }}</b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
@@ -24,13 +24,13 @@
                 <b-input-group>
                     <b-input-group-append>
                         <p v-if="!deleteMode">
-                            <b-button class="btn btn-danger" v-b-popover.hover="'Double click to select all elements currently in the table'" title="Hint" v-on:click="deleteMode=(!deleteMode)"   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)" >Delete</b-button>
+                            <b-button class="btn btn-danger" v-b-popover.hover="'Double click to select all elements currently in the table'" title="Hint" v-on:click="deleteMode=(!deleteMode)"   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)" >{{ $t('message.delete', ['delete']) }}</b-button>
                             <b-button v-b-modal.modal-2>Add Computer</b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New Computer">
                                 <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
                                 <div slot="modal-footer">
-                                    <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
+                                    <b-button slot="modal-cancel" @click="this.hideModal">{{ $t('message.cancel', ['cancel']) }}</b-button>
                                 </div>
                             </b-modal>
 
@@ -41,10 +41,10 @@
                         <div v-if="deleteMode && selectedDelete.length>0 ">
                             <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
                             <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
-                                <template slot="modal-title">Are you sure you want to delete ?</template>
+                                <template slot="modal-title">{{ $t('message.deleteWarning', ['deleteWarning']) }}</template>
                                 <div class="d-block text-center">
-                                    <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
-                                    <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
+                                    <b-button class="mt-3" block @click="validationSupression">{{ $t('message.yes', ['yes']) }}</b-button>
+                                    <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">{{ $t('message.no', ['no']) }}</b-button>
                                 </div>
                             </b-modal>
                         </div>

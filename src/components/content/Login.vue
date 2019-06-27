@@ -27,7 +27,7 @@
 
 <script>
 	import axios from 'axios'
-	import {mapMutations, mapGetters} from 'vuex'
+	import {mapMutations, mapGetters, mapActions} from 'vuex'
 	export default {
 		name: "Login.vue",
 		data() {
@@ -39,8 +39,13 @@
 				show: true
 			}
 		},
+
 		methods: {
 			...mapMutations(["setToken"]),
+			...mapActions([
+						"editLangage"
+					]
+			),
 			...mapGetters(["token"]),
 			onSubmit(evt) {
 				evt.preventDefault();

@@ -138,11 +138,14 @@ const messages = {
             computer: 'Computers',
             company: 'Companys',
             user: 'Users',
+            userName: 'User name',
             role: 'Roles',
             signIn: 'Sign in',
-            signOut: 'Sign out'
-
-
+            signOut: 'Sign out',
+            deleteWarning:'Are you sure you want to delete ?',
+            yes: 'Yes',
+            no: 'No',
+            hintDoubleCheck: 'Double click to deselect all elements currently in the table'
         }
     },
 
@@ -170,9 +173,14 @@ const messages = {
             computer: 'Ordinateurs',
             company: 'Companies',
             user: 'Utilisateurs',
+            userName: 'Nom d\'utilisateur',
             role: 'Roles',
             signIn: 'Se connecter',
-            signOut: 'Se deconnecter'
+            signOut: 'Se deconnecter',
+            deleteWarning:'Etes vous sûr de vouloir effacer ?',
+            yes: 'Oui',
+            no: 'Non',
+            hintDoubleCheck: 'Double cliquer pour selectionner tout les elements de la table'
         }
     },
 };
