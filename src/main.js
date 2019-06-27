@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+
 import App from './App.vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
@@ -16,80 +18,191 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(VueI18n);
 
 const routes = [
-  { path: '/', redirect:'/computers' },
-  { path: '/computers', component: ComputerDashboard },
-  { path: '/companies', component: CompanyDashboard },
-  { path: '/users', component: UserDashboard},
-  { path: '/roles', component: RoleDashboard},
-  { path: '/login', component: Login}
+
+    {path: '/', redirect: '/computers'},
+    {path: '/computers', component: ComputerDashboard},
+    {path: '/companies', component: CompanyDashboard},
+    {path: '/users', component: UserDashboard},
+    {path: '/roles', component: RoleDashboard},
+    {path: '/login', component: Login}
 ];
 
-const router = new VueRouter({ routes: routes, mode: "history" });
+const router = new VueRouter({routes: routes, mode: "history"});
 
 const store = new Vuex.Store({
-  state: {
-    page: 1,
-    size: 10,
-    search: '',
-    count: 0,
-    orderBy: 'id',
-    token: ''
-  },
-  getters: {
-    page: state => state.page,
-    size: state => state.size,
-    search: state => state.search,
-    count: state => state.count,
-    orderBy: state => state.orderBy,
-    token: state => state.token
-  },
-  mutations: {
-    setPage (state, page) {
-      state.page = page
+    state: {
+        page: 1,
+        size: 10,
+        search: '',
+        count: 0,
+        orderBy: 'id',
+        token: '',
+        lang: 'fr',
+        locales: ['en', 'fr'],
     },
-    setSize (state, size) {
-      state.size = size
+    getters: {
+        page: state => state.page,
+        size: state => state.size,
+        search: state => state.search,
+        count: state => state.count,
+        orderBy: state => state.orderBy,
+        token: state => state.token,
+        storedLocale: state => state.storedLocale
     },
-    setSearch(state, search) {
-      state.search = search
+    mutations: {
+        setPage(state, page) {
+            state.page = page
+        },
+        setSize(state, size) {
+            state.size = size
+        },
+        setSearch(state, search) {
+            state.search = search
+        },
+        setCount(state, count) {
+            state.count = count
+        },
+        setOrderBy(state, orderBy) {
+            state.orderBy = orderBy
+        },
+        setToken(state, token) {
+            state.token = token
+        },
+        setStoredLocale(state, storedLocale) {
+            state.storedLocale = storedLocale
+        },
+        setLangage(state, lang) {
+            state.lang = lang
+            i18n.locale = lang;
+        }
     },
-    setCount(state, count) {
-      state.count = count
+
+    actions: {
+        editPage(context, page) {
+            context.commit('setPage', page)
+        },
+        editSize(context, size) {
+            context.commit('setSize', size)
+        },
+        editSearch(context, search) {
+            context.commit('setSearch', search)
+        },
+        editCount(context, count) {
+            context.commit('setCount', count)
+        },
+        editOrderBy(context, orderBy) {
+            context.commit('setOrderBy', orderBy)
+        },
+        editToken(context, token) {
+            context.commit('setToken', token)
+        },
+
+        editStoredLocale(context, storedLocale) {
+            context.commit('setStoreLocale', storedLocale)
+        },
+        editLangage(context, lang) {
+            context.commit('setLangage', lang)
+        }
     },
-    setOrderBy(state, orderBy){
-      state.orderBy = orderBy
+
+});
+
+//i18n
+
+
+const messages = {
+    en: {
+        message: {
+            hello: 'hello world',
+            applicationName: 'Computer Database',
+            id: 'id',
+            name: 'name',
+            introduction: 'Introduced',
+            discontinued: 'Discontinued',
+            companyId: 'Company Id',
+            companyName: 'Company Name',
+            applicationLangFR: 'French',
+            applicationLangEN: 'English',
+            filter: 'Filter',
+            clear: 'Clear',
+            search: 'Search',
+            lang: 'Lang',
+            delete: 'Delete',
+            cancel: 'Cancel',
+            update: 'Update',
+            validate: 'Validate',
+            addComputer: 'Add Computer',
+            computer: 'Computers',
+            company: 'Companys',
+            user: 'Users',
+            userName: 'User name',
+            role: 'Roles',
+            signIn: 'Sign in',
+            signOut: 'Sign out',
+            deleteWarning:'Are you sure you want to delete ?',
+            yes: 'Yes',
+            no: 'No',
+            hintDoubleCheck: 'Double click to deselect all elements currently in the table',
+            plsSelectCompany: 'Please select a company',
+            commit: 'commit',
+            reset: 'reset',
+            submit: 'submit',
+        }
     },
-    setToken(state, token) {
-      state.token = token
-    }
-  },
-  actions: {
-    editPage( context, page ) {
-      context.commit('setPage', page )
+
+    fr: {
+        message: {
+            hello: 'bonjour',
+            applicationName: 'Base de données de PC',
+            id: 'id',
+            name: 'Nom',
+            introduction: 'Introduction',
+            discontinued: 'Suspension',
+            companyId: 'Companie Id',
+            companyName: 'Nom de la companie',
+            applicationLangFR: 'Français',
+            applicationLangEN: 'Anglais',
+            filter: 'Filtrer',
+            clear: 'Effacer',
+            search: 'Chercher',
+            lang: 'Langue',
+            delete: 'Supprimer',
+            cancel: 'Annuler',
+            update: 'Modifier',
+            validate: 'Valider',
+            addComputer: 'Ajouter un ordinateur',
+            computer: 'Ordinateurs',
+            company: 'Companies',
+            user: 'Utilisateurs',
+            userName: 'Nom d\'utilisateur',
+            role: 'Roles',
+            signIn: 'Se connecter',
+            signOut: 'Se deconnecter',
+            deleteWarning:'Etes vous sûr de vouloir effacer ?',
+            yes: 'Oui',
+            no: 'Non',
+            hintDoubleCheck: 'Double cliquer pour selectionner tout les elements de la table',
+            plsSelectCompany: 'Selectionnez une companie',
+            commit: 'commit',
+            reset: 'Annuler',
+            submit: 'Se connecter',
+        }
     },
-    editSize( context, size ) {
-      context.commit('setSize', size )
-    },
-    editSearch( context, search ) {
-      context.commit('setSearch', search)
-    },
-    editCount( context, count ) {
-      context.commit('setCount', count)
-    },
-    editOrderBy(context, orderBy){
-      context.commit('setOrderBy', orderBy)
-    },
-    editToken(context, token) {
-      context.commit('setToken', token)
-    }
-  }
+};
+
+
+let i18n = new VueI18n({
+    locale: 'fr',
+    messages,
 });
 
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    i18n,
+    render: h => h(App)
 }).$mount('#app')

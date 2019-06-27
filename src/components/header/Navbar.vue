@@ -1,58 +1,59 @@
 <template>
-  <div>
-    <b-navbar  toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand to='/'>Computer Database</b-navbar-brand>
+    <div>
+        <b-navbar toggleable="lg" type="dark" variant="info">
+            <b-navbar-brand to='/'>{{ $t('message.applicationName', ['applicationName']) }}</b-navbar-brand>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
-        </b-navbar-nav>
+            <b-collapse id="nav-collapse" is-nav>
 
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
 
-          <b-nav-item-dropdown text="List" right>
-            <b-dropdown-item to='/computers'>Computers</b-dropdown-item>
-            <b-dropdown-item to='/companies'>Companies</b-dropdown-item>
-            <b-dropdown-item to='/users'>Users</b-dropdown-item>
-            <b-dropdown-item to='/roles'>Roles</b-dropdown-item>
-          </b-nav-item-dropdown>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
 
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template slot="button-content">
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-  </div>
+                    <b-nav-item-dropdown text="List" right>
+                        <b-dropdown-item to='/computers'>{{ $t('message.computer', ['computer']) }}</b-dropdown-item>
+                        <b-dropdown-item to='/companies'>{{ $t('message.company', ['company']) }}</b-dropdown-item>
+                        <b-dropdown-item to='/users'>{{ $t('message.user', ['user']) }}</b-dropdown-item>
+                        <b-dropdown-item to='/roles'>{{ $t('message.role', ['role']) }}</b-dropdown-item>
+                    </b-nav-item-dropdown>
+
+                    <b-nav-item-dropdown text="Lang" right>
+                        <b-dropdown-item href="#"  @click="editLangage('en')">{{ $t('message.applicationLangEN', ['applicationLangEN']) }}</b-dropdown-item>
+                        <b-dropdown-item href="#" @click="editLangage('fr')">{{ $t('message.applicationLangFR', ['applicationLangFR']) }}</b-dropdown-item>
+                    </b-nav-item-dropdown>
+
+                    <b-nav-item-dropdown right>
+                        <!-- Using 'button-content' slot -->
+                        <template slot="button-content">
+                            <em>{{ $t('message.user', ['user']) }}</em>
+                        </template>
+                        <b-dropdown-item href="#">Profile</b-dropdown-item>
+                        <b-dropdown-item href="#">{{ $t('message.signOut', ['signOut']) }}</b-dropdown-item>
+                    </b-nav-item-dropdown>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'Navbar'
-}
+    import {mapActions} from "vuex"
+
+    export default {
+        name: 'Navbar',
+        methods: {
+            ...mapActions([
+                    "editLangage"
+                ]
+            )
+        }
+    }
+
 </script>
 <style scoped>
-.bg-info{
-  background-color: #003459 !important;
-}
+    .bg-info {
+        background-color: #003459 !important;
+    }
 </style>
