@@ -311,7 +311,7 @@ button {
   transform: translateX(100px);
   opacity: 0;
 }
-.flip-list-move  {
+.flip-list-move{
   transition: transform 1s;
 }
 
