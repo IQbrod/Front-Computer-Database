@@ -10,6 +10,7 @@
 <script>
     import pagination from '../Pagination'
     import users from "./Users";
+    import { mapGetters } from 'vuex'
 
     export default {
         name: "UserDashboard",
@@ -17,9 +18,15 @@
             users,
             pagination
         },
-        props: {},
-        data() {
-            return {};
+        methods: {
+            ...mapGetters([
+                'token'
+            ])
+        },
+        mounted: function() {
+            if(!this.token()) {
+                this.$router.push({path: "/login"});
+            }
         }
     };
 </script>
@@ -32,10 +39,5 @@
     #jumb {
         background-color: #fcfcfc;
         opacity: 10%;
-    }
-
-    .table {
-        background-color: #eff8f8;
-
     }
 </style>

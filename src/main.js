@@ -10,6 +10,7 @@ import ComputerDashboard from './components/content/ContentComputer/ComputerDash
 import CompanyDashboard from './components/content/ContentCompany/CompanyDashboard'
 import UserDashboard from './components/content/ContentUser/UserDashboard'
 import RoleDashboard from './components/content/ContentRole/RoleDashboard'
+import Login from './components/content/Login'
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
@@ -21,7 +22,8 @@ const routes = [
   { path: '/computers', component: ComputerDashboard },
   { path: '/companies', component: CompanyDashboard },
   { path: '/users', component: UserDashboard},
-  { path: '/roles', component: RoleDashboard}
+  { path: '/roles', component: RoleDashboard},
+  { path: '/login', component: Login}
 ];
 
 const router = new VueRouter({ routes: routes, mode: "history" });
@@ -32,14 +34,16 @@ const store = new Vuex.Store({
     size: 10,
     search: '',
     count: 0,
-    orderBy: 'id'
+    orderBy: 'id',
+    token: ''
   },
   getters: {
     page: state => state.page,
     size: state => state.size,
     search: state => state.search,
     count: state => state.count,
-    orderBy: state => state.orderBy
+    orderBy: state => state.orderBy,
+    token: state => state.token
   },
   mutations: {
     setPage (state, page) {
@@ -54,8 +58,11 @@ const store = new Vuex.Store({
     setCount(state, count) {
       state.count = count
     },
-    setOrderBy(state, orderBy ){
+    setOrderBy(state, orderBy){
       state.orderBy = orderBy
+    },
+    setToken(state, token) {
+      state.token = token
     }
   },
   actions: {
@@ -73,6 +80,9 @@ const store = new Vuex.Store({
     },
     editOrderBy(context, orderBy){
       context.commit('setOrderBy', orderBy)
+    },
+    editToken(context, token) {
+      context.commit('setToken', token)
     }
   }
 });
