@@ -19,15 +19,15 @@
                     </b-nav-form>
 
                     <b-nav-item-dropdown text="List" right>
-                        <b-dropdown-item href="/computers">Computers</b-dropdown-item>
-                        <b-dropdown-item href="/companies">Companies</b-dropdown-item>
-                        <b-dropdown-item href="/users">Users</b-dropdown-item>
-                        <b-dropdown-item href="/roles">Roles</b-dropdown-item>
+                        <b-dropdown-item href="/computers">{{ $t('message.computer', ['computer']) }}</b-dropdown-item>
+                        <b-dropdown-item href="/companies">{{ $t('message.company', ['company']) }}</b-dropdown-item>
+                        <b-dropdown-item href="/users">{{ $t('message.user', ['user']) }}</b-dropdown-item>
+                        <b-dropdown-item href="/roles">{{ $t('message.role', ['role']) }}</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#" @click="editLangage('en')">EN</b-dropdown-item>
-                        <b-dropdown-item href="#" @click="editLangage('fr')">FR</b-dropdown-item>
+                        <b-dropdown-item href="#" @click="editLangage('en')">{{ $t('message.applicationLangEN', ['applicationLangEN']) }}</b-dropdown-item>
+                        <b-dropdown-item href="#" @click="editLangage('fr')">{{ $t('message.applicationLangFR', ['applicationLangFR']) }}</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item-dropdown right>
