@@ -93,7 +93,7 @@
 				axios
 						.get("http://10.0.1.97:8080/cdb/api/roles", this.headers())
 						.then(response => {
-							this.roleList = response.data
+							this.roleList = response.data;
 						})
 						.catch(error => {
 							this.permissionManager(error);
