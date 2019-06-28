@@ -163,27 +163,18 @@
           size="sm"
           class="mr-2"
           @click="updating = row.item.id"
-<<<<<<< HEAD
-        >Update</b-button>
-=======
         >{{ $t('message.update', ['update']) }}</b-button>
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         <span v-else>
           <b-button
             @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
             size="sm"
             class="mr-2"
-<<<<<<< HEAD
-          >Commit</b-button>
-          <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
-=======
           >{{ $t('message.commit', ['commit']) }}</b-button>
           <b-button
             @click="updating=null"
             size="sm"
             class="mr-2"
           >{{ $t('message.cancel', ['cancel']) }}</b-button>
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         </span>
       </template>
     </b-table>
@@ -199,20 +190,10 @@ export default {
   props: ["items", "delete", "add", "update", "companies"],
   data() {
     return {
-<<<<<<< HEAD
-      transProps: {
-        name: "flip-list"
-      },
-=======
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
       filter: this.search(),
       pageOptions: [10, 50, 100],
       perPage: 10,
       fields: [
-<<<<<<< HEAD
-        { key: "id", sortable: true },
-=======
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         { key: "name", sortable: true },
         { key: "introduction", sortable: true },
         { key: "discontinued", sortable: true },
@@ -297,38 +278,6 @@ export default {
       bind: function(el, binding, vnode) {
         vnode.context[binding.arg] = binding.value;
       }
-<<<<<<< HEAD
-    }
-  },
-  watch: {
-    currentSize: function(value) {
-      this.setSize(value);
-    },
-    filter: function(value) {
-      this.setSearch(value);
-    },
-    page: function() {
-      this.updating = null;
-      this.selectedDelete = [];
-    },
-    sortBy: function(value) {
-      this.setOrderBy(value);
-    },
-    sortDesc: function(value) {
-      if (value) {
-        this.setOrderBy(this.sortBy + "_rev");
-      } else this.setOrderBy(this.sortBy);
-    }
-  }
-};
-</script>
-<style>
-button {
-  margin: 10px;
-}
-#clear {
-  margin: 0%;
-=======
     }
   },
   watch: {
@@ -356,7 +305,6 @@ button {
 <style scoped>
 #btn {
   margin-right: 10px;
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
 }
 .slide-fade-enter-active {
   transition: all 0.5s ease;
@@ -364,24 +312,11 @@ button {
 .slide-fade-leave-active {
   transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
-<<<<<<< HEAD
-.slide-fade-enter, .slide-fade-leave-to,.flip-list-leave-to{
-  transform: translateX(100px);
-  opacity: 0;
-}
-.flip-list-move{
-  transition: transform 1s;
-}
-
-
-
-=======
 .slide-fade-enter,
 .slide-fade-leave-to,
 .flip-list-leave-to {
   transform: translateX(100px);
   opacity: 0;
 }
->>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
 </style>
 
