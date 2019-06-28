@@ -36,18 +36,20 @@
               </b-modal>
             </p>
             <p v-else>
-              <b-button  id="btn" class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+              <b-button id="btn" class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
             </p>
-            <div v-if="deleteMode && selectedDelete.length>0 ">
-              <b-button id="btn" v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
-              <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
-                <template slot="modal-title">Are you sure you want to delete ?</template>
-                <div class="d-block text-center">
-                  <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
-                  <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
-                </div>
-              </b-modal>
-            </div>
+            <transition name="slide-fade">
+              <div v-if="deleteMode && selectedDelete.length>0 ">
+                <b-button id="btn" v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+                <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
+                  <template slot="modal-title">Are you sure you want to delete ?</template>
+                  <div class="d-block text-center">
+                    <b-button class="mt-3" block @click="validationSupression">Yes</b-button>
+                    <b-button class="mt-3" block @click="$bvModal.hide('modal-1')">No</b-button>
+                  </div>
+                </b-modal>
+              </div>
+            </transition>
           </b-input-group-append>
         </b-input-group>
       </b-col>
@@ -191,5 +193,17 @@ export default {
 <style scoped>
 #btn {
   margin-right: 10px;
+}
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to,
+.flip-list-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
 }
 </style>
