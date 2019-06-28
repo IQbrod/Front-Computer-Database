@@ -3,18 +3,21 @@
     <!-- User Interface controls -->
     <b-row>
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+        <b-form-group label-cols-sm="3" :label=" $t('message.filter', ['filter']) " class="mb-0">
           <b-input-group>
-            <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+            <b-form-input v-model="filter" :placeholder="$t('message.searchType', ['searchType'])" ></b-form-input>
             <b-input-group-append>
-              <b-button id="clear" :disabled="!filter" @click="filter = ''">Clear</b-button>
+              <b-button
+                :disabled="!filter"
+                @click="filter = ''"
+              >{{ $t('message.clear', ['clear']) }}</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
 
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+        <b-form-group label-cols-sm="3" :label="$t('message.perPage', ['perPage'])" class="mb-0">
           <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
         </b-form-group>
       </b-col>
@@ -23,54 +26,61 @@
       <b-col md="6" class="my-1">
         <b-input-group>
           <b-input-group-append>
-            <p v-if="!deleteMode">
-              <b-button
-                class="btn btn-danger"
-                v-b-popover.hover="'Double click to select all elements currently in the table'"
-                title="Hint"
-                v-on:click="deleteMode=(!deleteMode)"
-                v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
-              >Delete</b-button>
-              <transition name="slide-fade">
-                <b-button v-b-modal.modal-2>Add Computer</b-button>
-              </transition>
-              <b-modal ref="my-modal" id="modal-2" title="New Computer">
-                <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
-                <div slot="modal-footer">
-                  <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
-                </div>
-              </b-modal>
-            </p>
 
-            <p v-else>
-              <b-button
-                class="btn"
-                v-b-popover.hover="'Double click to deselect all elements currently in the table'"
-                title="Hint"
-                v-on:click="deleteMode=(!deleteMode)"
-                v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
-              >Cancel</b-button>
-            </p>
             <transition name="slide-fade">
+              <p v-if="!deleteMode">
+                <b-button
+                  id="btn"
+                  class="btn btn-danger"
+                  v-b-popover.hover="'Double click to select all elements currently in the table'"
+                  title="Hint"
+                  v-on:click="deleteMode=(!deleteMode)"
+                  v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
+                >{{ $t('message.delete', ['delete']) }}</b-button>
+
+                <b-button id="btn" v-b-modal.modal-2>{{ $t('message.addComputer', ['addComputer']) }}</b-button>
+
+                <b-modal ref="my-modal" id="modal-2" title="New Computer">
+                  <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
+                  <div slot="modal-footer">
+                    <b-button
+                      id="btn"
+                      slot="modal-cancel"
+                      @click="this.hideModal"
+                    >{{ $t('message.cancel', ['cancel'])}}</b-button>
+                  </div>
+                </b-modal>
+              </p>
+
+              <p v-else>
+                <b-button
+                  id="btn"
+                  class="btn"
+                  v-b-popover.hover="'Double click to deselect all elements currently in the table'"
+                  title="Hint"
+                  v-on:click="deleteMode=(!deleteMode)"
+                  v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
+                >Cancel</b-button>
+              </p>
+
               <div v-if="deleteMode && selectedDelete.length>0 ">
                 <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+
                 <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
-                  <template slot="modal-title">Are you sure you want to delete ?</template>
+                  <template slot="modal-title">{{ $t('message.deleteWarning', ['deleteWarning']) }}</template>
                   <div class="d-block text-center">
                     <b-button
-                      id="clear"
+                      id="btn"
                       class="mt-3"
-                      variant="success"
                       block
                       @click="validationSupression"
-                    >Yes</b-button>
+                    >{{ $t('message.yes', ['yes']) }}</b-button>
                     <b-button
-                      id="clear"
+                      id="btn"
                       class="mt-3"
-                      variant="danger"
                       block
                       @click="$bvModal.hide('modal-1')"
-                    >No</b-button>
+                    >{{ $t('message.no', ['no']) }}</b-button>
                   </div>
                 </b-modal>
               </div>
@@ -80,10 +90,8 @@
       </b-col>
     </b-row>
     <!-- Main table element -->
-
     <b-table
       hover
-      id="CustomTableOrdi"
       :items="styleDanger"
       @row-clicked="selectionDelete"
       :fields="fields"
@@ -92,10 +100,7 @@
       :sort-desc.sync="sortDesc"
       :noLocalSorting="true"
       :no-sort-reset="true"
-      :tbody-transition-props="transProps"
     >
-      <template slot="id" slot-scope="row">{{ row.value }}</template>
-
       <template slot="name" slot-scope="row">
         <p v-if="updating!== row.item.id">{{ row.value }}</p>
         <p v-else>
@@ -134,7 +139,10 @@
         <p v-else>
           <b-form-select id="input-company" v-model="row.item.companyId">
             <template slot="first">
-              <option @click="newCompanyName='_'" value="0">-- Please select a company --</option>
+              <option
+                @click="newCompanyName='_'"
+                value="0"
+              >-- {{ $t('message.plsSelectCompany', ['plsSelectCompany']) }} --</option>
               <option
                 @click="newCompanyName=company.name"
                 v-for="company in companies"
@@ -155,14 +163,27 @@
           size="sm"
           class="mr-2"
           @click="updating = row.item.id"
+<<<<<<< HEAD
         >Update</b-button>
+=======
+        >{{ $t('message.update', ['update']) }}</b-button>
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         <span v-else>
           <b-button
             @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
             size="sm"
             class="mr-2"
+<<<<<<< HEAD
           >Commit</b-button>
           <b-button @click="updating=null" size="sm" class="mr-2">Cancel</b-button>
+=======
+          >{{ $t('message.commit', ['commit']) }}</b-button>
+          <b-button
+            @click="updating=null"
+            size="sm"
+            class="mr-2"
+          >{{ $t('message.cancel', ['cancel']) }}</b-button>
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         </span>
       </template>
     </b-table>
@@ -178,14 +199,20 @@ export default {
   props: ["items", "delete", "add", "update", "companies"],
   data() {
     return {
+<<<<<<< HEAD
       transProps: {
         name: "flip-list"
       },
+=======
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
       filter: this.search(),
       pageOptions: [10, 50, 100],
       perPage: 10,
       fields: [
+<<<<<<< HEAD
         { key: "id", sortable: true },
+=======
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
         { key: "name", sortable: true },
         { key: "introduction", sortable: true },
         { key: "discontinued", sortable: true },
@@ -270,6 +297,7 @@ export default {
       bind: function(el, binding, vnode) {
         vnode.context[binding.arg] = binding.value;
       }
+<<<<<<< HEAD
     }
   },
   watch: {
@@ -300,6 +328,35 @@ button {
 }
 #clear {
   margin: 0%;
+=======
+    }
+  },
+  watch: {
+    currentSize: function(value) {
+      this.setSize(value);
+    },
+    filter: function(value) {
+      this.setSearch(value);
+    },
+    page: function() {
+      this.updating = null;
+      this.selectedDelete = [];
+    },
+    sortBy: function(value) {
+      this.setOrderBy(value);
+    },
+    sortDesc: function(value) {
+      if (value) {
+        this.setOrderBy(this.sortBy + "_rev");
+      } else this.setOrderBy(this.sortBy);
+    }
+  }
+};
+</script>
+<style scoped>
+#btn {
+  margin-right: 10px;
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
 }
 .slide-fade-enter-active {
   transition: all 0.5s ease;
@@ -307,6 +364,7 @@ button {
 .slide-fade-leave-active {
   transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
 }
+<<<<<<< HEAD
 .slide-fade-enter, .slide-fade-leave-to,.flip-list-leave-to{
   transform: translateX(100px);
   opacity: 0;
@@ -317,5 +375,13 @@ button {
 
 
 
+=======
+.slide-fade-enter,
+.slide-fade-leave-to,
+.flip-list-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
+}
+>>>>>>> f8e2b6c0fee11370c3f1ebbafd89209f8f6eed3b
 </style>
 

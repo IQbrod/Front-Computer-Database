@@ -9,19 +9,24 @@
 
 <script>
     import pagination from '../Pagination'
-    import computers from "./Computers";
-
+    import computers from "./Computers"
+    import { mapGetters } from 'vuex'
     export default {
         name: "ComputerDashboard",
         components: {
             computers,
             pagination
         },
-        props: {},
-        data() {
-            return {
-            };
+        methods: {
+            ...mapGetters([
+                'token'
+            ])
         },
+        mounted: function() {
+            if(!this.token()) {
+                this.$router.push({path: "/login"});
+            }
+        }
     };
 </script>
 
@@ -33,10 +38,5 @@
     #jumb {
         background-color: #fcfcfc;
         opacity: 10%;
-    }
-
-    .table {
-        background-color: #eff8f8;
-
     }
 </style>

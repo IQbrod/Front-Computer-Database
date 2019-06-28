@@ -29,6 +29,13 @@
             ...mapMutations([
                 'setCount'
             ]),
+            ...mapGetters(["token"]),
+            headers() {
+                return { headers: {
+                        Authorization: "Bearer " + this.token()
+                    }
+                }
+            },
             get() {
                 axios
                     .get(
@@ -36,7 +43,7 @@
                         "?page=" + this.page +
                         "&size=" + this.size +
                         "&search=" + this.search +
-                        "&orderBy="+ this.orderBy
+                        "&orderBy="+ this.orderBy, this.headers()
                     )
                     .then(response => (this.computerList = response.data))
                     .catch(e => {
@@ -46,7 +53,7 @@
             delete(listId) {
                 listId.forEach(elem => {
                     axios
-                        .delete("http://10.0.1.97:8080/cdb/api/computers/" + elem)
+                        .delete("http://10.0.1.97:8080/cdb/api/computers/" + elem, this.headers())
                         .then(() => this.get());
                     this.setCount(this.count - 1);
                 });
@@ -55,26 +62,26 @@
                 if (computer.introduction === '') computer.introduction = null;
                 if (computer.discontinued === '') computer.discontinued = null;
                 axios
-                    .put("http://10.0.1.97:8080/cdb/api/computers/", computer).then(() => this.get())
+                    .put("http://10.0.1.97:8080/cdb/api/computers/", computer, this.headers()).then(() => this.get())
                     .catch(e => {
                         this.errors.push(e);
                     });
             },
             add(computer) {
-                axios.post('http://10.0.1.97:8080/cdb/api/computers', computer)
+                axios.post('http://10.0.1.97:8080/cdb/api/computers', computer, this.headers())
                     .then(() => this.get());
                 this.setCount(this.count + 1);
             },
             getCompanies() {
                 axios
-                    .get('http://10.0.1.97:8080/cdb/api/companies')
+                    .get('http://10.0.1.97:8080/cdb/api/companies', this.headers())
                     .then(response => {
                         this.companyList = response.data;
                     })
             },
             countComputers() {
                 axios
-                    .get('http://10.0.1.97:8080/cdb/api/computers/count?search=' + this.search)
+                    .get('http://10.0.1.97:8080/cdb/api/computers/count?search=' + this.search, this.headers())
                     .then(response => {
                         this.setCount(response.data);
                     });
@@ -86,7 +93,6 @@
             this.getCompanies();
 
         },
-
         watch: {
             page: function () {
                 this.get();
