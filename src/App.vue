@@ -2,16 +2,18 @@
   <div class="application">
     <navbar/>
     <router-view></router-view>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import Navbar from './components/header/Navbar'
+import Footer from './components/footer/Footer'
 
 export default {
   name: 'app',
   components: {
-    Navbar,
+    Navbar,Footer
   }
 };
 </script>
