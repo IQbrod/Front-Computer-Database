@@ -1,10 +1,10 @@
 <template>
   <b-form id="form" @submit="onSubmit" @reset="onReset" :v-if="show">
-    <b-form-group id="input-group-1" label="Username :" label-for="input-1">
+    <b-form-group id="input-group-1" :label="$t('message.userName', ['userName'])" label-for="input-1">
       <b-form-input id="input-1" v-model="form.username" required placeholder="Enter username"></b-form-input>
     </b-form-group>
 
-    <b-form-group id="input-group-2" label="Password :" label-for="input-2">
+    <b-form-group id="input-group-2" :label="$t('message.password', ['password'])" label-for="input-2">
       <b-form-input id="input-2" v-model="form.password" required placeholder="Enter password" type="password"></b-form-input>
     </b-form-group>
     <div>
@@ -19,7 +19,7 @@
         @dismissed="dismissCountDown=0"
         @dismiss-count-down="countDownChanged"
       >
-        <p>Connection error please check your credentials.</p>
+        <p>{{ $t('message.connexionError', ['connexionError']) }}</p>
       </b-alert>
     </div>
   </b-form>

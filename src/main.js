@@ -153,6 +153,8 @@ const messages = {
             reset: 'reset',
             submit: 'submit',
             password: 'password',
+            list: 'List',
+            connexionError: 'Connection error please check your credentials.',
         }
     },
 
@@ -194,7 +196,9 @@ const messages = {
             commit: 'commit',
             reset: 'Annuler',
             submit: 'Se connecter',
-            password: 'mot de passe',
+            password: 'Mot de passe',
+            list: 'Liste',
+            connexionError: 'Erreur de connexion, mot de passe ou identifiant incorrecte ',
         }
     },
 };
