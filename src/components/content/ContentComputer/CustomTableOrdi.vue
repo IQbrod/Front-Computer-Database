@@ -5,7 +5,7 @@
       <b-col md="6" class="my-1">
         <b-form-group label-cols-sm="3" :label=" $t('message.filter', ['filter']) " class="mb-0">
           <b-input-group>
-            <b-form-input v-model="filter" :placeholder="$t('message.searchType', ['searchType'])" ></b-form-input>
+            <b-form-input v-model="filter" :placeholder="$t('message.searchType', ['searchType'])"></b-form-input>
             <b-input-group-append>
               <b-button
                 :disabled="!filter"
@@ -26,7 +26,6 @@
       <b-col md="6" class="my-1">
         <b-input-group>
           <b-input-group-append>
-
             <transition name="slide-fade">
               <p v-if="!deleteMode">
                 <b-button
@@ -38,7 +37,11 @@
                   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
                 >{{ $t('message.delete', ['delete']) }}</b-button>
 
-                <b-button id="btn" v-b-modal.modal-2>{{ $t('message.addComputer', ['addComputer']) }}</b-button>
+                <b-button
+                  id="btn"
+                  variant="primary"
+                  v-b-modal.modal-2
+                >{{ $t('message.addComputer', ['addComputer']) }}</b-button>
 
                 <b-modal ref="my-modal" id="modal-2" title="New Computer">
                   <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
@@ -55,6 +58,7 @@
               <p v-else>
                 <b-button
                   id="btn"
+                  variant="success"
                   class="btn"
                   v-b-popover.hover="'Double click to deselect all elements currently in the table'"
                   title="Hint"
@@ -72,12 +76,14 @@
                   <div class="d-block text-center">
                     <b-button
                       id="btn"
+                      variant="danger"
                       class="mt-3"
                       block
                       @click="validationSupression"
                     >{{ $t('message.yes', ['yes']) }}</b-button>
                     <b-button
                       id="btn"
+                      variant="primary"
                       class="mt-3"
                       block
                       @click="$bvModal.hide('modal-1')"
@@ -105,33 +111,39 @@
       <template slot="name" slot-scope="row">
         <p v-if="updating!== row.item.id">{{ row.value }}</p>
         <p v-else>
-          <input v-model="newName" v-init:newName="row.item.name" type="text" id="name" name="name">
+          <b-form-input
+            v-model="newName"
+            v-init:newName="row.item.name"
+            type="text"
+            id="name"
+            name="name"
+          />
         </p>
       </template>
 
       <template slot="introduction" slot-scope="row">
         <p v-if="updating!== row.item.id">{{ row.value }}</p>
         <p v-else>
-          <input
+          <b-form-input
             v-model="newIntro"
             v-init:newIntro="row.item.introduction"
             type="date"
             id="introduction"
             name="introduction"
-          >
+          />
         </p>
       </template>
 
       <template slot="discontinued" slot-scope="row">
         <p v-if="updating!== row.item.id">{{ row.value }}</p>
         <p v-else>
-          <input
+          <b-form-input
             v-model="newDiscon"
             v-init:newDiscon="row.item.discontinued"
             type="date"
             id="discontinued"
             name="discontinued"
-          >
+          />
         </p>
       </template>
 
@@ -159,6 +171,7 @@
 
       <template slot="update" slot-scope="row">
         <b-button
+          variant="info"
           v-if="updating != row.item.id"
           :disabled="updating != row.item.id && updating !== null"
           size="sm"
@@ -167,11 +180,15 @@
         >{{ $t('message.update', ['update']) }}</b-button>
         <span v-else>
           <b-button
+            id="com"
+            variant="warning"
             @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
             size="sm"
             class="mr-2"
           >{{ $t('message.commit', ['commit']) }}</b-button>
           <b-button
+          id="nonCom"
+            variant="dark"
             @click="updating=null"
             size="sm"
             class="mr-2"
@@ -318,6 +335,12 @@ export default {
 .flip-list-leave-to {
   transform: translateX(100px);
   opacity: 0;
+}
+#com{
+  margin: 3px;
+}
+#nonCom{
+  margin: 3px;
 }
 </style>
 
