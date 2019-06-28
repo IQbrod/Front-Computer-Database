@@ -25,22 +25,22 @@
                 <b-input-group>
                     <b-input-group-append>
                         <p v-if="!deleteMode">
-                            <b-button class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
-                            <b-button v-b-modal.modal-2>Add Role</b-button>
+                            <b-button id="btn" class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+                            <b-button id="btn" v-b-modal.modal-2>Add Role</b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New Role">
                                 <AddForm :add="this.add" :hideModal="this.hideModal"></AddForm>
                                 <div slot="modal-footer">
-                                    <b-button slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
+                                    <b-button id="btn" slot="modal-cancel" @click="this.hideModal">Cancel</b-button>
                                 </div>
                             </b-modal>
 
                         </p>
                         <p v-else>
-                            <b-button class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+                            <b-button id="btn" class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
                         </p>
                         <div v-if="deleteMode && selectedDelete.length>0 ">
-                            <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+                            <b-button id="btn" v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
                             <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
                                 <template slot="modal-title">Are you sure you want to delete ?</template>
                                 <div class="d-block text-center">
@@ -190,5 +190,7 @@
 </script>
 
 <style scoped>
-
+#btn {
+  margin-right: 10px;
+}
 </style>
