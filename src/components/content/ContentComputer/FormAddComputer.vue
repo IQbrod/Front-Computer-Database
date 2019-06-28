@@ -39,7 +39,7 @@
                         v-model="computer.companyId"
                 >
                     <template slot="first">
-                        <option value=0>-- Please select a company --</option>
+                        <option value=0>-- {{$t('message.plsSelectCompany', ['plsSelectCompany'])}} --</option>
                         <option v-for="company in companiesList" :key=company.id :value=company.id> {{company.name}}
                         </option>
                     </template>

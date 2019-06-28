@@ -102,7 +102,7 @@
       :noLocalSorting="true"
       :no-sort-reset="true"
     >
-      <template slot="name" slot-scope="row">
+      <template slot="name" slot-scope="row" >
         <p v-if="updating!== row.item.id">{{ row.value }}</p>
         <p v-else>
           <input v-model="newName" v-init:newName="row.item.name" type="text" id="name" name="name">
@@ -195,7 +195,7 @@ export default {
       pageOptions: [10, 50, 100],
       perPage: 10,
       fields: [
-        { key: "name", sortable: true },
+        { key: "name", sortable: true, label:"{{$t('message.name', ['name'])}}" },
         { key: "introduction", sortable: true },
         { key: "discontinued", sortable: true },
         { key: "companyId", sortable: true },
