@@ -26,38 +26,40 @@
       <b-col md="6" class="my-1">
         <b-input-group>
           <b-input-group-append>
-            <p v-if="!deleteMode">
-              <b-button
-                id="btn"
-                class="btn btn-danger"
-                v-b-popover.hover="'Double click to select all elements currently in the table'"
-                title="Hint"
-                v-on:click="deleteMode=(!deleteMode)"
-                v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
-              >{{ $t('message.delete', ['delete']) }}</b-button>
-              <b-button id="btn" v-b-modal.modal-2>Add Computer</b-button>
+            <transition name="slide-fade">
+              <p v-if="!deleteMode">
+                <b-button
+                  id="btn"
+                  class="btn btn-danger"
+                  v-b-popover.hover="'Double click to select all elements currently in the table'"
+                  title="Hint"
+                  v-on:click="deleteMode=(!deleteMode)"
+                  v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
+                >{{ $t('message.delete', ['delete']) }}</b-button>
+                <b-button id="btn" v-b-modal.modal-2>Add Computer</b-button>
 
-              <b-modal ref="my-modal" id="modal-2" title="New Computer">
-                <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
-                <div slot="modal-footer">
-                  <b-button
-                    id="btn"
-                    slot="modal-cancel"
-                    @click="this.hideModal"
-                  >{{ $t('message.cancel', ['cancel'])}}</b-button>
-                </div>
-              </b-modal>
-            </p>
-            <p v-else>
-              <b-button
-                id="btn"
-                class="btn"
-                v-b-popover.hover="'Double click to deselect all elements currently in the table'"
-                title="Hint"
-                v-on:click="deleteMode=(!deleteMode)"
-                v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
-              >Cancel</b-button>
-            </p>
+                <b-modal ref="my-modal" id="modal-2" title="New Computer">
+                  <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>
+                  <div slot="modal-footer">
+                    <b-button
+                      id="btn"
+                      slot="modal-cancel"
+                      @click="this.hideModal"
+                    >{{ $t('message.cancel', ['cancel'])}}</b-button>
+                  </div>
+                </b-modal>
+              </p>
+              <p v-else>
+                <b-button
+                  id="btn"
+                  class="btn"
+                  v-b-popover.hover="'Double click to deselect all elements currently in the table'"
+                  title="Hint"
+                  v-on:click="deleteMode=(!deleteMode)"
+                  v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
+                >Cancel</b-button>
+              </p>
+            </transition>
             <div v-if="deleteMode && selectedDelete.length>0 ">
               <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
               <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
@@ -298,6 +300,18 @@ export default {
 <style scoped>
 #btn {
   margin-right: 10px;
+}
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.5s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to,
+.flip-list-leave-to {
+  transform: translateX(100px);
+  opacity: 0;
 }
 </style>
 
