@@ -62,9 +62,7 @@
                  :noLocalSorting="true"
                  :no-sort-reset="true">
 
-            <template slot="id" slot-scope="row">
-                {{ row.value}}
-            </template>
+           
             <template slot="username" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
                 <p v-else><input v-model="newUserName" v-init:newUserName="row.item.username" type="text" id="username"
@@ -164,7 +162,6 @@
                 pageOptions: [10, 50, 100],
 
                 fields: [
-                    {key: 'id', sortable: true},
                     {key: 'username', sortable: true},
                     {key: 'password'},
                     {key: 'roleId', sortable: true},

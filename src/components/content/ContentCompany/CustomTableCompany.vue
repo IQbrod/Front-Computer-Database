@@ -62,7 +62,7 @@
                  :sort-desc.sync="sortDesc"
                  :noLocalSorting="true"
                  :no-sort-reset="true">
-            <template slot="id" slot-scope="row">{{ row.value}}</template>
+           
 
             <template slot="name" slot-scope="row">
                 <p v-if="updating!== row.item.id">{{ row.value }}</p>
@@ -133,7 +133,7 @@
             return {
                 filter: this.search(),
                 pageOptions: [10, 50, 100],
-                fields: [{key:'id',sortable: true}, {key:'name', sortable:true}, 'update'],
+                fields: [ {key:'name', sortable:true}, 'update'],
                 updating: null,
                 currentSize: this.size(),
                 selectedDelete: [],
