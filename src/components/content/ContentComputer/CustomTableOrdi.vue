@@ -36,6 +36,7 @@
                   v-on:click="deleteMode=(!deleteMode)"
                   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
                 >{{ $t('message.delete', ['delete']) }}</b-button>
+
                 <b-button id="btn" v-b-modal.modal-2>Add Computer</b-button>
 
                 <b-modal ref="my-modal" id="modal-2" title="New Computer">
@@ -49,6 +50,7 @@
                   </div>
                 </b-modal>
               </p>
+
               <p v-else>
                 <b-button
                   id="btn"
@@ -59,27 +61,29 @@
                   v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
                 >Cancel</b-button>
               </p>
+
+              <div v-if="deleteMode && selectedDelete.length>0 ">
+                <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+
+                <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
+                  <template slot="modal-title">{{ $t('message.deleteWarning', ['deleteWarning']) }}</template>
+                  <div class="d-block text-center">
+                    <b-button
+                      id="btn"
+                      class="mt-3"
+                      block
+                      @click="validationSupression"
+                    >{{ $t('message.yes', ['yes']) }}</b-button>
+                    <b-button
+                      id="btn"
+                      class="mt-3"
+                      block
+                      @click="$bvModal.hide('modal-1')"
+                    >{{ $t('message.no', ['no']) }}</b-button>
+                  </div>
+                </b-modal>
+              </div>
             </transition>
-            <div v-if="deleteMode && selectedDelete.length>0 ">
-              <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
-              <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
-                <template slot="modal-title">{{ $t('message.deleteWarning', ['deleteWarning']) }}</template>
-                <div class="d-block text-center">
-                  <b-button
-                    id="btn"
-                    class="mt-3"
-                    block
-                    @click="validationSupression"
-                  >{{ $t('message.yes', ['yes']) }}</b-button>
-                  <b-button
-                    id="btn"
-                    class="mt-3"
-                    block
-                    @click="$bvModal.hide('modal-1')"
-                  >{{ $t('message.no', ['no']) }}</b-button>
-                </div>
-              </b-modal>
-            </div>
           </b-input-group-append>
         </b-input-group>
       </b-col>
