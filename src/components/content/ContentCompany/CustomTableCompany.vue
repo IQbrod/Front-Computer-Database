@@ -124,7 +124,7 @@
                   @click="updateManager([row.item.id, newName], row.item)"
                   size="sm"
                   class="mr-2"
-          >{{ $t('message.commit', ['commit']) }}</b-button>
+          >Validate</b-button>
           <b-button
                   id="nonCom"
                   variant="dark"
