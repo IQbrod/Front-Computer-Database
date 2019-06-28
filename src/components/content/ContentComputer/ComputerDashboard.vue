@@ -1,5 +1,6 @@
 <template>
     <div id="cont">
+        <h1><b-badge pill variant="primary">{{this.count()}}</b-badge>   Computer Found</h1>
         <b-jumbotron id="jumb" lead="Computer DataBase">
             <computers />
         </b-jumbotron>
@@ -19,7 +20,8 @@
         },
         methods: {
             ...mapGetters([
-                'token'
+                'token',
+                'count'
             ])
         },
         mounted: function() {

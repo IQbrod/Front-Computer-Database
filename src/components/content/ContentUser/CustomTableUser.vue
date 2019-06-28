@@ -25,7 +25,7 @@
         <b-input-group>
           <b-input-group-append>
             <p v-if="!deleteMode">
-              <b-button id="btn" class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)">Delete</b-button>
+              <b-button id="btn" class="btn btn-danger" v-on:click="deleteMode=(!deleteMode)" v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)" >Delete</b-button>
               <b-button id="btn" v-b-modal.modal-2>New User</b-button>
 
               <b-modal ref="my-modal" id="modal-2" title="New User">
@@ -36,7 +36,7 @@
               </b-modal>
             </p>
             <p v-else>
-              <b-button id="btn" class="btn" v-on:click="deleteMode=(!deleteMode)">Cancel</b-button>
+              <b-button id="btn" class="btn" v-on:click="deleteMode=(!deleteMode)"   v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)" >Cancel</b-button>
             </p>
             <transition name="slide-fade">
               <div v-if="deleteMode && selectedDelete.length>0 ">
@@ -130,6 +130,13 @@ export default {
   methods: {
     ...mapMutations(["setSize", "setSearch", "setOrderBy"]),
     ...mapGetters(["size", "search"]),
+    selectAll(items) {
+      var res = [];
+      items.forEach(elem => {
+        res.push(elem.id);
+      });
+      return res;
+    },
     selectionDelete(render) {
       if (this.selectedDelete.includes(render.id) && this.deleteMode) {
         const index = this.selectedDelete.indexOf(render.id);

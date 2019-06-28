@@ -34,7 +34,7 @@
                   v-on:click="deleteMode=(!deleteMode)"
                   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
                 >{{ $t('message.delete', ['delete']) }}</b-button>
-          
+
                 <b-button
                   id="btn"
                   variant="primary"
@@ -51,7 +51,6 @@
                     >{{ $t('message.cancel', ['cancel'])}}</b-button>
                   </div>
                 </b-modal>
-               
               </p>
 
               <p v-else>
@@ -154,7 +153,7 @@
               <option
                 @click="newCompanyName='_'"
                 value="0"
-              >-- {{ $t('message.plsSelectCompany', ['plsSelectCompany']) }} --</option>
+              >{{ $t('message.plsSelectCompany', ['plsSelectCompany']) }}</option>
               <option
                 @click="newCompanyName=company.name"
                 v-for="company in companies"
@@ -170,7 +169,7 @@
 
       <template slot="update" slot-scope="row">
         <b-button
-          variant="info"
+          variant="primary"
           v-if="updating != row.item.id"
           :disabled="updating != row.item.id && updating !== null"
           size="sm"
@@ -180,14 +179,14 @@
         <span v-else>
           <b-button
             id="com"
-            variant="warning"
+            variant="primary"
             @click="updateManager([row.item.id, newName, newIntro, newDiscon, row.item.companyId, newCompanyName ], row.item)"
             size="sm"
             class="mr-2"
           >{{ $t('message.commit', ['commit']) }}</b-button>
           <b-button
-          id="nonCom"
-            variant="dark"
+            id="nonCom"
+            variant="danger"
             @click="updating=null"
             size="sm"
             class="mr-2"
@@ -335,10 +334,10 @@ export default {
   transform: translateX(100px);
   opacity: 0;
 }
-#com{
+#com {
   margin: 3px;
 }
-#nonCom{
+#nonCom {
   margin: 3px;
 }
 </style>
