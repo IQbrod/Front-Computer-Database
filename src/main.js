@@ -100,12 +100,14 @@ const store = new Vuex.Store({
         editToken(context, token) {
             context.commit('setToken', token)
         },
-
         editStoredLocale(context, storedLocale) {
             context.commit('setStoreLocale', storedLocale)
         },
         editLangage(context, lang) {
             context.commit('setLangage', lang)
+        },
+        resetToken(context) {
+            context.commit('setToken', '')
         }
     },
 
