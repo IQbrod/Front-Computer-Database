@@ -1,9 +1,10 @@
 <template>
     <div id="cont">
-        <b-jumbotron id="jumb" lead="Computer DataBase">
-            <computers />
+        <b-jumbotron id="jumb" lead="Computer DataBase" v-if="!this.permissionDenied">
+            <computers :togglePermissionDenied="togglePermissionDenied" />
         </b-jumbotron>
-        <pagination className="page"/>
+        <pagination className="page" v-if="!this.permissionDenied" />
+        <p v-else>Permission Denied !</p>
     </div>
 </template>
 
@@ -13,6 +14,11 @@
     import { mapGetters } from 'vuex'
     export default {
         name: "ComputerDashboard",
+        data() {
+            return {
+                permissionDenied: false
+            }
+        },
         components: {
             computers,
             pagination
@@ -20,7 +26,10 @@
         methods: {
             ...mapGetters([
                 'token'
-            ])
+            ]),
+            togglePermissionDenied: function() {
+                this.permissionDenied = true;
+            }
         },
         mounted: function() {
             if(!this.token()) {

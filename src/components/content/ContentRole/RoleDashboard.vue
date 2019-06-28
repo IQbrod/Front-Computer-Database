@@ -1,9 +1,10 @@
 <template>
     <div id="cont">
-        <b-jumbotron id="jumb" lead="Role DataBase">
-            <roles/>
+        <b-jumbotron id="jumb" lead="Role DataBase" v-if="!this.permissionDenied">
+            <roles :togglePermissionDenied="togglePermissionDenied"/>
         </b-jumbotron>
-        <pagination className="page"/>
+        <pagination className="page" v-if="!this.permissionDenied"/>
+        <p v-else>Permission Denied !</p>
     </div>
 </template>
 
@@ -14,6 +15,11 @@
 
     export default {
         name: "RoleDashboard",
+        data() {
+            return {
+                permissionDenied: false
+            }
+        },
         components: {
             roles,
             pagination
@@ -21,7 +27,10 @@
         methods: {
             ...mapGetters([
                 'token'
-            ])
+            ]),
+            togglePermissionDenied: function() {
+                this.permissionDenied = true;
+            }
         },
         mounted: function() {
             if(!this.token()) {

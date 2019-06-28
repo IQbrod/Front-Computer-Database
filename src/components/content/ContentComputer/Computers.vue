@@ -1,113 +1,133 @@
 <template>
-    <div>
-        <CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList"
-                         :add="this.add" :companies="this.companyList"></CustomTableOrdi>
-    </div>
+	<div>
+		<CustomTableOrdi striped hover :update="this.update" :delete="this.delete" :items="this.computerList"
+		                 :add="this.add" :companies="this.companyList"></CustomTableOrdi>
+	</div>
 </template>
 
 <script>
-    import CustomTableOrdi from "./CustomTableOrdi";
-    import axios from "axios";
-    import {mapGetters, mapMutations, mapState} from "vuex";
+	import CustomTableOrdi from "./CustomTableOrdi";
+	import axios from "axios";
+	import {mapGetters, mapMutations, mapState} from "vuex";
 
-    export default {
-        name: "computers",
-        props: ["updateVar", "componentUpdate"],
-        components: {CustomTableOrdi},
-        data() {
-            return {
-                computerList: [],
-                errors: [],
-                companyList: []
-            };
-        },
-        computed: {
-            ...mapGetters(["page", "size", "search", "count", "orderBy"]),
-            ...mapState(['count'])
-        },
-        methods: {
-            ...mapMutations([
-                'setCount'
-            ]),
-            ...mapGetters(["token"]),
-            headers() {
-                return { headers: {
-                        Authorization: "Bearer " + this.token()
-                    }
-                }
-            },
-            get() {
-                axios
-                    .get(
-                        "http://10.0.1.97:8080/cdb/api/computers" +
-                        "?page=" + this.page +
-                        "&size=" + this.size +
-                        "&search=" + this.search +
-                        "&orderBy="+ this.orderBy, this.headers()
-                    )
-                    .then(response => (this.computerList = response.data))
-                    .catch(e => {
-                        this.errors.push(e);
-                    });
-            },
-            delete(listId) {
-                listId.forEach(elem => {
-                    axios
-                        .delete("http://10.0.1.97:8080/cdb/api/computers/" + elem, this.headers())
-                        .then(() => this.get());
-                    this.setCount(this.count - 1);
-                });
-            },
-            update(computer) {
-                if (computer.introduction === '') computer.introduction = null;
-                if (computer.discontinued === '') computer.discontinued = null;
-                axios
-                    .put("http://10.0.1.97:8080/cdb/api/computers/", computer, this.headers()).then(() => this.get())
-                    .catch(e => {
-                        this.errors.push(e);
-                    });
-            },
-            add(computer) {
-                axios.post('http://10.0.1.97:8080/cdb/api/computers', computer, this.headers())
-                    .then(() => this.get());
-                this.setCount(this.count + 1);
-            },
-            getCompanies() {
-                axios
-                    .get('http://10.0.1.97:8080/cdb/api/companies', this.headers())
-                    .then(response => {
-                        this.companyList = response.data;
-                    })
-            },
-            countComputers() {
-                axios
-                    .get('http://10.0.1.97:8080/cdb/api/computers/count?search=' + this.search, this.headers())
-                    .then(response => {
-                        this.setCount(response.data);
-                    });
-            },
-        },
-        created() {
-            this.countComputers();
-            this.get();
-            this.getCompanies();
+	export default {
+		name: "computers",
+		props: ["togglePermissionDenied"],
+		components: {CustomTableOrdi},
+		data() {
+			return {
+				computerList: [],
+				errors: [],
+				companyList: []
+			};
+		},
+		computed: {
+			...mapGetters(["page", "size", "search", "count", "orderBy"]),
+			...mapState(['count'])
+		},
+		methods: {
+			...mapMutations([
+				'setCount'
+			]),
+			...mapGetters(["token"]),
+			permissionManager(error) {
+				if (this.token() && error.response.status === 403) {
+					this.togglePermissionDenied();
+				}
+			},
+			headers() {
+				return {
+					headers: {
+						Authorization: "Bearer " + this.token()
+					}
+				}
+			},
+			get() {
+				axios
+						.get(
+								"http://10.0.1.97:8080/cdb/api/computers" +
+								"?page=" + this.page +
+								"&size=" + this.size +
+								"&search=" + this.search +
+								"&orderBy=" + this.orderBy, this.headers()
+						)
+						.then(response => {
+							this.computerList = response.data;
+						})
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+			delete(listId) {
+				listId.forEach(elem => {
+					axios
+							.delete("http://10.0.1.97:8080/cdb/api/computers/" + elem, this.headers())
+							.then(() => this.get())
+							.catch(error => {
+								this.permissionManager(error);
+							});
+					this.setCount(this.count - 1);
+				});
+			},
+			update(computer) {
+				if (computer.introduction === '') computer.introduction = null;
+				if (computer.discontinued === '') computer.discontinued = null;
+				axios
+						.put("http://10.0.1.97:8080/cdb/api/computers/", computer, this.headers()).then(() => this.get())
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+			add(computer) {
+				axios.post('http://10.0.1.97:8080/cdb/api/computers', computer, this.headers())
+						.then(() => this.get())
+						.catch(error => {
+							this.permissionManager(error);
+						});
+				this.setCount(this.count + 1);
+			},
+			getCompanies() {
+				axios
+						.get('http://10.0.1.97:8080/cdb/api/companies', this.headers())
+						.then(response => {
+							this.companyList = response.data;
+						})
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+			countComputers() {
+				axios
+						.get('http://10.0.1.97:8080/cdb/api/computers/count?search=' + this.search, this.headers())
+						.then(response => {
+							this.setCount(response.data);
+						})
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+		},
+		created() {
+			this.countComputers();
+			this.get();
+			this.getCompanies();
 
-        },
-        watch: {
-            page: function () {
-                this.get();
-            },
-            size: function () {
-                this.get();
-            },
-            search: function () {
-                this.countComputers();
-                this.get();
-            },
-            orderBy: function () {
-                this.get();
-            }
-        }
-    };
+		},
+		watch: {
+			page: function () {
+				this.get();
+			},
+			size: function () {
+				this.get();
+			},
+			search: function () {
+				this.countComputers();
+				this.get();
+			},
+			orderBy: function () {
+				this.get();
+			}
+		}
+	};
 
 </script>
