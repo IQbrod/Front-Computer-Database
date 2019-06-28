@@ -13,7 +13,7 @@
 
 	export default {
 		name: 'roles',
-		props: ["updateVar", "componentUpdate"],
+		props: ["togglePermissionDenied"],
 		components: {CustomTableRole},
 		data() {
 			return {
@@ -32,6 +32,11 @@
 				'setCount'
 			]),
 			...mapGetters(["token"]),
+			permissionManager(error) {
+				if (this.token() && error.response.status === 403) {
+					this.togglePermissionDenied();
+				}
+			},
 			headers() {
 				return {
 					headers: {
@@ -40,12 +45,6 @@
 				}
 			},
 			get() {
-				console.log("http://10.0.1.97:8080/cdb/api/roles?" +
-										"page=" + this.page
-										+ "&size=" + this.size
-										+ "&search=" + this.search
-										+ "&orderBy=" + this.orderBy);
-				console.log(this.headers());
 				axios
 						.get(
 								"http://10.0.1.97:8080/cdb/api/roles?" +
@@ -55,28 +54,34 @@
 								+ "&orderBy=" + this.orderBy, this.headers()
 						)
 						.then(response => (this.roleList = response.data))
-						.catch(e => {
-							this.errors.push(e);
+						.catch(error => {
+							this.permissionManager(error);
 						});
 			},
 			delete(listId) {
 				listId.forEach(elem => {
 					axios
 							.delete("http://10.0.1.97:8080/cdb/api/roles/" + elem, this.headers())
-							.then(() => this.get());
+							.then(() => this.get())
+							.catch(error => {
+								this.permissionManager(error);
+							});
 					this.setCount(this.count - 1);
 				});
 			},
 			update(role) {
 				axios
 						.put("http://10.0.1.97:8080/cdb/api/roles/", role, this.headers())
-						.catch(e => {
-							this.errors.push(e);
+						.catch(error => {
+							this.permissionManager(error);
 						});
 			},
 			add(role) {
 				axios.post('http://10.0.1.97:8080/cdb/api/roles', role, this.headers())
-						.then(() => this.get());
+						.then(() => this.get())
+						.catch(error => {
+							this.permissionManager(error);
+						});
 				this.setCount(this.count + 1);
 			},
 			countRoles() {
@@ -84,6 +89,9 @@
 						.get('http://10.0.1.97:8080/cdb/api/roles/count?search=' + this.search, this.headers())
 						.then(response => {
 							this.setCount(response.data);
+						})
+						.catch(error => {
+							this.permissionManager(error);
 						});
 			}
 		},

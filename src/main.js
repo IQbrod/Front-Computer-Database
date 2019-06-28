@@ -13,6 +13,7 @@ import RoleDashboard from './components/content/ContentRole/RoleDashboard'
 import Login from './components/content/Login'
 
 Vue.config.productionTip = false;
+
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(Vuex);

@@ -66,7 +66,6 @@
 				};
 				axios(authOptions).then(response => {
 					this.setToken(response.data);
-					console.log("token in form : " + this.token());
 				    this.$router.go(-1);
 				}).catch(function (error) {
 					console.log(error);

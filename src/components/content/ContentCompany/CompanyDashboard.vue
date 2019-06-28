@@ -1,9 +1,10 @@
 <template>
     <div id="cont">
-        <b-jumbotron id="jumb" lead="Company DataBase">
-            <companies/>
+        <b-jumbotron id="jumb" lead="Company DataBase" v-if="!this.permissionDenied">
+            <companies :togglePermissionDenied="togglePermissionDenied"/>
         </b-jumbotron>
-        <pagination className="page"/>
+        <pagination className="page" v-if="!this.permissionDenied" />
+        <p v-else>Permission Denied !</p>
     </div>
 </template>
 
@@ -14,6 +15,11 @@
 
     export default {
         name: "CompanyDashboard",
+        data() {
+            return {
+                permissionDenied: false
+            }
+        },
         components: {
             companies,
             pagination
@@ -21,7 +27,10 @@
         methods: {
             ...mapGetters([
                 'token'
-            ])
+            ]),
+            togglePermissionDenied: function() {
+                this.permissionDenied = true;
+            }
         },
         mounted: function() {
             if(!this.token()) {

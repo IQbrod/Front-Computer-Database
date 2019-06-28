@@ -1,110 +1,135 @@
 <template>
-    <div>
-        <CustomTableUser striped hover :items="this.userList" :update="this.update" :add="this.add" :delete="this.delete" :roles="this.roleList"></CustomTableUser>
-    </div>
+	<div>
+		<CustomTableUser striped hover :items="this.userList" :update="this.update"
+		                 :add="this.add"
+		                 :delete="this.delete" :roles="this.roleList"></CustomTableUser>
+	</div>
 </template>
 
 <script>
-    import CustomTableUser from './CustomTableUser';
-    import axios from "axios";
-    import { mapGetters , mapState, mapMutations} from 'vuex';
+	import CustomTableUser from './CustomTableUser';
+	import axios from "axios";
+	import {mapGetters, mapState, mapMutations} from 'vuex';
 
-    export default {
-        name : 'users',
-        components: {CustomTableUser},
-        data() {
-            return {
-                userList: [],
-                errors: [],
-                roleList: []
-            }
-        },
-        computed: {
-            ...mapGetters([
-                'page',
-                'size', "search", "count","orderBy"]),
-            ...mapState(['count'])
-        },
-        methods:{
-            ...mapMutations([
-                'setCount'
-            ]),
-            ...mapGetters(["token"]),
-            headers() {
-                return { headers: {
-                        Authorization: "Bearer " + this.token()
-                    }
-                }
-            },
-            get() {
-                axios
-                    .get(
-                            "http://10.0.1.97:8080/cdb/api/users" +
-                            "?page=" + this.page +
-                            "&size=" + this.size +
-                            "&search=" + this.search +
-                            "&orderBy=" + this.orderBy, this.headers()
-                        )
-                        .then(response => (this.userList = response.data))
-                        .catch(e => {
-                            this.errors.push(e);
-                        });
-                    },
-            delete(listId) {
-            listId.forEach(elem => {
-                axios
-                .delete("http://10.0.1.97:8080/cdb/api/users/" + elem, this.headers())
-                .then(() => this.get());
-                this.setCount(this.count - 1);
-            });
-            },
-            update(user) {
-                axios
-                        .put("http://10.0.1.97:8080/cdb/api/users/", user, this.headers()).then(()=>this.get())
-                        .catch(e => {
-                            this.errors.push(e);
-                        });
-            },
-            add(user){
-            axios.post('http://10.0.1.97:8080/cdb/api/users', user, this.headers())
-                    .then(()=>this.get());
-                this.setCount(this.count + 1);
-            },
-            getRoles(){
-            axios
-                .get("http://10.0.1.97:8080/cdb/api/roles", this.headers())
-                .then(response => {
-                    this.roleList = response.data
-                })
-            },
-            countUsers() {
-                axios
-                        .get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search, this.headers())
-                        .then(response => {
-                            this.setCount(response.data);
-                        });
-            }
-        },
-        created() {
-            this.countUsers();
-            this.get();
-            this.getRoles();
-        },
-        watch: {
-            page: function() {
-                this.get()
-            },
-            size: function() {
-                this.get()
-            },
+	export default {
+		name: 'users',
+		props: ["togglePermissionDenied"],
+		components: {CustomTableUser},
+		data() {
+			return {
+				userList: [],
+				errors: [],
+				roleList: []
+			}
+		},
+		computed: {
+			...mapGetters([
+				'page',
+				'size', "search", "count", "orderBy"]),
+			...mapState(['count'])
+		},
+		methods: {
+			...mapMutations([
+				'setCount'
+			]),
+			...mapGetters(["token"]),
+			permissionManager(error) {
+				if (this.token() && error.response.status === 403) {
+					this.togglePermissionDenied()
+				}
+			},
+			headers() {
+				return {
+					headers: {
+						Authorization: "Bearer " + this.token()
+					}
+				}
+			},
+			get() {
+				axios
+						.get(
+								"http://10.0.1.97:8080/cdb/api/users" +
+								"?page=" + this.page +
+								"&size=" + this.size +
+								"&search=" + this.search +
+								"&orderBy=" + this.orderBy, this.headers()
+						)
+						.then(response => {
+							this.userList = response.data
+						})
+						.catch(error => {
+							this.permissionManager(error);
+						});
 
-            orderBy: function () {
-                this.get();
-            },
-            search: function() {
-                this.countUsers();
-                this.get();
-             }
-        }
-    }
+			},
+			delete(listId) {
+				listId.forEach(elem => {
+					axios
+							.delete("http://10.0.1.97:8080/cdb/api/users/" + elem, this.headers())
+							.then(() => this.get())
+							.catch(error => {
+								this.permissionManager(error);
+							});
+					this.setCount(this.count - 1);
+				});
+			},
+			update(user) {
+				axios
+						.put("http://10.0.1.97:8080/cdb/api/users/", user, this.headers())
+						.then(() => this.get())
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+			add(user) {
+				axios.post('http://10.0.1.97:8080/cdb/api/users', user, this.headers())
+						.then(() => this.get())
+						.catch(error => {
+							this.permissionManager(error);
+						});
+				this.setCount(this.count + 1);
+			},
+			getRoles() {
+				axios
+						.get("http://10.0.1.97:8080/cdb/api/roles", this.headers())
+						.then(response => {
+							this.roleList = response.data
+						})
+						.catch(error => {
+							this.permissionManager(error);
+						});
+			},
+			countUsers() {
+				axios
+						.get('http://10.0.1.97:8080/cdb/api/users/count?search=' + this.search, this.headers())
+						.then(response => {
+							this.setCount(response.data);
+						})
+						.catch(error => {
+						  this.permissionManager(error);
+						});
+			}
+		},
+		created() {
+			this.countUsers();
+			this.get();
+			this.getRoles();
+		},
+		watch: {
+			page: function () {
+				this.get()
+			},
+			size: function () {
+				this.get()
+			},
+
+			orderBy: function () {
+				this.get();
+			},
+			search: function () {
+				this.countUsers();
+				this.get();
+			}
+		}
+	}
 </script>
