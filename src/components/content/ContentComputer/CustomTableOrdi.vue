@@ -2,7 +2,7 @@
   <b-container fluid>
     <!-- User Interface controls -->
     <b-row>
-      <b-col md="6" class="my-1">
+      <b-col md="4" class="my-1">
         <b-form-group label-cols-sm="3" :label=" $t('message.filter', ['filter']) " class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" :placeholder="$t('message.searchType', ['searchType'])"></b-form-input>
@@ -16,14 +16,12 @@
         </b-form-group>
       </b-col>
 
-      <b-col md="6" class="my-1">
+      <b-col md="4" class="my-1">
         <b-form-group label-cols-sm="3" :label="$t('message.perPage', ['perPage'])" class="mb-0">
           <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
         </b-form-group>
       </b-col>
-    </b-row>
-    <b-row>
-      <b-col md="6" class="my-1">
+      <b-col md="4" class="my-1">
         <b-input-group>
           <b-input-group-append>
             <transition name="slide-fade">
@@ -36,7 +34,7 @@
                   v-on:click="deleteMode=(!deleteMode)"
                   v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
                 >{{ $t('message.delete', ['delete']) }}</b-button>
-
+          
                 <b-button
                   id="btn"
                   variant="primary"
@@ -53,12 +51,13 @@
                     >{{ $t('message.cancel', ['cancel'])}}</b-button>
                   </div>
                 </b-modal>
+               
               </p>
 
               <p v-else>
                 <b-button
                   id="btn"
-                  variant="success"
+                  variant="primary"
                   class="btn"
                   v-b-popover.hover="'Double click to deselect all elements currently in the table'"
                   title="Hint"
