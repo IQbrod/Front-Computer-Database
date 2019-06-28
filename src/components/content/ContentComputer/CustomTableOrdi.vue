@@ -3,9 +3,9 @@
     <!-- User Interface controls -->
     <b-row>
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+        <b-form-group label-cols-sm="3" :label=" $t('message.filter', ['filter']) " class="mb-0">
           <b-input-group>
-            <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+            <b-form-input v-model="filter" :placeholder="$t('message.searchType', ['searchType'])" ></b-form-input>
             <b-input-group-append>
               <b-button
                 :disabled="!filter"
@@ -17,7 +17,7 @@
       </b-col>
 
       <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+        <b-form-group label-cols-sm="3" :label="$t('message.perPage', ['perPage'])" class="mb-0">
           <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
         </b-form-group>
       </b-col>
@@ -35,7 +35,7 @@
                 v-on:click="deleteMode=(!deleteMode)"
                 v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
               >{{ $t('message.delete', ['delete']) }}</b-button>
-              <b-button id="btn" v-b-modal.modal-2>Add Computer</b-button>
+              <b-button id="btn" v-b-modal.modal-2>{{ $t('message.addComputer', ['addComputer']) }}</b-button>
 
               <b-modal ref="my-modal" id="modal-2" title="New Computer">
                 <AddForm :add="this.add" :hideModal="this.hideModal" :companies="this.companies"></AddForm>

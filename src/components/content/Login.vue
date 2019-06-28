@@ -1,11 +1,11 @@
 <template>
   <b-form id="form" @submit="onSubmit" @reset="onReset" :v-if="show">
     <b-form-group id="input-group-1" :label="$t('message.userName', ['userName'])" label-for="input-1">
-      <b-form-input id="input-1" v-model="form.username" required placeholder="Enter username"></b-form-input>
+      <b-form-input id="input-1" v-model="form.username" required :placeholder="$t('message.userEnter', ['userEnter'])"></b-form-input>
     </b-form-group>
 
     <b-form-group id="input-group-2" :label="$t('message.password', ['password'])" label-for="input-2">
-      <b-form-input id="input-2" v-model="form.password" required placeholder="Enter password" type="password"></b-form-input>
+      <b-form-input id="input-2" v-model="form.password" required :placeholder="$t('message.passwordEnter', ['passwordEnter'])" type="password"></b-form-input>
     </b-form-group>
     <div>
       <b-button id="btn" type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
@@ -27,7 +27,7 @@
 
 <script>
 import axios from "axios";
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "Login.vue",
   data() {
@@ -43,7 +43,6 @@ export default {
   methods: {
     ...mapMutations(["setToken"]),
     ...mapGetters(["token"]),
-    ...mapActions(["editLangage"]),
     onSubmit(evt) {
       evt.preventDefault();
       this.getToken(this.form);

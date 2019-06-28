@@ -3,7 +3,7 @@
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-form-group
                     id="input-group-1"
-                    label="Computer Name:"
+                    :label="$t('message.computerName', ['computerName'])"
                     label-for="input-name"
                     description="The name of that new computer"
             >
@@ -11,11 +11,11 @@
                         id="input-name"
                         v-model="computer.name"
                         required
-                        placeholder="Computer Name"
+                        :placeholder="$t('message.computerName', ['computerName'])"
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-2" label="introduction Date:" label-for="input-introduction">
+            <b-form-group id="input-group-2" :label="$t('message.introductionDate', ['introductionDate'])" label-for="input-introduction">
                 <b-form-input
                         id="input-introduction"
                         v-model="computer.introduction"
@@ -24,7 +24,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-3" label="Discontinued Date:" label-for="input-discontinued">
+            <b-form-group id="input-group-3" :label="$t('message.discontinuedDate', ['discontinuedDate'])" label-for="input-discontinued">
                 <b-form-input
                         id="input-discontinued"
                         v-model="computer.discontinued"
@@ -33,7 +33,7 @@
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-4" label="Company:" label-for="input-company">
+            <b-form-group id="input-group-4" :label="$t('message.company', ['company'])" label-for="input-company">
                 <b-form-select
                         id="input-company"
                         v-model="computer.companyId"
@@ -46,8 +46,8 @@
                 </b-form-select>
             </b-form-group>
             <div slot="modal-footer">
-                <b-button type="submit" variant="primary">Submit</b-button>
-                <b-button type="reset" variant="danger">Reset</b-button>
+                <b-button type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
+                <b-button type="reset" variant="danger">{{ $t('message.reset', ['reset']) }}</b-button>
             </div>
         </b-form>
 
