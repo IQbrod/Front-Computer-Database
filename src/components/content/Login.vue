@@ -7,10 +7,11 @@
     <b-form-group id="input-group-2" label="Password :" label-for="input-2">
       <b-form-input id="input-2" v-model="form.password" required placeholder="Enter password"></b-form-input>
     </b-form-group>
-
-    <b-button type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
-    <b-button type="reset" variant="danger">{{ $t('message.reset', ['reset']) }}</b-button>
     <div>
+      <b-button id="btn" type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
+      <b-button type="reset" variant="danger">{{ $t('message.reset', ['reset']) }}</b-button>
+    </div>
+    <div id="pop">
       <b-alert
         :show="dismissCountDown"
         dismissible
@@ -19,7 +20,6 @@
         @dismiss-count-down="countDownChanged"
       >
         <p>Connection error please check your credentials.</p>
-        <b-progress variant="warning" :max="4" :value="dismissCountDown" height="4px"></b-progress>
       </b-alert>
     </div>
   </b-form>
@@ -27,7 +27,7 @@
 
 <script>
 import axios from "axios";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "Login.vue",
   data() {
@@ -90,5 +90,11 @@ export default {
 <style scoped>
 #form {
   margin: 5% 20% 0 20%;
+}
+#pop {
+  margin-top: 4%;
+}
+#btn{
+  margin-right: 2%;
 }
 </style>
