@@ -129,7 +129,7 @@ const messages = {
             filter: 'Filter',
             clear: 'Clear',
             search: 'Search',
-            lang: 'Lang',
+            lang: 'Langage',
             delete: 'Delete',
             cancel: 'Cancel',
             update: 'Update',
@@ -140,6 +140,8 @@ const messages = {
             user: 'Users',
             userName: 'User name',
             role: 'Roles',
+            roleId: 'Role id',
+            roleName: 'Role name',
             signIn: 'Sign in',
             signOut: 'Sign out',
             deleteWarning:'Are you sure you want to delete ?',
@@ -150,6 +152,7 @@ const messages = {
             commit: 'commit',
             reset: 'reset',
             submit: 'submit',
+            password: 'password',
         }
     },
 
@@ -179,6 +182,8 @@ const messages = {
             user: 'Utilisateurs',
             userName: 'Nom d\'utilisateur',
             role: 'Roles',
+            roleId: 'Role identifiant',
+            roleName: 'Nom du role',
             signIn: 'Se connecter',
             signOut: 'Se deconnecter',
             deleteWarning:'Etes vous sûr de vouloir effacer ?',
@@ -189,6 +194,7 @@ const messages = {
             commit: 'commit',
             reset: 'Annuler',
             submit: 'Se connecter',
+            password: 'mot de passe',
         }
     },
 };

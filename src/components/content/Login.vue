@@ -5,7 +5,7 @@
     </b-form-group>
 
     <b-form-group id="input-group-2" label="Password :" label-for="input-2">
-      <b-form-input id="input-2" v-model="form.password" required placeholder="Enter password"></b-form-input>
+      <b-form-input id="input-2" v-model="form.password" required placeholder="Enter password" type="password"></b-form-input>
     </b-form-group>
     <div>
       <b-button id="btn" type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
