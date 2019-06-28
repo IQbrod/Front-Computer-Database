@@ -1,7 +1,7 @@
 <template>
     <div id="cont">
-        <h1><b-badge pill variant="primary">{{this.count()}}</b-badge> Computers Found</h1>
-        <b-jumbotron id="jumb" lead="Computer DataBase" v-if="!this.permissionDenied">
+        <h1><b-badge pill variant="primary">{{this.count()}}</b-badge>{{ $t('message.computerFound', ['computerFound']) }}</h1>
+        <b-jumbotron id="jumb" :lead="$t('message.computerDatabase', ['computerDatabse'])" v-if="!this.permissionDenied">
             <computers :togglePermissionDenied="togglePermissionDenied" />
         </b-jumbotron>
         <pagination className="page" v-if="!this.permissionDenied" />

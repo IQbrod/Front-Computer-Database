@@ -17,8 +17,8 @@
 
 
             <div slot="modal-footer">
-                <b-button type="submit" variant="primary" >Submit</b-button>
-                <b-button type="reset" variant="danger" >Reset</b-button>
+                <b-button type="submit" variant="primary" >{{$t('message.submit', ['submit'])}}</b-button>
+                <b-button type="reset" variant="danger" >{{$t('message.reset', ['reset'])}}</b-button>
             </div >
         </b-form>
 

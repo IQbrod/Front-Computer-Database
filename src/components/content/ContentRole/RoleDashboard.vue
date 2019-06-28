@@ -1,7 +1,7 @@
 <template>
     <div id="cont">
-        <h1 v-if="!this.permissionDenied"><b-badge pill variant="primary">{{this.count()}}</b-badge> Roles Found</h1>
-        <b-jumbotron id="jumb" lead="Role DataBase" v-if="!this.permissionDenied">
+        <h1 v-if="!this.permissionDenied"><b-badge pill variant="primary">{{this.count()}}</b-badge> {{ $t('message.roleFound', ['roleFound']) }}</h1>
+        <b-jumbotron id="jumb" :lead="$t('message.roleDatabase', ['roleDatabse'])" v-if="!this.permissionDenied">
             <roles :togglePermissionDenied="togglePermissionDenied"/>
         </b-jumbotron>
         <pagination className="page" v-if="!this.permissionDenied"/>

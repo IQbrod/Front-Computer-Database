@@ -8,14 +8,14 @@
                         <b-form-input v-model="filter"
                                       :placeholder="$t('message.searchType', ['searchType'])"></b-form-input>
                         <b-input-group-append>
-                            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                            <b-button :disabled="!filter" @click="filter = ''">{{ $t('message.clear', ['clear']) }}</b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
             </b-col>
 
             <b-col md="4" class="my-1">
-                <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+                <b-form-group label-cols-sm="3" :label=" $t('message.perPage', ['perPage']) " class="mb-0">
                     <b-form-select v-model="currentSize" :options="pageOptions"></b-form-select>
                 </b-form-group>
             </b-col>
@@ -27,13 +27,13 @@
                             <p v-if="!deleteMode">
                                 <b-button   id="btn"
                                             class="btn btn-danger"
-                                            v-b-popover.hover="'Double click to select all elements currently in the table'"
+                                            v-b-popover.hover="$t('message.hintDoubleCheck', ['hintDoubleCheck'])"
                                             title="Hint"
                                             v-on:click="deleteMode=(!deleteMode)"
                                             v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
-                                >Delete
+                                >{{ $t('message.delete', ['delete']) }}
                                 </b-button>
-                                <b-button id="btn" variant="primary" v-b-modal.modal-2>Add Company</b-button>
+                                <b-button id="btn" variant="primary" v-b-modal.modal-2>{{ $t('message.addCompany', ['addCompany']) }}</b-button>
 
                                 <b-modal ref="my-modal" id="modal-2" title="New Company">
                                     <AddForm :add="this.add" :hideModal="this.hideModal"></AddForm>
@@ -46,16 +46,16 @@
                                 <b-button   id="btn"
                                             variant="primary"
                                             class="btn"
-                                            v-b-popover.hover="'Double click to deselect all elements currently in the table'"
+                                            v-b-popover.hover="$t('message.hintDoubleCheck2', ['hintDoubleCheck2'])"
                                             title="Hint"
                                             v-on:click="deleteMode=(!deleteMode)"
                                             v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
-                                >Cancel</b-button>
+                                >{{ $t('message.cancel', ['cancel']) }}</b-button>
                             </p>
                         </transition>
                         <transition name="slide-fade">
                             <div v-if="deleteMode && selectedDelete.length>0 ">
-                                <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
+                                <b-button v-b-modal.modal-1 class="btn btn-danger">{{ $t('message.validate', ['validate']) }}</b-button>
 
                                 <b-modal id="modal-1" title="Are you sure you want to delete ?" hide-footer>
                                     <template slot="modal-title">{{ $t('message.deleteWarning', ['deleteWarning']) }}
@@ -185,7 +185,7 @@
             return {
                 filter: this.search(),
                 pageOptions: [10, 50, 100],
-                fields: [{key: "name", sortable: true}, "update"],
+                fields: [{key: "name", sortable: true,  label: this.$t('message.name', ['name'])}, {key:"update",  label: this.$t('message.update', ['update'])}],
                 updating: null,
                 currentSize: this.size(),
                 selectedDelete: [],

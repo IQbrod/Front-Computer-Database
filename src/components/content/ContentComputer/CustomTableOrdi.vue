@@ -31,7 +31,7 @@
                                 <b-button
                                         id="btn"
                                         class="btn btn-danger"
-                                        v-b-popover.hover="'Double click to select all elements currently in the table'"
+                                        v-b-popover.hover="$t('message.hintDoubleCheck', ['hintDoubleCheck'])"
                                         title="Hint"
                                         v-on:click="deleteMode=(!deleteMode)"
                                         v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
@@ -65,7 +65,7 @@
                                         id="btn"
                                         variant="primary"
                                         class="btn"
-                                        v-b-popover.hover="'Double click to deselect all elements currently in the table'"
+                                        v-b-popover.hover="$t('message.hintDoubleCheck2', ['hintDoubleCheck2'])"
                                         title="Hint"
                                         v-on:click="deleteMode=(!deleteMode)"
                                         v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
@@ -224,12 +224,12 @@
                 pageOptions: [10, 50, 100],
                 perPage: 10,
                 fields: [
-                    {key: "name", sortable: true},
-                    {key: "introduction", sortable: true},
-                    {key: "discontinued", sortable: true},
-                    {key: "companyId", sortable: true},
-                    {key: "companyName", sortable: true},
-                    {key: "update"}
+                    {key: "name", sortable: true,  label: this.$t('message.name', ['name'])},
+                    {key: "introduction", sortable: true,  label: this.$t('message.introduction', ['introduction'])},
+                    {key: "discontinued", sortable: true,  label: this.$t('message.discontinued', ['discontinued'])},
+                    {key: "companyId", sortable: true,  label: this.$t('message.companyId', ['comapnyId'])},
+                    {key: "companyName", sortable: true,  label: this.$t('message.companyName', ['companyName'])},
+                    {key: "update",  label: this.$t('message.update', ['update'])}
                 ],
                 updating: null,
                 currentSize: this.size(),

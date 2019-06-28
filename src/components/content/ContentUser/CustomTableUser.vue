@@ -5,9 +5,9 @@
             <b-col md="4" class="my-1">
                 <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
                     <b-input-group>
-                        <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+                        <b-form-input v-model="filter" placeholder="$t('message.searchType', ['searchType'])"></b-form-input>
                         <b-input-group-append>
-                            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                            <b-button :disabled="!filter" @click="filter = ''">{{$t('message.clear', ['clear'])}}</b-button>
                         </b-input-group-append>
                     </b-input-group>
                 </b-form-group>
@@ -25,7 +25,7 @@
                             <b-button
                                     id="btn"
                                     class="btn btn-danger"
-                                    v-b-popover.hover="'Double click to select all elements currently in the table'"
+                                    v-b-popover.hover="$t('message.hintDoubleCheck', ['hintDoubleCheck']) "
                                     title="Hint"
                                     v-on:click="deleteMode=(!deleteMode)"
                                     v-on:dblclick="selectedDelete=selectAll(items),deleteMode=(!deleteMode)"
@@ -35,7 +35,7 @@
                                     id="btn"
                                     variant="primary"
                                     v-b-modal.modal-2
-                            >New User
+                            >{{ $t('message.addUser', ['addUser']) }}
                             </b-button>
 
                             <b-modal ref="my-modal" id="modal-2" title="New User">
@@ -56,7 +56,7 @@
                                     id="btn"
                                     variant="primary"
                                     class="btn"
-                                    v-b-popover.hover="'Double click to deselect all elements currently in the table'"
+                                    v-b-popover.hover="$t('message.hintDoubleCheck2', ['hintDoubleCheck2']) "
                                     title="Hint"
                                     v-on:click="deleteMode=(!deleteMode)"
                                     v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
@@ -127,7 +127,7 @@
                 <p v-else>
                     <b-form-select id="input-role" v-model="row.item.roleId">
                         <template slot="first">
-                            <option @click="newRoleName='_'" value="0">-- Please select a role --</option>
+                            <option @click="newRoleName='_'" value="0">{{ $t('message.selectRole', ['selectRole']) }}</option>
                             <option
                                     @click="newRoleName=role.name"
                                     v-for="role in roles"
@@ -228,11 +228,11 @@
                 pageOptions: [10, 50, 100],
 
                 fields: [
-                    {key: "username", sortable: true},
-                    {key: "password"},
-                    {key: "roleId", sortable: true},
-                    {key: "roleName", sortable: true},
-                    {key: "update"}
+                    {key: "username", sortable: true,  label: this.$t('message.userName', ['userName'])},
+                    {key: "password",  label: this.$t('message.password', ['password'])},
+                    {key: "roleId", sortable: true,  label: this.$t('message.roleId', ['RoleId'])},
+                    {key: "roleName", sortable: true,  label: this.$t('message.roleName', ['RoleName'])},
+                    {key: "update",  label: this.$t('message.update', ['update'])}
                 ],
                 updating: null,
                 perPage: 10,
