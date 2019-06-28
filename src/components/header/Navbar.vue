@@ -12,14 +12,14 @@
                 <b-navbar-nav class="ml-auto">
 
 
-                    <b-nav-item-dropdown text="List" right>
+                    <b-nav-item-dropdown :text="$t('message.list', ['list'])"  right>
                         <b-dropdown-item to='/computers'>{{ $t('message.computer', ['computer']) }}</b-dropdown-item>
                         <b-dropdown-item to='/companies'>{{ $t('message.company', ['company']) }}</b-dropdown-item>
                         <b-dropdown-item to='/users'>{{ $t('message.user', ['user']) }}</b-dropdown-item>
                         <b-dropdown-item to='/roles'>{{ $t('message.role', ['role']) }}</b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown text="Lang" right>
+                    <b-nav-item-dropdown :text="$t('message.lang', ['lang'])" right>
                         <b-dropdown-item href="#"  @click="editLangage('en')">{{ $t('message.applicationLangEN', ['applicationLangEN']) }}</b-dropdown-item>
                         <b-dropdown-item href="#" @click="editLangage('fr')">{{ $t('message.applicationLangFR', ['applicationLangFR']) }}</b-dropdown-item>
                     </b-nav-item-dropdown>
