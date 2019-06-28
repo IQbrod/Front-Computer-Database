@@ -1,5 +1,6 @@
 <template>
     <div id="cont">
+        <h1><b-badge pill variant="primary">{{this.count()}}</b-badge> Companies Found</h1>
         <b-jumbotron id="jumb" lead="Company DataBase" v-if="!this.permissionDenied">
             <companies :togglePermissionDenied="togglePermissionDenied"/>
         </b-jumbotron>
@@ -26,7 +27,7 @@
         },
         methods: {
             ...mapGetters([
-                'token'
+                'token', 'count'
             ]),
             togglePermissionDenied: function() {
                 this.permissionDenied = true;

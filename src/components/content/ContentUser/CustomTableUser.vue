@@ -143,7 +143,7 @@
 
             <template slot="update" slot-scope="row">
                 <b-button
-                        variant="info"
+                        variant="primary"
                         v-if="updating != row.item.id"
                         :disabled="updating != row.item.id && updating !== null"
                         size="sm"
@@ -154,14 +154,14 @@
                 <span v-else>
           <b-button
                   id="com"
-                  variant="warning"
+                  variant="primary"
                   @click="updateManager([row.item.id,newUserName ,row.item.roleId , newRoleName], row.item)"
                    size="sm"
                   class="mr-2"
           >Validate</b-button>
           <b-button
                   id="nonCom"
-                  variant="dark"
+                  variant="danger"
                   @click="updating=null"
                   size="sm"
                   class="mr-2"
@@ -190,6 +190,13 @@
                 } else if (this.deleteMode) {
                     this.selectedDelete.push(render.id);
                 }
+            },
+            selectAll(items) {
+                var res = [];
+                items.forEach(elem => {
+                    res.push(elem.id);
+                });
+                return res;
             },
             validationSupression: function () {
                 this.delete(this.selectedDelete);
@@ -240,12 +247,18 @@
         },
         watch: {
             currentSize: function (value) {
+                this.updating = null;
+                this.selectedDelete = [];
                 this.setSize(value);
             },
             sortBy: function (value) {
+                this.updating = null;
+                 this.selectedDelete = [];
                 this.setOrderBy(value);
             },
             filter: function (value) {
+                this.updating = null;
+                this.selectedDelete = [];
                 this.setSearch(value);
             },
             page: function () {
@@ -253,7 +266,9 @@
                 this.selectedDelete = [];
             },
             sortDesc: function (value) {
-                if (value) {
+            this.updating = null;
+                this.selectedDelete = []; 
+                              if (value) {
                     this.setOrderBy(this.sortBy + "_rev");
                 } else this.setOrderBy(this.sortBy);
             }
