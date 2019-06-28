@@ -40,7 +40,7 @@
 
                             <b-modal ref="my-modal" id="modal-2" title="New User">
                                 <AddForm :add="this.add" :hideModal="this.hideModal"
-                                         :companies="this.companies"></AddForm>
+                                         :roles="this.roles"></AddForm>
                                 <div slot="modal-footer">
                                     <b-button
                                             id="btn"
