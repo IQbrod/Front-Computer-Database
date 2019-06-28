@@ -10,7 +10,7 @@
     <div>
       <b-button id="btn" type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
       <b-button type="reset" variant="danger">{{ $t('message.reset', ['reset']) }}</b-button>
-      <b-button v-b-modal.modal-1>Create an account</b-button>
+      <b-button v-b-modal.modal-1>{{ $t('message.createAccount', ['createAccount']) }}</b-button>
     </div>
     <div id="pop">
       <b-alert
@@ -23,36 +23,36 @@
         <p>{{ $t('message.connexionError', ['connexionError']) }}</p>
       </b-alert>
 
-  <b-modal id="modal-1" title="Register" ref="modal-add-user" :hideFooter="true">
+  <b-modal id="modal-1" :title=" $t('message.register', ['register'])" ref="modal-add-user" :hideFooter="true">
     <b-form>
       <b-form>
         <b-form-group
                 id="input-group-1"
-                label="Username:"
+                :label="$t('message.userName', ['userName'])"
         >
           <b-form-input
                   id="input-username"
                   v-model="newUser.username"
                   required
-                  placeholder="Username"
+                  :placeholder="$t('message.userName', ['userName'])"
           ></b-form-input>
         </b-form-group>
 
         <b-form-group
                 id="input-group-2"
-                label="Password :">
+                :label="$t('message.password', ['password'])">
           <b-form-input
                   type="password"
                   id="input-password"
                   v-model="newUser.password"
                   required
-                  placeholder="Password"
+                  :placeholder="$t('message.password', ['password'])"
           ></b-form-input>
         </b-form-group>
 
         <div slot="modal-footer">
-          <b-button type="submit" @click="add()" variant="primary">Submit</b-button>
-          <b-button type="cancel" id="btn" slot="modal-cancel">Cancel</b-button>
+          <b-button type="submit" @click="add()" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
+          <b-button type="cancel" id="btn" slot="modal-cancel">{{ $t('message.cancel', ['cancel']) }}</b-button>
         </div >
       </b-form>
 

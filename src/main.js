@@ -180,6 +180,8 @@ const messages = {
             computerDatabase: 'Computer Database',
             roleDatabase: 'Role Database',
             userDatabase: 'User Database',
+            createAccount: 'Create an account',
+            register: 'Register',
         }
     },
 
@@ -193,7 +195,7 @@ const messages = {
             introductionDate: 'Date d\'introduction',
             discontinued: 'Suspension',
             discontinuedDate: 'Date de suspension',
-            companyId: 'Companie Id',
+            companyId: 'Id Entreprise',
             companyName: 'Nom de l\'entreprise',
             applicationLangFR: 'Français',
             applicationLangEN: 'Anglais',
@@ -245,6 +247,8 @@ const messages = {
             computerDatabase: 'Base de donnée des PC',
             roleDatabase: 'Base de donnée des roles',
             userDatabase: 'Base de donnée des utilisateurs',
+            createAccount: 'Créer un compte',
+            register: 'S\'inscrire',
 
         }
     },
