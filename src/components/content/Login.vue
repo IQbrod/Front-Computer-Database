@@ -23,7 +23,7 @@
         <p>{{ $t('message.connexionError', ['connexionError']) }}</p>
       </b-alert>
 
-  <b-modal id="modal-1" title="Register" ref="modal-add-user">
+  <b-modal id="modal-1" title="Register" ref="modal-add-user" :hideFooter="true">
     <b-form>
       <b-form>
         <b-form-group
