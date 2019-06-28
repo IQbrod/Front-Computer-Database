@@ -62,7 +62,8 @@
                   v-on:dblclick="selectedDelete=selectedDelete=[],deleteMode=(!deleteMode)"
                 >Cancel</b-button>
               </p>
-
+            </transition>
+            <transition name="slide-fade">
               <div v-if="deleteMode && selectedDelete.length>0 ">
                 <b-button v-b-modal.modal-1 class="btn btn-danger">Validate</b-button>
 
