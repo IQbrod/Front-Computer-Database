@@ -7,7 +7,7 @@
           <b-input-group>
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
             <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+              <b-button :disabled="!filter" @click="filter = ''"> label: this.$t('message.clear', ['clear'])</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
@@ -130,7 +130,7 @@ export default {
     return {
       filter: null,
       pageOptions: [10, 50, 100],
-      fields: [{ key: "name", sortable: true }, "update"],
+      fields: [{ key: "name", sortable: true ,  label: this.$t('message.name', ['name'])}, {key:"update",  label: this.$t('message.update', ['update'])}],
       updating: null,
       currentSize: this.size(),
       selectedDelete: [],

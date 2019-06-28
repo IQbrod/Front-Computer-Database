@@ -195,12 +195,12 @@ export default {
       pageOptions: [10, 50, 100],
       perPage: 10,
       fields: [
-        { key: "name", sortable: true, label:"{{$t('message.name', ['name'])}}" },
-        { key: "introduction", sortable: true },
-        { key: "discontinued", sortable: true },
-        { key: "companyId", sortable: true },
-        { key: "companyName", sortable: true },
-        { key: "update" }
+        { key: "name", sortable: true, label: this.$t('message.name', ['name']) },
+        { key: "introduction", sortable: true, label: this.$t('message.introduction', ['introduction']) },
+        { key: "discontinued", sortable: true , label: this.$t('message.discontinued', ['discontinued'])},
+        { key: "companyId", sortable: true, label: this.$t('message.companyId', ['companyId']) },
+        { key: "companyName", sortable: true, label:this.$t('message.companyName', ['companyName']) },
+        { key: "update", label:this.$t('message.update', ['update'])  }
       ],
       updating: null,
       currentSize: this.size(),

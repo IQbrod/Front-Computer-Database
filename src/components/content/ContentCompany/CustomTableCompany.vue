@@ -134,7 +134,7 @@ export default {
     return {
       filter: this.search(),
       pageOptions: [10, 50, 100],
-      fields: [{ key: "name", sortable: true }, "update"],
+      fields: [{ key: "name", sortable: true, label: this.$t('message.name', ['name'])}, {key:"update", label: this.$t('message.update', ['update'])}],
       updating: null,
       currentSize: this.size(),
       selectedDelete: [],

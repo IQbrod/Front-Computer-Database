@@ -168,11 +168,11 @@ export default {
       pageOptions: [10, 50, 100],
 
       fields: [
-        { key: "username", sortable: true },
-        { key: "password" },
-        { key: "roleId", sortable: true },
-        { key: "roleName", sortable: true },
-        { key: "update" }
+        { key: "username", sortable: true,  label: this.$t('message.userName', ['userName']) },
+        { key: "password",  label: this.$t('message.password', ['password']) },
+        { key: "roleId", sortable: true,  label: this.$t('message.roleId', ['roleId']) },
+        { key: "roleName", sortable: true,  label: this.$t('message.roleName', ['roleName']) },
+        { key: "update", label: this.$t('message.update', ['update']) }
       ],
       updating: null,
       perPage: 10,
