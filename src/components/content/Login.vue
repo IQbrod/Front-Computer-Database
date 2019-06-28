@@ -10,6 +10,7 @@
     <div>
       <b-button id="btn" type="submit" variant="primary">{{ $t('message.submit', ['submit']) }}</b-button>
       <b-button type="reset" variant="danger">{{ $t('message.reset', ['reset']) }}</b-button>
+      <b-button v-b-modal.modal-1>Create an account</b-button>
     </div>
     <div id="pop">
       <b-alert
@@ -21,8 +22,48 @@
       >
         <p>{{ $t('message.connexionError', ['connexionError']) }}</p>
       </b-alert>
+
+  <b-modal id="modal-1" title="Register" ref="modal-add-user">
+    <b-form>
+      <b-form>
+        <b-form-group
+                id="input-group-1"
+                label="Username:"
+        >
+          <b-form-input
+                  id="input-username"
+                  v-model="newUser.username"
+                  required
+                  placeholder="Username"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+                id="input-group-2"
+                label="Password :">
+          <b-form-input
+                  type="password"
+                  id="input-password"
+                  v-model="newUser.password"
+                  required
+                  placeholder="Password"
+          ></b-form-input>
+        </b-form-group>
+
+        <div slot="modal-footer">
+          <b-button type="submit" @click="add()" variant="primary">Submit</b-button>
+          <b-button type="cancel" id="btn" slot="modal-cancel">Cancel</b-button>
+        </div >
+      </b-form>
+
+    </b-form>
+    <div slot="modal-footer">
+    </div>
+  </b-modal>
+
     </div>
   </b-form>
+
 </template>
 
 <script>
@@ -34,15 +75,25 @@ export default {
     return {
       form: {
         username: "",
-        password: ""
+        password: "",
       },
       show: true,
-      dismissCountDown: 0
+      dismissCountDown: 0,
+      newUser: {
+        username: '',
+        password: '',
+        roleId: ''
+      }
     };
   },
   methods: {
     ...mapMutations(["setToken"]),
     ...mapGetters(["token"]),
+    permissionManager(error) {
+      if (this.token() && error.response.status === 403) {
+        this.togglePermissionDenied()
+      }
+    },
     onSubmit(evt) {
       evt.preventDefault();
       this.getToken(this.form);
@@ -81,6 +132,15 @@ export default {
         .catch(function(error) {
           this.errors.push(error);
         });
+    },
+    add() {
+      this.newUser.roleId = 1;
+      console.log(this.newUser);
+      axios.post('http://10.0.1.97:8080/cdb/api/users', this.newUser)
+              .then(() => {;})
+              .catch(error => {
+                this.permissionManager(error);
+              });
     }
   }
 };
