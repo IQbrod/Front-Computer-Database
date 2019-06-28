@@ -89,7 +89,7 @@ export default {
 
 <style scoped>
 #form {
-  margin: 5% 20% 0 20%;
+  margin: 5% 20% 31% 20%;
 }
 #pop {
   margin-top: 4%;
